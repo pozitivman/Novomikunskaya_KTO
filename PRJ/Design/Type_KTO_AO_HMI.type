@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Type v. 1.0 >
+<Type Name="KTO_AO_HMI" Kind="Struct" UUID="591E5E474CD17211AC6B85A08AAF7A46">
+    <Fields>
+        <Field Name="var" Type="BOOL" UUID="DFBC58414FF21C579FFD069DE08E432D" />
+    </Fields>
+</Type>

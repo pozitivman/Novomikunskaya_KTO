@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Type v. 1.0 >
+<Type Name="KTO_AO_DRV" Kind="Struct" UUID="7811C38640FA9428C2E7C591157859A9">
+    <Fields>
+        <Field Name="var" Type="BOOL" UUID="A62313714825010D41C71482EB808E71" />
+    </Fields>
+</Type>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Folder config v. 1.0 >
+<Folder Name="DI">
+    <Items>
+		<Item Name="Type_KTO_DI_DRV.type" />
+		<Item Name="Type_KTO_DI_HMI.type" />
+		<Item Name="DI_HMI.type" />
+    </Items>
+</Folder>

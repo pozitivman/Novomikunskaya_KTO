@@ -2,5 +2,7 @@
 *.pdf
 *.doc
 *.xlsx
-# ignore all files in the build/ directory
+*.old
+
+# ignore all files in the DOC/ directory
 DOC/

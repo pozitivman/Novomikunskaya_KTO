@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE SubAppType v. 1.3 >
+<SubAppType Name="DRV_A2" Kind="DRIVER.SONET.MODBUS" Args="" Comment="" UUID="4797D68248FDADA78927B1B4F1D3EE9E">
+    <InterfaceList>
+
+    </InterfaceList>
+</SubAppType>

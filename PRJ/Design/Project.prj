@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE Project v. 1.0 >
-<Project Name="Novomikunskaya_KTO" Comment="" Port="10000" EndPort="30000" UUID="AB99454248D8D23928663FB580E79078" SignProject="FALSE" UsersUpdateMode="ASK">
+<Project Name="Novomikunskaya_KTO" Comment="" Port="10000" EndPort="30000" UUID="F92FE3AE40833D393C49D1BCD5AE2722" SignProject="FALSE" UsersUpdateMode="REPLACE">
+    <Globals>
+        <Signal Name="Deblock" UUID="6BAECAA040B090C458A0259509A3725D" Type="BOOL" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot;" />
+        <Signal Name="Deblock_PRU" UUID="F2F84E504F643C72489365BDED794987" Type="BOOL" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot; с панели ПРУ" />
+        <Signal Name="Deblock_HMI" UUID="721D1E2B47816844F4C2EA81FB2B11E9" Type="BOOL" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot; из скады" />
+        <Signal Name="Kvitir" UUID="8FE14510413641AF6CC19C9F6C2C8D78" Type="BOOL" Global="TRUE" Comment="Кнопка &quot;Квитирование&quot;" />
+        <Signal Name="IMIT" UUID="63E3F82748EB12BBD84ED5BA287E8B0E" Type="BOOL" Global="TRUE" Comment="Режим имитации" />
+        <Signal Name="DO_sound_AS" UUID="06F9CCCC4E1BDBB50F7357BB7C2D924F" Type="BOOL" Global="TRUE" Comment="Включение звуковой сигнализации АС" />
+        <Signal Name="DO_sound_PS" UUID="2AD6D0C14C1FBA9FE5003995BEEFCC6E" Type="BOOL" Global="TRUE" Comment="Включение звуковой сигнализации ПС" />
+        <Signal Name="NO_sound_TS" UUID="078DBA7048D91B376B42F983276FBDCF" Type="BOOL" Global="TRUE" Comment="Заглушка для технологических сообщений" />
+        <Signal Name="USER_NAME_NOW_ARM" UUID="F9BDEB6A4E9F5BF964ADE99892C1C0AC" Type="STRING" ArraySize="10" Global="TRUE" Comment="Текущий пользователь для нескольких АРМов" />
+        <Signal Name="USER_NAME_NOW" UUID="5CDA288E4CE1B54863DF95A1B67B2607" Type="STRING" Global="TRUE" Comment="Текущий пользователь" />
+        <Signal Name="MakeReport" UUID="B568AE304B05189A1DFA969BD8EF36EB" Type="BOOL" Global="TRUE" Comment="Составить документ" />
+        <Signal Name="KTO_AI_DRV" UUID="1992475442BA350E9C24CBA4A2887CA0" Type="37FF3ECA42D479BD2302648F8F459118" Global="TRUE" Comment="Аналоговые входы. Драйвер" />
+        <Signal Name="KTO_AI_HMI" UUID="C1A047ED4E867233E37F5182C6033A08" Type="650D476341710DD510E73DBF0399D983" Global="TRUE" Comment="Аналоговые входы. Логика" />
+        <Signal Name="KTO_AO_DRV" UUID="6B6013124403B2C454A085B4408EDB6F" Type="7811C38640FA9428C2E7C591157859A9" Global="TRUE" Comment="Аналоговые выходы. Драйвер" />
+        <Signal Name="KTO_AO_HMI" UUID="4D34A84A424BBCA64906658883518319" Type="591E5E474CD17211AC6B85A08AAF7A46" Global="TRUE" Comment="Аналоговые выходы. Логика" />
+        <Signal Name="KTO_DI_DRV" UUID="8DDA0FCD4A48F2D125E7C891B7EF5893" Type="D32C33364CE8C5E11D92228B89B4AAA0" Global="TRUE" Comment="Дискретные входы. Драйвер" />
+        <Signal Name="KTO_DI_HMI" UUID="CC055E5E4FBD18715494DDAD80F3C25A" Type="3D9354EF4F58D8D30A7C508A1429A0D1" Global="TRUE" Comment="Дискретные входы. Логика" />
+        <Signal Name="KTO_DO_DRV" UUID="C42BC1D84BE117E5355CD6B9A636784C" Type="0F6D678243CE8828D7655F9553C3A52B" Global="TRUE" Comment="Дискретные выходы. Драйвер" />
+        <Signal Name="KTO_DO_HMI" UUID="6BB8886144EA4B796E170AAEF9087015" Type="C59E9B4E412222AEB12F7E9E698DC22C" Global="TRUE" Comment="Дискретные выходы. Логика" />
+    </Globals>
     <Connections />
 </Project>
