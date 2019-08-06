@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE UserList v. 1.0 >
+<GroupList CRC16="5388" />
+
+<UserList CRC16="44603" />
+
+<SecurityPolicy CRC16="37677" Use="FALSE" MinPasswordLen="1" DiffCharCases="FALSE" SpecialChars="" />
+
+<RightsList Items="" />

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Project v. 1.0 >
+<Project Name="Novomikunskaya_KTO" Comment="" Port="10000" EndPort="30000" UUID="AB99454248D8D23928663FB580E79078" SignProject="FALSE" UsersUpdateMode="ASK">
+    <Connections />
+</Project>
