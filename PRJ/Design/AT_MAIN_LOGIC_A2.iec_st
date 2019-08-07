@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Program >
+<Program UUID="FD3CE90644FFFCA2F81F15BF3E449296" Name="MAIN_LOGIC_A2" Period="100" PutDataAtEndOfCycle="false">
+    <Variables>
+        <Variable UUID="6CDFF63448F76BD4840379A2B5DBC0FC" Name="proc_DI" Type="FB_DI" TypeUUID="9018116F43FC2E443834D486159520D8" Usage="internal" />
+        <Variable UUID="BC7901564EBDF9D4838C5DAC7105128B" Name="clock_AI_cur" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="internal" />
+        <Variable UUID="B37428F7472FA3B3D371B08EFBA52ECF" Name="clock_AI_prev" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="internal" />
+        <Variable UUID="C2FD7ADB4965CAC731537696486D5AEC" Name="FScan" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Usage="internal" />
+        <Variable UUID="3EA9581941B8E40ABDDB4596CF40E859" Name="DTC_start" Type="calc_dt" TypeUUID="E1A64949466CCCA81E37988A136D23C2" Usage="internal" />
+        <Variable UUID="2AB06E3C4DF7D8940FE3ECBB850C1581" Name="DTC_duration" Type="calc_dt" TypeUUID="E1A64949466CCCA81E37988A136D23C2" Usage="internal" />
+    </Variables>
+    <ST><![CDATA[//Использование C-библиотеки (время цикла и таймер 1с)
+clock_AI_cur := CLOCK();
+IF Firstscan THEN
+	clock_AI_prev := clock_AI_cur;
+END_IF;
+cycleTime := clock_AI_cur - clock_AI_prev;
+clock_AI_prev := clock_AI_cur;
+
+//Фиксируем нажатие кнопки Квитирование на щите САУ
+//rtrig_Kvitir(CLK:= KC1_STU3_DI_HMI.A2_9_5_ACK_SOUND.PV, Q => Kvitir);
+//Фиксируем нажатие кнопки Сброс аварийной остановки на щите САУ
+//rtrig_Kvitir(CLK:= KC1_STU3_DI_HMI.A2_9_6_RST_AO.PV, Q => Reset_AO);
+
+//Фиксируем нажатие кнопки Деблокировка из разных источников
+//rtrig_Deblock(CLK:= Deblock_PRU or Deblock_HMI, Q => Deblock);
+
+//proc_AI();
+proc_DI();
+
+//proc_ALG();
+//proc_VLV();
+
+//proc_DO();
+//proc_AO();
+//proc_APS();
+
+if DO_sound_PS then
+//	KC1_STU3_DO_HMI.A3_7_11_SOUND_ALARM1_ON.PV := true; //Включить предупредительную сигнализацию на щите САУ УПГСН
+else
+//	KC1_STU3_DO_HMI.A3_7_11_SOUND_ALARM1_ON.PV := false;
+end_if;
+
+if DO_sound_AS then
+//	KC1_STU3_DO_HMI.A3_7_12_SOUND_ALARM2_ON.PV := true; //Включить аварийную сигнализацию на щите САУ УПГСН
+else
+//	KC1_STU3_DO_HMI.A3_7_12_SOUND_ALARM2_ON.PV := false;
+end_if;
+
+//Сброс кнопок Деблокировка и Квитирование
+Deblock := BOOL#0;
+Kvitir := BOOL#0;
+
+IF Firstscan THEN Firstscan := BOOL#0; FScan := BYTE#0; END_IF;
+clock_AI_cur := CLOCK();
+cycleTime_AI_sys := clock_AI_cur - clock_AI_prev;]]></ST>
+    <DataTypes>
+        <Struct UUID="24096E3F4C0C396B81199DA606D417FF" Name="DI_HMI">
+            <Field UUID="70988A694DD85D0E78079BBD6216FA79" Name="PV" Comment="Обработанное дискретное значение" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="CF7E229443E1351DAA088F86810D2BC5" Name="Descr" Comment="Название дискрета" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" />
+            <Field UUID="6A20C3BE40C40144566175922F96EEB6" Name="Nedost" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+        </Struct>
+    </DataTypes>
+    <FBLibrary>
+        <FunctionBlock UUID="90D0C5D044939603D0BD418B90A10328" Name="DI_Proc">
+            <Variables>
+                <Variable UUID="293790C0400AEE8E646241AF54168597" Name="DI_raw" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="90D020944A62F4359AC073BD30D91C04" Name="cycle_set" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" Usage="input" />
+                <Variable UUID="6DA04EE34C5683D9CA5E5DA173F1E282" Name="Inv" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="9EBB87F74FDE47608E622599DCEFC25E" Name="DI_out" Type="DI_HMI" TypeUUID="24096E3F4C0C396B81199DA606D417FF" Usage="inout" />
+                <Variable UUID="9238B59F4BC1A60E4E950DBC947C2480" Name="Descr" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" InitialValue="&apos;FALSE&apos;" Usage="input" />
+                <Variable UUID="74FB70564CC19DC7C703E6B32B39C126" Name="cycle_val" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" Usage="internal" />
+                <Variable UUID="AFC9DC1340331290F03520A18FE89153" Name="DI_in_last" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[IF NOT (DI_Raw XOR DI_in_last) THEN
+	cycle_val := cycle_val + INT#1;
+ELSE
+	cycle_val := INT#0;
+END_IF;
+
+IF cycle_val >= cycle_set THEN
+	DI_out.PV := DI_Raw XOR Inv;
+END_IF;
+
+DI_in_last := DI_Raw;
+DI_out.Descr := Descr;]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="9018116F43FC2E443834D486159520D8" Name="FB_DI">
+            <Variables>
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1001" Name="DI_001" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1002" Name="DI_002" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1003" Name="DI_003" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1004" Name="DI_004" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1005" Name="DI_005" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1006" Name="DI_006" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1007" Name="DI_007" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1008" Name="DI_008" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1009" Name="DI_009" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1010" Name="DI_010" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1011" Name="DI_011" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1012" Name="DI_012" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1013" Name="DI_013" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1014" Name="DI_014" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1015" Name="DI_015" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1016" Name="DI_016" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1017" Name="DI_017" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1018" Name="DI_018" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1019" Name="DI_019" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1020" Name="DI_020" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1021" Name="DI_021" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1022" Name="DI_022" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1023" Name="DI_023" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1024" Name="DI_024" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1025" Name="DI_025" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1026" Name="DI_026" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1027" Name="DI_027" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1028" Name="DI_028" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1029" Name="DI_029" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1030" Name="DI_030" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1031" Name="DI_031" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1032" Name="DI_032" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1033" Name="DI_033" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1034" Name="DI_034" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1035" Name="DI_035" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1036" Name="DI_036" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1037" Name="DI_037" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1038" Name="DI_038" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1039" Name="DI_039" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1040" Name="DI_040" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1041" Name="DI_041" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1042" Name="DI_042" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1043" Name="DI_043" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1044" Name="DI_044" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1045" Name="DI_045" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1046" Name="DI_046" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1047" Name="DI_047" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1048" Name="DI_048" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1049" Name="DI_049" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1050" Name="DI_050" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1051" Name="DI_051" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1052" Name="DI_052" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1053" Name="DI_053" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1054" Name="DI_054" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1055" Name="DI_055" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1056" Name="DI_056" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1057" Name="DI_057" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1058" Name="DI_058" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1059" Name="DI_059" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1060" Name="DI_060" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1061" Name="DI_061" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1062" Name="DI_062" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1063" Name="DI_063" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1064" Name="DI_064" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1065" Name="DI_065" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1066" Name="DI_066" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1067" Name="DI_067" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1068" Name="DI_068" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1069" Name="DI_069" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1070" Name="DI_070" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1071" Name="DI_071" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1072" Name="DI_072" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1073" Name="DI_073" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1074" Name="DI_074" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1075" Name="DI_075" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1076" Name="DI_076" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1077" Name="DI_077" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1078" Name="DI_078" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1079" Name="DI_079" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1080" Name="DI_080" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1081" Name="DI_081" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1082" Name="DI_082" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1083" Name="DI_083" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1084" Name="DI_084" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1085" Name="DI_085" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1086" Name="DI_086" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1087" Name="DI_087" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1088" Name="DI_088" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1089" Name="DI_089" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1090" Name="DI_090" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1091" Name="DI_091" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1092" Name="DI_092" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1093" Name="DI_093" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1094" Name="DI_094" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1095" Name="DI_095" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1096" Name="DI_096" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1097" Name="DI_097" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1098" Name="DI_098" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1099" Name="DI_099" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1100" Name="DI_100" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1101" Name="DI_101" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1102" Name="DI_102" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1103" Name="DI_103" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1104" Name="DI_104" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1105" Name="DI_105" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1106" Name="DI_106" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1107" Name="DI_107" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1108" Name="DI_108" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1109" Name="DI_109" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1110" Name="DI_110" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1111" Name="DI_111" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1112" Name="DI_112" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1113" Name="DI_113" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1114" Name="DI_114" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1115" Name="DI_115" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1116" Name="DI_116" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1117" Name="DI_117" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1118" Name="DI_118" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1119" Name="DI_119" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1120" Name="DI_120" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1121" Name="DI_121" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1122" Name="DI_122" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1123" Name="DI_123" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1124" Name="DI_124" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1125" Name="DI_125" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1126" Name="DI_126" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1127" Name="DI_127" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+                <Variable UUID="7ACE42664558DA688FAAB785D02C1128" Name="DI_128" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[if not IMIT then
+DI_001(KTO_DI_DRV.A2_3_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_1_SEN_QT1_CH4_zagaz_flt,	'Датчик загазованности по метану - Авария (QT1)');
+DI_002(KTO_DI_DRV.A2_3_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_2_SEN_QT1_CH4_zagaz_lim_1,	'Датчик загазованности по метану - Порог 1 (QT1)');
+DI_003(KTO_DI_DRV.A2_3_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_3_SEN_QT1_CH4_zagaz_lim_2,	'Датчик загазованности по метану - Порог 2 (QT1)');
+DI_004(KTO_DI_DRV.A2_3_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_4_SEN_QT2_CO2_warn_ala,	'Предупредительная сигнализация оксида углерода (QT2)');
+DI_005(KTO_DI_DRV.A2_3_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_5_SEN_QT2_CO2_emerg_ala,	'Аварийная сигнализация оксида углерода (QT2)');
+DI_006(KTO_DI_DRV.A2_3_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_6_Check_signal,	'Опробование сигнализации (SB1)');
+DI_007(KTO_DI_DRV.A2_3_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_7_SV1_ON,	'Клапан отсечной в положении "Открыто" (CV-0201)');
+DI_008(KTO_DI_DRV.A2_3_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_8_SV1_OFF,	'Клапан отсечной в положении "Закрыто" (CV-0201)');
+DI_009(KTO_DI_DRV.A2_3_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_9_SV1_RDY,	'Клапан отсечной в положении "Готовность" (CV-0201)');
+DI_010(KTO_DI_DRV.A2_3_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_10_SV1_FLT,	'Клапан отсечной в положении "Неисправность" (CV-0201)');
+DI_011(KTO_DI_DRV.A2_3_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_11_SV1_EMG,	'Клапан отсечной в положении "Авария" (CV-0201)');
+DI_012(KTO_DI_DRV.A2_3_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_12_R1_P_lo_gaz_GU_BBR,	'Реле низкого давления системы подачи газа на ГУ основной камеры сгорания (PS-0101A)');
+DI_013(KTO_DI_DRV.A2_3_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_13_R2_P_hi_gaz_GU_BBR,	'Реле высокого давления системы подачи газа на ГУ основной камеры сгорания (PS-0102A)');
+DI_014(KTO_DI_DRV.A2_3_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_14_R3_P_lo_gaz_GU_SBR,	'Реле низкого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0101B)');
+DI_015(KTO_DI_DRV.A2_3_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_15_R4_P_hi_gaz_GU_SBR,	'Реле высокого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0102B)');
+DI_016(KTO_DI_DRV.A2_3_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_16_R5_P_air_GU_BBR,	'Реле давления в системе подачи воздуха на ГУ первичной камеры сгорания (PS-0103A) ');
+DI_017(KTO_DI_DRV.A2_4_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_1_R6_P_air_GU_SBR,	'Реле давления в системе подачи воздуха на ГУ вторичной камеры сгорания (PS-0103B) ');
+DI_018(KTO_DI_DRV.A2_4_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_2_AG1_OFF,	'Ворошитель инсинератора в крайнем закрытом положении (ZSC-0204)');
+DI_019(KTO_DI_DRV.A2_4_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_3_AG1_ON,	'Ворошитель инсинератора в крайнем открытом положении (ZSO-0204)');
+DI_020(KTO_DI_DRV.A2_4_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_4_SEN_door_extr_ash_OFF,	'Датчик двери выема золы из инсинератора в сост. "закрыто" (ZSC-0207)');
+DI_021(KTO_DI_DRV.A2_4_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_5_SEN_door_serv_ins_OFF,	'Датчик двери обслуживания инсинератора в сост. "закрыто" (ZSC-0206)');
+DI_022(KTO_DI_DRV.A2_4_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_6_Lmin_tank_RD_CSSG,	'Минимальный уровень в баке дозатора реагентов в систему охлаждения дым. газов (LSL-0201)');
+DI_023(KTO_DI_DRV.A2_4_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_7_SEN_FP_door_ins_ld_OFF,	'Датчик огнестойкой двери загрузки инсинератора в состоянии "закрыто" (ZSC-0201)');
+DI_024(KTO_DI_DRV.A2_4_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_8_SEN_FP_door_ins_ld_ON,	'Датчик огнестойкой двери загрузки инсинератора в состоянии "открыто" (ZSO-0201)');
+DI_025(KTO_DI_DRV.A2_4_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_9_SEN_damp_ld_dev_feed_OFF,	'Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "закрыто" (ZSC-0202)');
+DI_026(KTO_DI_DRV.A2_4_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_10_SEN_damp_ld_dev_feed_ON,	'Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "открыто" (ZSO-0202)');
+DI_027(KTO_DI_DRV.A2_4_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_11_SEN_push_ld_dev_feed_OFF,	'Датчик толкателя устройства подачи в инсинератор в состоянии "закрыт" (ZSC-0203)');
+DI_028(KTO_DI_DRV.A2_4_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_12_SEN_push_ld_dev_feed_ON,	'Датчик толкателя устройства подачи в инсинератор в состоянии "открыт" (ZSO-0203)');
+DI_029(KTO_DI_DRV.A2_4_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_13_SEN_push_ld_dev_feed_IMT,	'Датчик толкателя устройства подачи в инсинератор в состоянии "промежуточное" (ZSO-0205)');
+DI_030(KTO_DI_DRV.A2_4_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_14_SW_T_oil_tank,	'Переключатель температуры масляного бака (TS-0202)');
+DI_031(KTO_DI_DRV.A2_4_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_15_Lmin_oil_GSDD,	'Минимальный уровень масла в баке гидравлической системы привода заслонок (LS-0102)');
+DI_032(KTO_DI_DRV.A2_4_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_16_V1_emg_ON,	'Вентилятор аварийный включен (B1)');
+DI_033(KTO_DI_DRV.A2_5_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_1_V2_air_feed_BBR_ON,	'Вентилятор подачи воздуха в основную камеру сгорания включен (CF-0201)');
+DI_034(KTO_DI_DRV.A2_5_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_2_V2_air_feed_BBR_FLT,	'Вентилятор подачи воздуха в основную камеру сгорания в аварии (CF-0201)');
+DI_035(KTO_DI_DRV.A2_5_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_3_V3_air_feed_SBR_ON,	'Вентилятор подачи воздуха во вторичную камеру сгорания включен (CF-0202)');
+DI_036(KTO_DI_DRV.A2_5_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_4_V3_air_feed_SBR_FLT,	'Вентилятор подачи воздуха во вторичную камеру сгорания в аварии (CF-0202)');
+DI_037(KTO_DI_DRV.A2_5_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_5_V4_ash_gaz_feed_ON,	'Вентилятор подачи дымовых газов в трубу включен (CF-0301) ');
+DI_038(KTO_DI_DRV.A2_5_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_6_V4_ash_gaz_feed_FLT,	'Вентилятор подачи дымовых газов в трубу в аварии (CF-0301) ');
+DI_039(KTO_DI_DRV.A2_5_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_7_V5_air_feed_CSG_ins_ON,	'Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)');
+DI_040(KTO_DI_DRV.A2_5_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_8_V5_air_feed_CSG_ins_FLT,	'Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)');
+DI_041(KTO_DI_DRV.A2_5_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_9_RD1_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (RAL-0201)');
+DI_042(KTO_DI_DRV.A2_5_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_10_RD1_RA_CSG_ON,	'Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (RAL-0201)');
+DI_043(KTO_DI_DRV.A2_5_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_11_RD2_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (CH-0201 )');
+DI_044(KTO_DI_DRV.A2_5_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_12_RD2_RA_CSG_ON,	'Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (CH-0201 )');
+DI_045(KTO_DI_DRV.A2_5_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_13_N1_work_ON,	'Насос (рабочий) включен (P-0201A)');
+DI_046(KTO_DI_DRV.A2_5_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_14_N1_work_RA_ON,	'Дист. управл. насосом (рабочим) включено (P-0201A)');
+DI_047(KTO_DI_DRV.A2_5_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_15_IC1_burn_dev_BBR_ON,	'Свеча зажигания устройства горелочного основной камеры сгорания включена (TR-0101A)');
+DI_048(KTO_DI_DRV.A2_5_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_16_IC1_RA_burn_dev_BBR_ON,	'Дист. управл. свечой зажигания устройства горелочного основной камеры сгорания включено (TR-0101A)');
+DI_049(KTO_DI_DRV.A2_6_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_1_IC1_burn_dev_SBR_ON,	'Свеча зажигания устройства горелочного вторичной камеры сгорания включена (TR-0101B)');
+DI_050(KTO_DI_DRV.A2_6_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_2_IC1_RA_burn_dev_SBR_ON,	'Дист. управл. свечой зажигания устройства горелочного вторичной камеры сгорания включено (TR-0101B)');
+DI_051(KTO_DI_DRV.A2_6_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_3_SV2_air_feed_burn_dev_SBR_ON,	'Клапан системы подачи воздуха на горелочное устройство вторичной камеры сгорания открыт (SV-0101b)');
+DI_052(KTO_DI_DRV.A2_6_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_4_SV2_RA_air_feed_burn_dev_SBR_ON,	'Дист. управл. клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания включено (SV-0101B)');
+DI_053(KTO_DI_DRV.A2_6_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_5_SV3_gaz_feed_burn_dev_BBR_ON,	'Клапан системы подачи газа на горелочное устройство основной камеры сгорания открыт (TV-0101A)');
+DI_054(KTO_DI_DRV.A2_6_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_6_SV3_RA_air_feed_burn_dev_BBR_ON,	'Дист. управл. клапана системы подачи газа на горелочное устройство основной камеры сгорания включено (TV-0101A)');
+DI_055(KTO_DI_DRV.A2_6_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_7_SV4_gaz_feed_burn_dev_SBR_ON,	'Клапан системы подачи газа на горелочное устройство вторичной камеры сгорания открыт (TV-0101В)');
+DI_056(KTO_DI_DRV.A2_6_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_8_SV4_RA_air_feed_burn_dev_SBR_ON,	'Дист. управл. клапана системы подачи газа на горелочное устройство вторичной камеры сгорания включено (TV-0101В)');
+DI_057(KTO_DI_DRV.A2_6_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_9_SV5_KMO3_ON,	'Клапан отсечной КМО-3 включен (CV-0201) сигнал от ВРУ');
+DI_058(KTO_DI_DRV.A2_6_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_10_SV5_RA_KMO3_ON,	'Дист. управл. клапаном отсечным КМО-3 включено (CV-0201) сигнал от ВРУ');
+DI_059(KTO_DI_DRV.A2_6_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_11_SV6_air_feed_burn_dev_BBR_ON,	'Клапан системы подачи воздуха на горелочное устройство основной камеры сгорания открыт (TV-0102A)');
+DI_060(KTO_DI_DRV.A2_6_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_12_SV6_RA_air_feed_burn_dev_BBR_ON,	'Дист. управл. клапаном системы подачи воздуха на горелочное устройство основной камеры сгорания включено (TV-0102A)');
+DI_061(KTO_DI_DRV.A2_6_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_13_N2_rez_ON,	'Насос (резервный) включен (P-0201B)');
+DI_062(KTO_DI_DRV.A2_6_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_14_N2_rez_RA_ON,	'Дист. управл. насосом (резервным) включено (P-0201B)');
+DI_063(KTO_DI_DRV.A2_6_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_15_C1_ON,	'Компрессор включен (C-0201)');
+DI_064(KTO_DI_DRV.A2_6_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_16_C1_RA_ON,	'Дист. управл. компрессором включено (C-0201)');
+DI_065(KTO_DI_DRV.A2_7_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_1_RD3_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (SC-0203)');
+DI_066(KTO_DI_DRV.A2_7_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_2_RD3_RA_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)');
+DI_067(KTO_DI_DRV.A2_7_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_3_V6_air_feed_burn_dev_BBR_ON,	'Вентилятор системы подачи воздуха на горелочное устройство основной камеры сгорания включен (СF-0102)');
+DI_068(KTO_DI_DRV.A2_7_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_4_V7_air_feed_burn_dev_SBR_ON,	'Вентилятор системы подачи воздуха на горелочное устройство вторичной камеры сгорания включен (СF-0101)');
+DI_069(KTO_DI_DRV.A2_7_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_5_SC1_disch_ash_INS_ON,	'Шнек выгрузки золы из инсинератора включен (SС-0201 )');
+DI_070(KTO_DI_DRV.A2_7_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_6_SC2_disch_ash_MC_ON,	'Шнек выгрузки золы из мультициклона включен (SС-0202) ');
+DI_071(KTO_DI_DRV.A2_7_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_7_N3_oil_feed_DD_ON,	'Насос подачи масла гидравлической системы привода заслонок включен (P-0401)');
+DI_072(KTO_DI_DRV.A2_7_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_8_H1_oil_feed_DD_ON,	'Подогреватель масла гидравлической системы привода заслонок включен (EH-0401)');
+DI_073(KTO_DI_DRV.A2_7_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_9_C1_ON,	'Срабатывание расцепителя (от ВРУ1)');
+DI_074(KTO_DI_DRV.A2_7_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_10_Rez,	'Резерв');
+DI_075(KTO_DI_DRV.A2_7_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_11_Rez,	'Резерв');
+DI_076(KTO_DI_DRV.A2_7_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_12_Rez,	'Резерв');
+DI_077(KTO_DI_DRV.A2_7_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_13_Rez,	'Резерв');
+DI_078(KTO_DI_DRV.A2_7_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_14_Rez,	'Резерв');
+DI_079(KTO_DI_DRV.A2_7_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_15_Rez,	'Резерв');
+DI_080(KTO_DI_DRV.A2_7_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_16_Rez,	'Резерв');
+DI_081(KTO_DI_DRV.A2_8_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_1_CHECK_Uop_AC_220,	'Наличие напряжения ~380 В ввода 1 ВРУ КТО1,2');
+DI_082(KTO_DI_DRV.A2_8_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_2_CHECK_Urp_DC_220,	'Наличие напряжения ~380 В ввода 2 ВРУ КТО1,2');
+DI_083(KTO_DI_DRV.A2_8_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_3_QFS_PIT_ON,	'Автоматический выключатель на вводе 1 включен ВРУ КТО1,2');
+DI_084(KTO_DI_DRV.A2_8_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_4_CHECK_GC_DISCH,	'Автоматический выключатель на вводе 2 включен ВРУ КТО1,2');
+DI_085(KTO_DI_DRV.A2_8_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_5_GC_OSN_IP_DC_24_VC,	'Срабатывание АВР ВРУ КТО1,2');
+DI_086(KTO_DI_DRV.A2_8_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_6_GC_REZ_IP_DC_24_VC,	'Пожар сигнал от ШПС');
+DI_087(KTO_DI_DRV.A2_8_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_7_GC_OSN_IP_DC_24_AI,	'Неисправность сигнал от ШПС');
+DI_088(KTO_DI_DRV.A2_8_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_8_Rez,	'Резерв');
+DI_089(KTO_DI_DRV.A2_8_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_9_Rez,	'Резерв');
+DI_090(KTO_DI_DRV.A2_8_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_10_Rez,	'Резерв');
+DI_091(KTO_DI_DRV.A2_8_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_11_Rez,	'Резерв');
+DI_092(KTO_DI_DRV.A2_8_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_12_Rez,	'Резерв');
+DI_093(KTO_DI_DRV.A2_8_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_13_Rez,	'Резерв');
+DI_094(KTO_DI_DRV.A2_8_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_14_Rez,	'Резерв');
+DI_095(KTO_DI_DRV.A2_8_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_15_Rez,	'Резерв');
+DI_096(KTO_DI_DRV.A2_8_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_16_Rez,	'Резерв');
+DI_097(KTO_DI_DRV.A2_9_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_1_BT_ES,	'Аварийный останов');
+DI_098(KTO_DI_DRV.A2_9_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_2_BT_Start,	'Запуск');
+DI_099(KTO_DI_DRV.A2_9_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_3_BT_door_feed_ON,	'Открыть подающую дверь');
+DI_100(KTO_DI_DRV.A2_9_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_4_BT_door_feed_OFF,	'Закрыть подающую дверь');
+DI_101(KTO_DI_DRV.A2_9_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_5_BT_door_ash_unload_ON,	'Открыть дверь выгрузки золы');
+DI_102(KTO_DI_DRV.A2_9_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_6_BT_door_ash_unload_OFF,	'Открыть дверь выгрузки золы');
+DI_103(KTO_DI_DRV.A2_9_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_7_BT_feed_waste_auto,	'Подача отходов в автоматическом режиме');
+DI_104(KTO_DI_DRV.A2_9_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_8_BT_feed_waste_man,	'Подача отходов в ручном режиме');
+DI_105(KTO_DI_DRV.A2_9_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_9_BT_feed_waste_start,	'Подача отходов - пуск');
+DI_106(KTO_DI_DRV.A2_9_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_10_BT_feed_waste_stop,	'Подача отходов - стоп');
+DI_107(KTO_DI_DRV.A2_9_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_11_BT_load_cycle,	'Цикл загрузки');
+DI_108(KTO_DI_DRV.A2_9_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_12_BT_cool_start,	'Запуск охлаждения');
+DI_109(KTO_DI_DRV.A2_9_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_13_BT_Kvitir,	'Квитирование');
+DI_110(KTO_DI_DRV.A2_9_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_14_BT_Check_alarm,	'Опробование сигнализации');
+DI_111(KTO_DI_DRV.A2_9_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_15_NC,	'Не подключен');
+DI_112(KTO_DI_DRV.A2_9_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_16_NC,	'Не подключен');
+DI_113(KTO_DI_DRV.A2_10_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_1_CTRL_OP_AC220,	'Контроль основного питания  ~220 В');
+DI_114(KTO_DI_DRV.A2_10_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_2_CTRL_P_UPS_AC220,	'Контроль питания от ИБП ~220 В');
+DI_115(KTO_DI_DRV.A2_10_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_3_SW_P_ON,	'Автоматы питания включены');
+DI_116(KTO_DI_DRV.A2_10_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_4_CTRL_ISP_DISCH,	'Контроль исправности разрядников');
+DI_117(KTO_DI_DRV.A2_10_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_5_ISP_OSN_IP_DC24_IC,	'Исправность осн. ИП =24В внутренних цепей');
+DI_118(KTO_DI_DRV.A2_10_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_6_ISP_REZ_IP_DC24_IC,	'Исправность рез. ИП =24В внутренних цепей');
+DI_119(KTO_DI_DRV.A2_10_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_7_ISP_OSN_IP_DC24_AI_AO,	'Исправность осн. ИП =24В AI, AO');
+DI_120(KTO_DI_DRV.A2_10_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_8_ISP_REZ_IP_DC24_AI_AO,	'Исправность рез. ИП =24В AI, AO');
+DI_121(KTO_DI_DRV.A2_10_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_9_ISP_OSN_IP_DC24_DI_EXT,	'Исправность осн. ИП =24В DI (внеш.)');
+DI_122(KTO_DI_DRV.A2_10_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_10_ISP_REZ_IP_DC24_DI_EXT,	'Исправность рез. ИП =24В DI (внеш.)');
+DI_123(KTO_DI_DRV.A2_10_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_11_ISP_OSN_IP_DC24_DO_EXT,	'Исправность осн. ИП =24В DO (внеш.)');
+DI_124(KTO_DI_DRV.A2_10_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_12_ISP_REZ_IP_DC24_DO_EXT,	'Исправность рез. ИП =24В DO (внеш.)');
+DI_125(KTO_DI_DRV.A2_10_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_13_ISP_OSN_IP_DC24_EXT_DEV,	'Исправность осн. ИП =24В внешн. Устройств');
+DI_126(KTO_DI_DRV.A2_10_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_14_ISP_REZ_IP_DC24_EXT_DEV,	'Исправность рез. ИП =24В внешн. Устройств');
+DI_127(KTO_DI_DRV.A2_10_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_15_NC,	'Не подключен');
+DI_128(KTO_DI_DRV.A2_10_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_16_NC,	'Не подключен');
+end_if;]]></ST>
+        </FunctionBlock>
+    </FBLibrary>
+</Program>

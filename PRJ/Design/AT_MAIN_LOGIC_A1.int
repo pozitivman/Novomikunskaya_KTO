@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE SubAppType v. 1.3 >
+<SubAppType Name="MAIN_LOGIC_A1" Kind="APPLICATION.ST.CONSOLE" Args="" Comment="" UUID="5353B0804199BA26822267BA0FEEACE4">
+    <InterfaceList>
+        <Signal Name="@PID" UUID="DB65A6D0437C00D0222520933DD2319E" Type="STRING" Usage="output" />
+        <Signal Name="@STATE" UUID="17E7FE844BFB4F403A300E8706052EBC" Type="STRING" Usage="output" />
+        <Signal Name="@COMMAND" UUID="F07649574D17530DAE3C9F842124FE1D" Type="STRING" />
+        <Signal Name="@COMMAND_VALUE" UUID="5D2B87AB44039686766A29B722A46D51" Type="STRING" />
+        <Signal Name="@MESSAGE" UUID="87A71D4B4FB27A73D3951BAFA337556D" Type="STRING" Usage="output" />
+        <Signal Name="@MESSAGE_FRAMEWORK" UUID="981AE36D4853D773B6D8318F546C5B0A" Type="STRING" Usage="output" />
+        <Signal Name="@EVENT" UUID="276446264EBFFE0F663D339AFFB3F233" Type="STRING" />
+        <Signal Name="@RESERVED" UUID="102B810649FEE074B6DC0A9945B92748" Type="BOOL" />
+        <Signal Name="@RESERVE" UUID="CDE5C2514501A8052E7DA9AF41701589" Type="BOOL" />
+        <Signal Name="@LICENSE" UUID="B604D1A849DB8D37FAE43BA7D8A1D9E8" Type="STRING" Usage="output" />
+        <Signal Name="@NODE_RUN" UUID="11CFC95F39784D0797BFCEAB0F98BF6A" Type="BOOL" />
+        <Signal Name="Kvitir" UUID="8FE14510413641AF6CC19C9F6C2C8D78" Type="BOOL" Usage="" Global="TRUE" Comment="Кнопка &quot;Квитирование&quot;" />
+        <Signal Name="Deblock" UUID="6BAECAA040B090C458A0259509A3725D" Type="BOOL" Usage="" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot;" />
+        <Signal Name="Deblock_PRU" UUID="F2F84E504F643C72489365BDED794987" Type="BOOL" Usage="" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot; с панели ПРУ" />
+        <Signal Name="Deblock_HMI" UUID="721D1E2B47816844F4C2EA81FB2B11E9" Type="BOOL" Usage="" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot; из скады" />
+        <Signal Name="IMIT" UUID="63E3F82748EB12BBD84ED5BA287E8B0E" Type="BOOL" Usage="" Global="TRUE" Comment="Режим имитации" />
+        <Signal Name="DO_sound_AS" UUID="06F9CCCC4E1BDBB50F7357BB7C2D924F" Type="BOOL" Usage="" Global="TRUE" Comment="Включение звуковой сигнализации АС" />
+        <Signal Name="DO_sound_PS" UUID="2AD6D0C14C1FBA9FE5003995BEEFCC6E" Type="BOOL" Usage="" Global="TRUE" Comment="Включение звуковой сигнализации ПС" />
+        <Signal Name="NO_sound_TS" UUID="078DBA7048D91B376B42F983276FBDCF" Type="BOOL" Usage="" Global="TRUE" Comment="Заглушка для технологических сообщений" />
+        <Signal Name="Firstscan" UUID="C801B0FB481D789D6662679FA099BB23" Type="BOOL" InitialValue="TRUE" Usage="" />
+        <Signal Name="cycleTime" UUID="D9411CEF4F806ABA03C133AA005C367F" Type="LREAL" Usage="" />
+        <Signal Name="cycleTime_dur" UUID="1EF38BD74BE71018118CDA8A8BC76A6E" Type="LREAL" Usage="" />
+        <Signal Name="cycleTime_AI_sys" UUID="AF40336346FC23FE3C418C97F93619D1" Type="LREAL" Usage="" />
+        <Signal Name="KTO_AI_DRV" UUID="1992475442BA350E9C24CBA4A2887CA0" Type="37FF3ECA42D479BD2302648F8F459118" Usage="" Global="TRUE" Comment="Аналоговые входы. Драйвер" />
+        <Signal Name="KTO_AI_HMI" UUID="C1A047ED4E867233E37F5182C6033A08" Type="650D476341710DD510E73DBF0399D983" Usage="" Global="TRUE" Comment="Аналоговые входы. Логика" />
+    </InterfaceList>
+</SubAppType>

@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Program >
+<Program UUID="5353B0804199BA26822267BA0FEEACE4" Name="MAIN_LOGIC_A1" Period="100" PutDataAtEndOfCycle="false">
+    <Variables>
+        <Variable UUID="2CD442DC44E6D41C4E1C1E988DCAE1B6" Name="clock_AI_cur" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="internal" />
+        <Variable UUID="E91704674A78E5EBC21F9DB02B75F5BD" Name="clock_AI_prev" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="internal" />
+        <Variable UUID="38E265C8429B5C32B91F0EACC7C676B6" Name="FScan" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Usage="internal" />
+        <Variable UUID="9CC40BC3441B9D009DDBB28B3BD8CB79" Name="DTC_start" Type="calc_dt" TypeUUID="E1A64949466CCCA81E37988A136D23C2" Usage="internal" />
+        <Variable UUID="848727164D99BA6D8D7A63B81D13EB03" Name="DTC_duration" Type="calc_dt" TypeUUID="E1A64949466CCCA81E37988A136D23C2" Usage="internal" />
+        <Variable UUID="1840F38C40FA6ACBDA5AE895D8169980" Name="proc_AI" Type="FB_AI" TypeUUID="8E13A588443D3D3C4FFE289D06A77D54" Usage="internal" />
+    </Variables>
+    <ST><![CDATA[//Использование C-библиотеки (время цикла и таймер 1с)
+clock_AI_cur := CLOCK();
+IF Firstscan THEN
+	clock_AI_prev := clock_AI_cur;
+END_IF;
+cycleTime := clock_AI_cur - clock_AI_prev;
+clock_AI_prev := clock_AI_cur;
+
+//Фиксируем нажатие кнопки Квитирование на щите САУ
+//rtrig_Kvitir(CLK:= KC1_STU3_DI_HMI.A2_9_5_ACK_SOUND.PV, Q => Kvitir);
+//Фиксируем нажатие кнопки Сброс аварийной остановки на щите САУ
+//rtrig_Kvitir(CLK:= KC1_STU3_DI_HMI.A2_9_6_RST_AO.PV, Q => Reset_AO);
+
+//Фиксируем нажатие кнопки Деблокировка из разных источников
+//rtrig_Deblock(CLK:= Deblock_PRU or Deblock_HMI, Q => Deblock);
+
+proc_AI();
+//proc_DI();
+
+//proc_ALG();
+//proc_VLV();
+
+//proc_DO();
+//proc_AO();
+//proc_APS();
+
+if DO_sound_PS then
+//	KC1_STU3_DO_HMI.A3_7_11_SOUND_ALARM1_ON.PV := true; //Включить предупредительную сигнализацию на щите САУ УПГСН
+else
+//	KC1_STU3_DO_HMI.A3_7_11_SOUND_ALARM1_ON.PV := false;
+end_if;
+
+if DO_sound_AS then
+//	KC1_STU3_DO_HMI.A3_7_12_SOUND_ALARM2_ON.PV := true; //Включить аварийную сигнализацию на щите САУ УПГСН
+else
+//	KC1_STU3_DO_HMI.A3_7_12_SOUND_ALARM2_ON.PV := false;
+end_if;
+
+//Сброс кнопок Деблокировка и Квитирование
+Deblock := BOOL#0;
+Kvitir := BOOL#0;
+
+IF Firstscan THEN Firstscan := BOOL#0; FScan := BYTE#0; END_IF;
+clock_AI_cur := CLOCK();
+cycleTime_AI_sys := clock_AI_cur - clock_AI_prev;]]></ST>
+    <DataTypes>
+        <Struct UUID="7CA6481542686C322937F59C357A4087" Name="AI_Config">
+            <Field UUID="4517D8014BA5F1A31DC490A2FCD8E76C" Name="Span" Comment="диапазон датчика в EU" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="625B09604DB57060C6C6D9827263FB2B" Name="Offset" Comment="смещение датчика в EU" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="E8C5F5114E8FDA42A3894991253BBACF" Name="gain" Comment="диапазон калибровки канала" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="E3A7F5EE4A6A89CBB7AB0EA58E189C69" Name="bias" Comment="смещение калибровки канала" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="8FDDC5F142B3E3FD3E64F296CC14CF38" Name="ROC" Comment="скорость изменения сигнала" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="DAE597984FC2AFA050E92B89986AE362" Name="Tf" Comment="постоянная фильтра &gt; 0.001" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="DAE8C99E4AC2A2FFD926D99C5A1C4101" Name="Manual_Target" Comment="задание для выхода блока в ручном режиме" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="1C0121064E4AD06F66B3878676614D38" Name="Manual_Rate" Comment="скорость изменения выхода блока в ручном режиме" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="8392C9FF4B63129DB1C5A5A5BF293B29" Name="min_fault_sensor_Eu" Comment="если сигнал с датчика Status.Input_sensor_eu меньше этого значения, то отказ канала [5]" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="0B3A58DE4B6F9A69D574C1A5202FA3D9" Name="max_fault_sensor_Eu" Comment="если сигнал с датчика Status.Input_sensor_eu больше этого значения, то отказ канала [7]" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="1568C2D746CAB3E44D7DD794373B2957" Name="recovery_time" Comment="время восстановления канала после исчезновения неисправности" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="DFEE44C24DDA9848DAE5728113B9F98E" Name="repair_time" Comment="время через которое канал будет автоматически выведен из ручного режима" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="A875986F466C964AEDE6E09BAC1A420F" Name="min_ADC" Comment="минимальное значение в единицах АЦП для обрабатываемого канала" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="EEEBBC024094CD578E5CC690A42B31BA" Name="max_ADC" Comment="максимальное значение в единицах АЦП для обрабатываемого канала" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="DD0C2FD94FDC5B075E8EF3B0976396FA" Name="Eu_sensor" Comment="номер единицы измерения датчика из initEU" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="FE78DF8A49E2C0290692989A746BB472" Name="Eu_PV" Comment="номер единицы измерения параметра из initEU" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="D14C10A6499566BA5E16118672FFEB92" Name="Eu_user" Comment="номер единицы измерения пользовательского параметра из initEU" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="D512793C40FE66F0B75F7385CA7266F9" Name="TypePolynom" Comment="тип полинома при обработке датчика температуры" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="FBCDD0414B10DB6493C7C8B6EDD7A350" Name="Manual_Enable" Comment="разрешение работы блока в ручном режиме" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="D218EFEB43A6B44F29A49093FD91251D" Name="Manual_Auto" Comment="команда перевода блока в ручной режим" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="ED41C85B410EF42D53B165A3F5065F93" Name="derivative_Enable" Comment="включение вычисления производной по 12-ти точкам" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="FA5F1E584485BFA64539D184086F7725" Name="ROC_Enable" Comment="включить контроль за максимальным и минимальным значениями ROC" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="8962095743492D1AA5ED9D8540DAE4AA" Name="reset" Comment="команда сброса блока" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="F179480A40ED28CE5CA45E92B3EEB8CD" Name="Dummy" Comment="резерв" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+        </Struct>
+        <Struct UUID="D470A5B742D14842108CABB1BF972AA4" Name="AI_Dbg">
+            <Field UUID="822FEFA14B48E2A770D14CBD34A10B69" Name="rev" Comment="дата разработки ревизии блока (число, месяц, год)" Type="DWORD" TypeUUID="53CAB7E947643F098D755BB9A02688FA" />
+            <Field UUID="71C2F45A4D402F4D0FF69FA766FDF8F5" Name="vData" Comment="EU -&gt; 0..1" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="60F61306485F85381318F39EBF53829C" Name="PrevSpan" Comment="pAI.Config.Span на предыдущем цикле" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="A2907BDE48E1318096C5CFB3C5C09B42" Name="PrevOffset" Comment="pAI.Config.Offset на предыдущем цикле" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="181ADBB442E788AF2FB4B78D1C5E65F7" Name="Gain_user" Comment="gain_user для вычисления PV_user" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="1C52F9D24DD2BEFA1A95C7B858900E6B" Name="Bias_user" Comment="bias_user для вычисления PV_user" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="432CB21E49AD1501D72CE0980A7DE140" Name="Reset_time_delay" Comment="время, оставшееся до восстановления канала после ухода отказа" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="D6A533284EAC0A7242D2839B0F19FB77" Name="valueReal" Comment="буфер для Status.Input_sensor_eu, используется для ROC" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Size="4" Array="TRUE" />
+            <Field UUID="CAB98A81424C8807ADF4EEBDB9383DF3" Name="valueFilt" Comment="буфер для фильтр значений отображенных на 0..1, 12=Status.pid" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Size="13" Array="TRUE" />
+            <Field UUID="3582F6594775E1865F09C0873064E1D8" Name="remaining_repain_time" Comment="тоже, что Status.remaining_repair_time, но = Config.repair_time при норм работе" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="0D0C16C242AD7F128F75269F9CA5A24F" Name="Manual_Rate" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="61623D914440D27D1EF888B1287A72AF" Name="Manual_Target" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="A505C15042B28798A999A9BECB71D669" Name="PrevTypePolynom" Comment="pAI.Config.TypePolynom на предыдущем цикле" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="31868FF34C857A6C116855992391F194" Name="Eu_sensor" Comment="pAI.Config.Eu_sensor на предыдущем цикле" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="85DAFB944821BD7AFB02DEB8E75292D5" Name="Eu_PV" Comment="pAI.Config.EU_PV на предыдущем цикле" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="724505764CC94736CC58F99A3FBF7604" Name="Eu_user" Comment="pAI.Config.EU_user на предыдущем цикле" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="4B84FCA94175AD0A050DCB99EE1DB029" Name="ROC_Enable" Comment="pAI.Config.ROC_Enable на предыдущем цикле" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="E07EC107421E6F67D91AAB98ADFA3AEE" Name="PrevManual" Comment="значение Manual на предыдущем цикле" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="DF257C1B462BDED976767283D26EFBAD" Name="Manual" Comment="временная переменная для Config.Manual_Auto" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="1BE9B69C4235DB8F7EA3D8B1C3161674" Name="fault_code_0" Comment="fault_code[0] на предыдущем цикле" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="331BCB524DCDAB04DD3E44B698A9DDCC" Name="derivative_Enable" Comment="Config.derivative_Enable на предыдущем цикле" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="ECA59B6947B07BFF5AEEBE8C8F3C8C39" Name="Dummy" Comment="резерв" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Size="3" Array="TRUE" />
+        </Struct>
+        <Struct UUID="A66BBC2040DE5F1DB91157BC6ACE32E7" Name="AI_HMI">
+            <Field UUID="08408FC645AB0FD2EA062CA5D201143C" Name="PV" Comment="Текущее значение" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" />
+            <Field UUID="520A5B304B131668EFB5D8B05CAAE18A" Name="PV_HMI" Comment="Текущее значение (SCADA, разные единицы измерения)" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" />
+            <Field UUID="9504C96D4FF272FD3F031F9B595BB439" Name="Obriv" Comment="Обрыв" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="856E277D4984F981C300F2B85B6B114E" Name="KZ" Comment="КЗ" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="0909CC6041726C87D90F43B5E85064CA" Name="Flt" Comment="Обобщенная неисправность" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="192AF1D84663C4B865D35AB5CC916218" Name="Manual" Comment="Ручное задание значения" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="7881E1C4450F4EB60D803CA5939E5F76" Name="Sim" Comment="Симуляция (1-руч , 0 - автомат)" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="F54C3A9E4EE2E38B407064BF86BC50BA" Name="Ust" Comment="Уставки" Type="AI_Ust" TypeUUID="CFCC3D61488D38C691B05DB3D2656918" />
+            <Field UUID="0ABB4F4D43F72A156DDC4695BA1C01CD" Name="Eu" Comment="Единицы измерения датчика (SCADA)" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="4A2B83C3465B741587AB8FA7DAC3A48C" Name="TM_Repair" Comment="Время ремонта (уставка)" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="9ACC541441A99C61C2316F8D98AB14D6" Name="TM_Repair_Back" Comment="Время до вывода из земонта (из С блока)" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="D56C399B482DA0C140C648AE1AF2E014" Name="ROC" Comment="Ошибка скорости нарастания" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="AF975E00464CA514BD5B598EDE3334CC" Name="Eu_PV" Comment="Единицы измерения датчика (Логика)" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="BC059D594E6CC59183062CBE8FE77DEE" Name="Max" Comment="Максимум диапазона измерения (Eu_PV)" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" />
+            <Field UUID="F1B1E57C4C536A8265FC0EA0F87DCC5F" Name="Min" Comment="Минимум диапазона измерения (Eu_PV)" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" />
+            <Field UUID="800764C84F392AD033B5FB867F0EB798" Name="Sensor_Click" Comment="Переход в таблицу сигналов при нажатии на сенсор" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="00EC37E34138F5D059BB8593AEA8FF01" Name="AS" Comment="Превышение аварийной уставки" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="286C6E7940BC6CFD1C6045BB77A838E9" Name="PS" Comment="Превышение предупредительной" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="11BE776C4EB8683E54CDD492708070DA" Name="Descr" Comment="Название сигнала" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" />
+            <Field UUID="44C9D9654D7EA62C1439DE8843072B58" Name="Prec" Comment="Количество точек после запятой" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" />
+            <Field UUID="2C48C1EF44E3D8AE340BBE811253E528" Name="Nedost" Comment="Бит достоверности сигнала" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+        </Struct>
+        <Struct UUID="6447E93C4B000B40B71B3AAF72BBD7E8" Name="AI_Oper">
+            <Field UUID="60B72BF545F4AE46D70897A35B8CBEE1" Name="In" Comment="входной сигнал" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="6680870F41E57E1CD12DE7BD939D5023" Name="PV_calc_eu" Comment="сигнал с датчика, преобразованный к единицам Config.Eu_PV" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="7A87352B49C8CB38C656E1A1CFA4E6B0" Name="PV_sensor_eu" Comment="сигнал с датчика в инженерных единицах датчика Config.Eu_sensor" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="6D15E55E46CC5037C519119244707FAC" Name="PV_calc_SIdU" Comment="сигнал с датчика, преобразованный к единицам СИ" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="9D4B46F5447EC3EDC8E93796EA46C83B" Name="PV_user" Comment="сигнал с датчика, преобразованный к единицам Config.Eu_user" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="ABDC2E134E9C00A6130C79956556F230" Name="Input_sensor_eu" Comment="сигнал с датчика в единицах датчика (для термометра будут Ом-ы)" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="A70F51954A5EC3620F5CE89B65BC6521" Name="pid" Comment="фильтрованное значение входного сигнала в диапазоне 0..1" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="2BEE6DB44C971279794FC7A860DE1E8D" Name="Span" Comment="диапазон для вычисления параметра Status.PV_calc_eu" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="739714974BF6C5D05FF06D9ADC6A9B34" Name="Offset" Comment="смещение для вычисления параметра Status.PV_calc_eu" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="7F9A64E942E9C3230B7D77B02AE9B088" Name="Span_SIdU" Comment="диапазон датчика в единицах СИ" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="F2BAB0B14BE0511E727E1C94143EC2B4" Name="Offset_SIdU" Comment="смещение датчика в единицах СИ" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="00FE3B0F4496D33E61F986BF56927A13" Name="ROC_max" Comment="максимальное значение ROC, если ROC_enable = 1" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="8A14BDC34EB871AFF63759AA38809FB0" Name="ROC_min" Comment="минимальное значение ROC, если ROC_enable = 1" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="0F9230254ABFB33678C3908A2E5EEEDB" Name="derivative" Comment="производная по 12-ти точкам в диапазоне 0..1" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="D667A86941F501C69C684BB68D9923A5" Name="derivative_eu" Comment="derivative * Status.Span" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="65B9EDBD4C9234D7E11C3B9ABFD8F320" Name="remaining_repair_time" Comment="время, оставшееся до перевода канала в автомат" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="F548944D4A7DC828DEA66BA8786ED508" Name="fault_code" Comment="коды отказов канала" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Size="32" Array="TRUE" />
+        </Struct>
+        <Struct UUID="CFCC3D61488D38C691B05DB3D2656918" Name="AI_Ust">
+            <Field UUID="3E21C31046E4A64176F24097E929F4FC" Name="AS_H" Comment="Верхняя аварийная уставка" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="99315D5443AC05C71740429116449777" Name="PS_H" Comment="Верхняя предупредительная уставка" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="851DB9614F63C10AF7A77586E05F4FC3" Name="AS_L" Comment="Нижняя аварийная уставка" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="4C682418472830EDFCBCE489F44AE048" Name="PS_L" Comment="Нижняя предупредительная уставка" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="F1592C324046059BC3F1AB9F714A86EB" Name="AS_H_ctrl" Comment="1 - включить АС (верх), 0 - откл" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="065865884A270BA9D95DFABD6D83CB1E" Name="PS_H_ctrl" Comment="1 - включить ПС (верх), 0 - откл" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="B5F6553C48496B2A255389B63119C675" Name="AS_L_ctrl" Comment="1 - включить АС (низ), 0 - откл" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="824899DA41C976FD44416092993BEBCD" Name="PS_L_ctrl" Comment="1 - включить ПС (низ), 0 - откл" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+        </Struct>
+        <Struct UUID="A32E304D43358DC1574ABBA8FDAFBC2D" Name="support_AI">
+            <Field UUID="98292A4244CEC586AB0D90A88781030F" Name="Oper" Comment="Вычисленные переменные" Type="AI_Oper" TypeUUID="6447E93C4B000B40B71B3AAF72BBD7E8" />
+            <Field UUID="69B5262E44356F990EAB9A80D859EFD7" Name="Config" Comment="Конфигурационные параметры" Type="AI_Config" TypeUUID="7CA6481542686C322937F59C357A4087" />
+            <Field UUID="BE0ABC8948C2FE38AC542A8F92BFFD11" Name="Debug" Comment="Отладочные переменные" Type="AI_Dbg" TypeUUID="D470A5B742D14842108CABB1BF972AA4" />
+        </Struct>
+    </DataTypes>
+    <FBLibrary>
+        <FunctionBlock UUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Name="AI_Proc_Mal">
+            <Variables>
+                <Variable UUID="CB2A7B4A4C204B90164842A18335F3D0" Name="SEN_AI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="inout" />
+                <Variable UUID="4CB9B2A84D0F937D88923D9905B9BB10" Name="AI_raw" Type="UINT" TypeUUID="C50B45D04CDCD1FA8859FAB8CB6FC7EE" Usage="input" />
+                <Variable UUID="0ABAF0FA4FE01DB8D3ACB891A69785B0" Name="cycleTime" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="CBCA772747FDCE2374A7AABB441CE4A1" Name="AI_HMI_str" Type="AI_HMI" TypeUUID="A66BBC2040DE5F1DB91157BC6ACE32E7" Usage="inout" />
+                <Variable UUID="429D84EC498F139E0A9871B89A5FDCF3" Name="AI_C_BLK" Type="proc_AI" TypeUUID="E0D63CC74D1606235F84069D885963D7" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[//Конфигурация. Изменения со СКАДЫ (не используется!!!!!!!!!!!!!!)
+
+(*SEN_AI.Config.Span := AI_HMI_str.Cfg_Span;
+SEN_AI.Config.Offset := AI_HMI_str.Cfg_Offset;
+SEN_AI.Config.min_fault_sensor_Eu := SEN_AI.Config.Offset-SEN_AI.Config.Span*LREAL#0.03125;
+SEN_AI.Config.max_fault_sensor_Eu := SEN_AI.Config.Span+SEN_AI.Config.Offset+SEN_AI.Config.Span*LREAL#0.012;
+SEN_AI.Config.repair_time := AI_HMI_str.Cfg_repair_time;
+SEN_AI.Config.min_ADC := AI_HMI_str.Cfg_min_ADC;
+SEN_AI.Config.max_ADC := AI_HMI_str.Cfg_max_ADC;
+SEN_AI.Config.ROC := AI_HMI_str.Cfg_ROC;*)
+
+//-----------------------------------------------------------------//
+// Запись сырого значения в структуру
+SEN_AI.Oper.In := UINT_TO_LREAL(AI_raw);
+
+// Запись в структуру признака ремонта канала
+SEN_AI.Config.Manual_Auto.0 := AI_HMI_str.Sim;
+
+// Запись в структуру задания канала в ручном режиме
+SEN_AI.Config.Manual_Target := AI_HMI_str.Manual;
+
+// Запись значения Eu_user в структуру
+SEN_AI.Config.Eu_user := AI_HMI_str.Eu;
+
+// Запись значения ROC в структуру
+SEN_AI.Config.ROC := AI_HMI_str.ROC;
+
+// Запись значения времени ремонта в структуру
+SEN_AI.Config.repair_time := AI_HMI_str.TM_Repair;
+//-----------------------------------------------------------------//
+
+
+//-----------------------------------------------------------------//
+// Вызов C-блока
+AI_C_BLK(SEN_AI, cycleTime);
+
+// Если блок вернул канал в автомат
+AI_HMI_str.Sim := SEN_AI.Config.Manual_Auto.0;
+
+// Обработанное значение для логики
+AI_HMI_str.PV := LREAL_TO_REAL(SEN_AI.Oper.PV_calc_eu);
+
+// Обработанное значение для SCADA (Eu_user)
+AI_HMI_str.PV_HMI := LREAL_TO_REAL(SEN_AI.Oper.PV_user);
+
+IF NOT IMIT THEN
+// Ошибка канала (обобщённая)
+AI_HMI_str.Flt := SEN_AI.Oper.fault_code[00].0;
+
+// Ошибка канала (КЗ)
+AI_HMI_str.KZ := SEN_AI.Oper.fault_code[04].0;
+
+// Ошибка канала (Обрыв)
+AI_HMI_str.Obriv := SEN_AI.Oper.fault_code[05].0;
+
+ELSE
+AI_HMI_str.Flt 		:= FALSE;
+AI_HMI_str.KZ 		:= FALSE;
+AI_HMI_str.Obriv 	:= FALSE;
+END_IF;
+
+
+// Время, оставшееся до перевода канала в автомат
+AI_HMI_str.TM_Repair_Back := SEN_AI.Oper.remaining_repair_time;
+
+// Безударный переход Работа - ремонт
+AI_HMI_str.Manual := SEN_AI.Config.Manual_Target;
+
+// Единицы измерения для логики Eu_PV
+AI_HMI_str.Eu_PV := SEN_AI.Config.Eu_PV;
+
+// AS PS
+AI_HMI_str.AS := (SEN_AI.Oper.PV_calc_eu >= AI_HMI_str.Ust.AS_H AND AI_HMI_str.Ust.AS_H_ctrl) OR (SEN_AI.Oper.PV_calc_eu <= AI_HMI_str.Ust.AS_L AND AI_HMI_str.Ust.AS_L_ctrl);
+AI_HMI_str.PS := (SEN_AI.Oper.PV_calc_eu >= AI_HMI_str.Ust.PS_H AND AI_HMI_str.Ust.PS_H_ctrl) OR (SEN_AI.Oper.PV_calc_eu <= AI_HMI_str.Ust.PS_L AND AI_HMI_str.Ust.PS_L_ctrl);]]></ST>
+        </FunctionBlock>
+        <Function UUID="8D15F57049F5028192F2088F3E72CEF6" Name="AI_init" ResultTypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D">
+            <Variables>
+                <Variable UUID="CC94540247523423E3460AB137780F9C" Name="Span" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="58B18438491EDC36229D6D88D269FA99" Name="Offset" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="22E4891641AECA58CF714D89CA6D0C77" Name="Tf" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="00846179436EC25E98CA879644FC0731" Name="repair_time" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="2055DDD5435182E309081FA6A061CECF" Name="min_ADC" Type="DINT" TypeUUID="AF9665534C6D5BDEF9AE77B026938B65" Usage="input" />
+                <Variable UUID="91DB535A4BA9A454B6863C988A5C4DD4" Name="max_ADC" Type="DINT" TypeUUID="AF9665534C6D5BDEF9AE77B026938B65" Usage="input" />
+                <Variable UUID="A13B68614D59FF3AF0E6C8A761E11F7B" Name="Eu_sensor" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" Usage="input" />
+                <Variable UUID="E087522A4909BD7C48B172AAA8B8B9A1" Name="Eu_PV" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" Usage="input" />
+                <Variable UUID="87E4772D45FC9CEAD17A5FAD205247E6" Name="Eu_user" Type="INT" TypeUUID="47B58C4E4726C8B230965EBE77F1169E" Usage="input" />
+                <Variable UUID="CF2C2E39497E9CD0D29EF8AB802E44AE" Name="Manual_Enable" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Usage="input" />
+                <Variable UUID="3D43BBF34F3DA111E5AFB18F1F9A49D4" Name="Manual_Auto" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Usage="input" />
+                <Variable UUID="46E9F64E489A651A13F21297DE53702A" Name="Manual_Target" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="9CCFA974419BEA72636DCE9DEC768273" Name="HMI_INIT" Type="AI_HMI" TypeUUID="A66BBC2040DE5F1DB91157BC6ACE32E7" Usage="inout" />
+                <Variable UUID="AB367F4B47FD3A1C43CDAF9E6C9AC8EB" Name="ROC" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="439EEEA4444A700DD2AE198A0BDFD689" Name="Descr" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" InitialValue="&apos;FALSE&apos;" Usage="input" />
+            </Variables>
+            <ST><![CDATA[AI_init.Config.Span:=Span;
+AI_init.Config.Offset:=Offset;
+AI_init.Config.gain := LREAL#0.0;
+AI_init.Config.bias := LREAL#0.0;
+AI_init.Config.ROC := ROC;	//Скорость нарастания сигнала
+AI_init.Config.Tf:=Tf;
+AI_init.Config.Manual_Target := Manual_Target;
+AI_init.Config.Manual_Rate := Span/LREAL#20;
+AI_init.Config.min_fault_sensor_Eu := Offset-Span*LREAL#0.025;
+AI_init.Config.max_fault_sensor_Eu := Span+Offset+Span*LREAL#0.012;
+AI_init.Config.recovery_time := LREAL#0.5;
+AI_init.Config.repair_time := repair_time;
+AI_init.Config.min_ADC := DINT_TO_LREAL(min_ADC);
+AI_init.Config.max_ADC := DINT_TO_LREAL(max_ADC);
+AI_init.Config.Eu_sensor := Eu_sensor;
+AI_init.Config.Eu_PV := Eu_PV;
+AI_init.Config.Eu_user := Eu_user;
+AI_init.Config.TypePolynom := INT#0;
+AI_init.Config.Manual_Enable := Manual_Enable;
+AI_init.Config.Manual_Auto := Manual_Auto;
+AI_init.Config.derivative_Enable := BYTE#0;
+AI_init.Config.ROC_Enable := BYTE#0;
+AI_init.Config.reset := BYTE#0;
+
+HMI_INIT.Eu 		:= Eu_user;							//Eu  для SCADA
+HMI_INIT.TM_Repair 	:= repair_time;						//Время вывода из ремонта
+HMI_INIT.ROC 		:= ROC;								//Ошибка скорости измерения сигнала
+HMI_INIT.Max 		:= LREAL_TO_REAL(Offset + Span);	//Максимум диапазона
+HMI_INIT.Min 		:= LREAL_TO_REAL(Offset);			//Минимум диапазона
+HMI_INIT.Descr		:= Descr;							//Название сигнала (Комментарий)]]></ST>
+        </Function>
+        <FunctionBlock UUID="8E13A588443D3D3C4FFE289D06A77D54" Name="FB_AI">
+            <Variables>
+                <Variable UUID="79001CB94B0112011DA9B7814602A444" Name="SEN_A1_3_1_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="CBE6F41A4846EC5CAC9604A233C3E72F" Name="SEN_A1_3_2_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="2374D06643E7130048E89BB08D78B1B3" Name="SEN_A1_3_3_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="9F45A24E4791D16E3863A98C32E69D12" Name="SEN_A1_3_4_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="9EB807F3435C4DEAC70BF3A2CE0BA927" Name="SEN_A1_4_1_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="A20C383240B875605583D8BFF2F842F2" Name="SEN_A1_4_2_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="3F1905764052FEC2A5BCF3B43C727533" Name="SEN_A1_4_3_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="F0B1ACE04D690AD01BD230896D8A740A" Name="SEN_A1_4_4_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="43AF86624184F5B7A92C8184A910D52D" Name="SEN_A1_5_1_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="A3C264CD4E1C31C0B4D11F91FCA8E22A" Name="SEN_A1_5_2_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="F229EEA64D7E8A5B81C6F292FB58FDE3" Name="SEN_A1_5_3_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="E8CC48EA4775D9E22A61B8B81406E7A6" Name="SEN_A1_5_4_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="DE63165048CBFECCD92D69B81A7593DF" Name="SEN_A1_6_1_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="54BE01D24A2BE6DB6AA3EDBFEECE1A4A" Name="SEN_A1_6_2_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="E5E1E85248F6A7466A9BC7897516EBFE" Name="SEN_A1_6_3_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="3D4785E844701E1820D834A19B367015" Name="SEN_A1_6_4_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="5268221B4494FBD361E2CB8D501C6A53" Name="SEN_A1_7_1_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="FA6F9C614A2D7477C8F5A4BF96E6DC17" Name="SEN_A1_7_2_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="99C6496B40AA33548F9F93A6AA8700CD" Name="SEN_A1_7_3_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="43417F00468E7C020CCC18A20C84AF26" Name="SEN_A1_7_4_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="7F4EAE4B44BC15697FAB98AC40DC9FED" Name="SEN_A1_8_1_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="30F09E7645362C6F807C8D8A9F0D57C1" Name="SEN_A1_8_2_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="AC46011242E5CA7EB212B0915B8B2E2C" Name="SEN_A1_8_3_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="CAA0A5944CB527AF3693ADB9F900B87D" Name="SEN_A1_8_4_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="7019BD0D446447F7BD913D85107FCE98" Name="SEN_A1_9_1_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="37FA7AEC45F7ADE8A32D019E528BD7DC" Name="SEN_A1_9_2_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="2C3CF70B48D916A15EAA3BA1693291FE" Name="SEN_A1_9_3_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="DAD9F4F641D98E915DDDBDB0E29EC162" Name="SEN_A1_9_4_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="1D54B92A4BC11A587BAB0A90E9AE771E" Name="SEN_A1_10_1_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="493BA5544AA9076B29E954AB0622D0E9" Name="SEN_A1_10_2_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="883FB9C949C01C43265D179F20BD6F13" Name="SEN_A1_10_3_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="46A1D643439420515C798A9F7BF17E11" Name="SEN_A1_10_4_HMI" Type="support_AI" TypeUUID="A32E304D43358DC1574ABBA8FDAFBC2D" Usage="internal" />
+                <Variable UUID="723FC1A04BF1CF4A0EB60FB572DFBFF6" Name="AI_001" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="4E2BBCF2484D65757CEC1887BDEDABAF" Name="AI_002" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="A0B6F7204B100ACC941DCF8A1371DCD5" Name="AI_003" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="C58A6E0040DD9F63CC19B4B98359777E" Name="AI_004" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="5C327DA24BA1280A1BF01C8283E6B9BB" Name="AI_005" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="5E7E05CD4217D60E5354DFA7AD0F1A76" Name="AI_006" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="54CF31D44410AE1D976E9A9D1F232A79" Name="AI_007" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="95231ADB425A144A677918AB7B62CC63" Name="AI_008" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="AED4002749FAB259DE4845A16278F799" Name="AI_009" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="AB5D77CA410EBB49173A42B5138A43A1" Name="AI_010" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="D86FD1CA4BA12B60FBECC8AA85D40800" Name="AI_011" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="D2F8F57B46E79C01C94CA693FEF9F902" Name="AI_012" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="2147B30342EA87D74C96F098D805D48A" Name="AI_013" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="DC8DDF6146B6C436E82FB18E8F75915C" Name="AI_014" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="B1C3A4564A71365340B418AAE76E4A58" Name="AI_015" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="EC8ACA8B4CFB92DC791CF7A6FD1180DA" Name="AI_016" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="3B7095654E72E535E397AB85211E9D3E" Name="AI_017" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="13487EF34FC26361666CECAC696B3E9E" Name="AI_018" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="E239E20E47AEB932A74F369AD2474763" Name="AI_019" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="6D174D1A4ADCFC48BDA192B3D2D930FB" Name="AI_020" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="E8D1D28DA040469E876C5EAAD9E9F91C" Name="AI_021" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="AFE1077803F0461FAB312C61BD12AFC5" Name="AI_022" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="5493A7437F774466AA732E4A7F21FF7D" Name="AI_023" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="030D3F705AE3433CB961F772D2EC8F07" Name="AI_024" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="A3E0B50F9103479084D85F06BFD4A2E1" Name="AI_025" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="868C99E5490F44F88AF704D3BFB2C53E" Name="AI_026" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="E15AFF1F96D544E19E50A372151383C9" Name="AI_027" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="3DBDBC3A53B04AAD87F9AF7A350B3720" Name="AI_028" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="240CF0B3498A4EDE8C8137092DA37E62" Name="AI_029" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="460C00D3B01C471AB6A4DFE07CEAE610" Name="AI_030" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="AB28D175DD56447AA5EBBC5F3B373AB2" Name="AI_031" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+                <Variable UUID="E598C4BE771D48E48B33675B8BDF9F9B" Name="AI_032" Type="AI_Proc_Mal" TypeUUID="F185FE7C49EE1A6AF29879ABE1E5FF85" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[
+
+//---------------Таблица измерений------------//
+(*
+Единицы измерения давления
+1 – кПа (абс) 										1
+2 - стандартные атмосферы (Ата) 					101.325
+3 - технические атмосферы (Ата) 					98.0665
+4 - бары (10^5 Па) 									100
+5 - дюймы водяного столба (249,089 Па) 				0.24908891
+6 - кг/см^2 (абс) 									98.0665
+7 – мбар (абс) 										0.1
+8 - мм водяного столба 								0.00980665
+9 - Па [Н/м2] (абс) 								0.001
+10 - фунт/кв. дюйм (абс.)(6,89476 кПа) (PSI) 		6.894757
+11 - бары (изб.) 									100
+12 - кг/см2 (изб.) 									98.0665
+13 - кПа (изб.) 									1
+14 - фунт/кв. дюйм (изб.)(6,89476 кПа) 				6.894757
+15 - МПа (изб.) 									1000
+16 - МПа (абс) 										1000
+17 - мбар (изб.) 									0.1
+18 - мм ртутного столба 							0.1333224
+19 - стандартные атм. (изб.) 						101.325
+20 - технические атм. (изб.) 						98.0665
+21 - Па [Н/м2] (изб) 								0.001
+
+Единицы измерения температуры
+22 - градус Кельвина. 								1
+23 - градус Цельсия. 								1
+24 - градус Фаренгейта. 							1.0/1.8
+
+Единицы измерения частоты
+43 - Гц 											1
+44 - об/мин 										1.0/60.0
+45 - кГц 											1000
+46 - радианы/с 										1.570796
+
+Единицы измерения мощности
+64 - кВт 											1
+65 - МВт 											1000
+66 - лошадиные силы. 								0.7457
+67 - Вт 											0.001
+
+Единицы измерения длины
+85 - Метр. 											1
+86 - километр 										1000
+87 - сантиметр 										0.01
+88 - миллиметр 										0.001
+89 - микрометр 										0.000001
+
+Единицы измерения объемного расхода
+106 - м^3/с (293.15К,101.325кПа) 					1
+107 - м^3/мин.(293.15К,101.325кПа) 					0.016666667
+108 - м^3/сутки(293.15К,101.325кПа) 				0.0000115741
+109 - м^3/час(293.15К,101.325кПа) 					0.000277778
+110 - нм^3/мин (293.15К,101.325кПа) 				0.016666667
+111 - нл/сут(293.15К,101.325кПа) 					0.0000000115741
+112 - нл/час(293.15К,101.325кПа) 					0.0000002777780
+113 - нм^3/час(293.15К,101.325кПа) 					0.000277778
+114 - нл/мин(293.15К,101.325кПа) 					0.0000166667
+
+Единицы измерения массового расхода
+127 - кг/с 											1
+128 - кг/мин 										0.016666667
+129 - кг/час 										0.000277778
+
+Единицы измерения силы тока
+148 - A 											1
+149 - кА 											1000
+150 - мA 											0.001
+151 - A_rms 										1.414214
+152 - kA_rms 										1414.214
+
+Единицы измерения разницы потенциала
+169 - В 											1
+170 - кВ 											1000
+171 - мВ 											0.001
+172 - V_rms 										1.414214
+173 - kV_rms 										1414.214
+
+Единицы измерения сопротивления проводника
+190 - Ом 											1
+191 - кОм 											1000
+192 - МОм 											1000000
+
+Единица отношений переменой к 100%
+211 - % процент 									1
+212 - Дробь (значение/100.0%) 						100
+
+Измерение углов
+232 - радиан 										1
+233 - градус 										0.017453293
+234 - минута 										0.000290888
+235 - секунда 										0.00000484814
+
+Измерение силы
+253-Н 												1
+
+Измерение скорости изменения длины
+274-м/с 											1
+275-мм/с 											0.001
+
+Измерение момента силы
+295-Н*м 											1
+
+Измерение объема
+316-м^3 											1
+317-л 												0.001
+
+Измерение плотности
+337-кг/м^3 											1
+
+Измерение времени
+358-секунда 										1
+359-минута 											60
+360-часы 											3600
+
+fault_code[0] – (обобщенный) - вход блока неисправен. Формируется при недостоверности входного параметра блока (один из отказов: [2], [4], [5], [6] или [7]). Выходное значение равно значению за два цикла до текущего. Если параметр Manual_Enable = 1,то производится автоматический перевод на ручной ввод значения переменной.
+fault_code[1] - неправильное преобразование единиц измерения датчика Eu_sensor в единицы измерения параметра Eu_PV (например из единиц измерения давления в температуру). При наличии несоответствия Eu_PV принимается таким же как и Eu_sensor.
+fault_code[2] - аппаратная неисправность входа. Участвует в формировании fault_code[0].
+fault_code[4] – значение сигнала на входе блока (в единицах измерения датчика) превысило значение параметра max_fault_sensor_Eu (значение сигнала за пределами диапазона измерения). Участвует в формировании fault_code[0].
+fault_code[5] - значение сигнала на входе блока (в единицах измерения датчика) меньше значения параметра min_fault_sensor_Eu (значение сигнала за пределами диапазона измерения). Участвует в формировании fault_code[0].
+fault_code[6] - скорость изменения сигнала на входе блока (в единицах измерения датчика) превышает максимально допустимое значение ( ROC ). Участвует в формировании fault_code[0].
+fault_code[7] – значение параметра min_fault_sensor_Eu больше или равно значения параметра
+*)
+
+//                          Диапазон изм., 
+//                          ||          	Ниж. граница диап., 
+//                          ||          	||         	0.1 -фильтр, 
+//                          ||          	||         	||         	Repair (время ремонта), 
+//                          ||          	||         	||         	||          Min АЦП,    Max АЦП, 
+//                          ||          	||         	||         	||          ||          ||          Eu_sensor (ед. изм. датчика), 
+//                          ||          	||         	||         	||          ||          ||          ||   		Eu_PV (физ. ед. изм. в логике), 
+//                          ||          	||         	||         	||          ||          ||          ||       	||       	Eu_user (доп. физ. ед. изм. для SCADA ), 
+//                          ||          	||         	||         	||          ||          ||          ||       	||       	||       	Вывод в ремонт при неисправности (BOOL#1)
+//						    ||          	||         	||     	   	||       	||          ||          ||       	||       	||       	||		//Перевод в ручное управление---------------------------
+//							||          	||         	||     	   	||       	||          ||          ||       	||       	||       	||		||		//Ручное задание значения
+//							||          	||         	||     	   	||       	||          ||          ||       	||       	||       	||		||		||													//Обрабатываемое значение
+//							||          	||         	||     	   	||       	||          ||          ||       	||       	||       	||		||		||													||
+//Инициализация				||          	||         	||     	   	||       	||          ||          ||       	||       	||       	||		||		||													||											//Скорость нарастания (ROC) (половина диапазона)
+IF FirstScan THEN	//		||				||			||			||			||			||			||			||			||			||		||		||													||											||			//Название сигнала																															
+SEN_A1_3_1_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#85, 	INT#85, 	INT#85, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_3_1_Uop.Manual,						KTO_AI_HMI.A1_3_1_Uop,						LREAL#200,	'Напряжение основного питания САУ ');
+SEN_A1_3_2_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#85, 	INT#85, 	INT#85, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_3_2_NC.Manual,						KTO_AI_HMI.A1_3_2_NC,						LREAL#200,	'Не подключен');
+SEN_A1_3_3_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#85, 	INT#85, 	INT#85, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_3_3_Lzag_CH4.Manual,					KTO_AI_HMI.A1_3_3_Lzag_CH4,					LREAL#200,	'Уровень загазованности по метану (QT1)');
+SEN_A1_3_4_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_3_4_rez.Manual,						KTO_AI_HMI.A1_3_4_rez,						LREAL#200,	'Резерв');
+SEN_A1_4_1_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_4_1_T_Burn_room.Manual,				KTO_AI_HMI.A1_4_1_T_Burn_room,				LREAL#200,	'Температура в камере сжигания TI0201 (TT1)');
+SEN_A1_4_2_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_4_2_T_Ign_room.Manual,				KTO_AI_HMI.A1_4_2_T_Ign_room,				LREAL#200,	'Температура в камере поджига TI0202 (TT2)');
+SEN_A1_4_3_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_4_3_T_tank_TK0201.Manual,				KTO_AI_HMI.A1_4_3_T_tank_TK0201,			LREAL#200,	'Температура в емкости TK-0201 (TT3)');
+SEN_A1_4_4_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_4_4_T1_dust_col.Manual,				KTO_AI_HMI.A1_4_4_T1_dust_col,				LREAL#200,	'Температура перед пылеуловителем TI0203 (TT4)');
+SEN_A1_5_1_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#15, 	INT#15, 	INT#15, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_5_1_T2_dust_col.Manual,				KTO_AI_HMI.A1_5_1_T2_dust_col,				LREAL#200,	'Температура после пылеуловителя TI0204 (TT5)');
+SEN_A1_5_2_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#85, 	INT#85, 	INT#85, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_5_2_T1_block.Manual,					KTO_AI_HMI.A1_5_2_T1_block,					LREAL#200,	'Температура в блоке (в помещении) (TT6)');
+SEN_A1_5_3_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#85, 	INT#85, 	INT#85, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_5_3_P_prim_Burn_room.Manual,			KTO_AI_HMI.A1_5_3_P_prim_Burn_room,			LREAL#200,	'Давление в основной камере сжигания PI0201(PT5)');
+SEN_A1_5_4_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#85, 	INT#85, 	INT#85, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_5_4_dP1_filt_V0208A.Manual,			KTO_AI_HMI.A1_5_4_dP1_filt_V0208A,			LREAL#200,	'Перепад давления на фильтре V-0208A (PdT1.2)');
+SEN_A1_6_1_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#85, 	INT#85, 	INT#85, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_6_1_dP1_filt_V0208A.Manual,			KTO_AI_HMI.A1_6_1_dP1_filt_V0208A,			LREAL#200,	'Перепад давления на фильтре V-0208B (PdT1.3)');
+SEN_A1_6_2_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#85, 	INT#85, 	INT#85, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_6_2_Pgaz1_burner_G1.Manual,			KTO_AI_HMI.A1_6_2_Pgaz1_burner_G1,			LREAL#200,	'Давление газа на горелку Г1 (PT1)');
+SEN_A1_6_3_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_6_3_Pgaz1_burner_G2.Manual,			KTO_AI_HMI.A1_6_3_Pgaz1_burner_G2,			LREAL#200,	'Давление газа на горелку Г2 (PT2)');
+SEN_A1_6_4_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_6_4_P2_pump_P0201A.Manual,			KTO_AI_HMI.A1_6_4_P2_pump_P0201A,			LREAL#200,	'Давление после насоса P-0201A (PT3)');
+SEN_A1_7_1_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_7_1_P2_pump_P0201B.Manual,			KTO_AI_HMI.A1_7_1_P2_pump_P0201B,			LREAL#200,	'Давление после насоса P-0201B (PT4)');
+SEN_A1_7_2_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_7_2_P2_regul_C0201.Manual,			KTO_AI_HMI.A1_7_2_P2_regul_C0201,			LREAL#200,	'Давление после регулятора C-0201 (PT6)');
+SEN_A1_7_3_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_7_3_Sen_flame_dtc_GU_main_BR.Manual,	KTO_AI_HMI.A1_7_3_Sen_flame_dtc_GU_main_BR,	LREAL#200,	'Датчик обнаружения пламени ГУ основной камеры сгорания (BI-0101A)');
+SEN_A1_7_4_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_7_4_Sen_flame_dtc_GU_secon_BR.Manual,	KTO_AI_HMI.A1_7_4_Sen_flame_dtc_GU_secon_BR,LREAL#200,	'Датчик обнаружения пламени ГУ вторичной камеры сгорания (BI-0101B)');
+SEN_A1_8_1_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_8_1_GRPSH_dP1_F1.Manual,				KTO_AI_HMI.A1_8_1_GRPSH_dP1_F1,				LREAL#200,	'ГРПШ.Перепад давления на Ф1 (PdT1.1)');
+SEN_A1_8_2_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_8_2_GRPSH_Q_GC1_1.Manual,				KTO_AI_HMI.A1_8_2_GRPSH_Q_GC1_1,			LREAL#200,	'ГРПШ.Расход на входе газа ГС1.1 (FE1.1)');
+SEN_A1_8_3_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_8_3_GRPSH_P_GC1_1.Manual,				KTO_AI_HMI.A1_8_3_GRPSH_P_GC1_1,			LREAL#200,	'ГРПШ.Давление на входе газа ГС1.1 (PT1.1)');
+SEN_A1_8_4_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_8_4_SV_pos.Manual,					KTO_AI_HMI.A1_8_4_SV_pos,					LREAL#200,	'Положение отсечного клапана (CV-0201)');
+SEN_A1_9_1_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#169, 	INT#169, 	INT#169, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_9_1_rez.Manual,						KTO_AI_HMI.A1_9_1_rez,						LREAL#200,	'Резерв');
+SEN_A1_9_2_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#169, 	INT#169, 	INT#169, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_9_2_rez.Manual,						KTO_AI_HMI.A1_9_2_rez,						LREAL#200,	'Резерв');
+SEN_A1_9_3_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_9_3_rez.Manual,						KTO_AI_HMI.A1_9_3_rez,						LREAL#200,	'Резерв');
+SEN_A1_9_4_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#150, 	INT#150, 	INT#150, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_9_4_SH_pos.Manual,					KTO_AI_HMI.A1_9_4_SH_pos,					LREAL#200,	'Положение затвора (CV-0101)');
+SEN_A1_10_1_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_10_1_L_hi_LT1.Manual,					KTO_AI_HMI.A1_10_1_L_hi_LT1,				LREAL#200,	'Верхний уровень в емкости TK-0201 (LT1)');
+SEN_A1_10_2_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_10_2_L_hi_LT2.Manual,					KTO_AI_HMI.A1_10_2_L_hi_LT2,				LREAL#200,	'Верхний уровень в емкости TK-0201 (LT2)');
+SEN_A1_10_3_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_10_3_rez.Manual,						KTO_AI_HMI.A1_10_3_rez,						LREAL#200,	'Резерв');
+SEN_A1_10_4_HMI	:=	AI_init(LREAL#100.0, 	LREAL#0.0, 	LREAL#0.1,	LREAL#160,	DINT#11937,	DINT#59550,	INT#23, 	INT#23,  	INT#23, 	BYTE#0,	BYTE#0,	KTO_AI_HMI.A1_10_4_rez.Manual,						KTO_AI_HMI.A1_10_4_rez,						LREAL#200,	'Резерв');
+END_IF;																
+
+																
+AI_001(SEN_A1_3_1_HMI,	KTO_AI_DRV.A1_3_1,	cycleTime,		KTO_AI_HMI.A1_3_1_Uop);
+AI_002(SEN_A1_3_2_HMI,	KTO_AI_DRV.A1_3_2,	cycleTime,		KTO_AI_HMI.A1_3_2_NC);
+AI_003(SEN_A1_3_3_HMI,	KTO_AI_DRV.A1_3_3,	cycleTime,		KTO_AI_HMI.A1_3_3_Lzag_CH4);
+AI_004(SEN_A1_3_4_HMI,	KTO_AI_DRV.A1_3_4,	cycleTime,		KTO_AI_HMI.A1_3_4_rez);
+AI_005(SEN_A1_4_1_HMI,	KTO_AI_DRV.A1_4_1,	cycleTime,		KTO_AI_HMI.A1_4_1_T_Burn_room);
+AI_006(SEN_A1_4_2_HMI,	KTO_AI_DRV.A1_4_2,	cycleTime,		KTO_AI_HMI.A1_4_2_T_Ign_room);
+AI_007(SEN_A1_4_3_HMI,	KTO_AI_DRV.A1_4_3,	cycleTime,		KTO_AI_HMI.A1_4_3_T_tank_TK0201);
+AI_008(SEN_A1_4_4_HMI,	KTO_AI_DRV.A1_4_4,	cycleTime,		KTO_AI_HMI.A1_4_4_T1_dust_col);
+AI_009(SEN_A1_5_1_HMI,	KTO_AI_DRV.A1_5_1,	cycleTime,		KTO_AI_HMI.A1_5_1_T2_dust_col);
+AI_010(SEN_A1_5_2_HMI,	KTO_AI_DRV.A1_5_2,	cycleTime,		KTO_AI_HMI.A1_5_2_T1_block);
+AI_011(SEN_A1_5_3_HMI,	KTO_AI_DRV.A1_5_3,	cycleTime,		KTO_AI_HMI.A1_5_3_P_prim_Burn_room);
+AI_012(SEN_A1_5_4_HMI,	KTO_AI_DRV.A1_5_4,	cycleTime,		KTO_AI_HMI.A1_5_4_dP1_filt_V0208A);
+AI_013(SEN_A1_6_1_HMI,	KTO_AI_DRV.A1_6_1,	cycleTime,		KTO_AI_HMI.A1_6_1_dP1_filt_V0208A);
+AI_014(SEN_A1_6_2_HMI,	KTO_AI_DRV.A1_6_2,	cycleTime,		KTO_AI_HMI.A1_6_2_Pgaz1_burner_G1);
+AI_015(SEN_A1_6_3_HMI,	KTO_AI_DRV.A1_6_3,	cycleTime,		KTO_AI_HMI.A1_6_3_Pgaz1_burner_G2);
+AI_016(SEN_A1_6_4_HMI,	KTO_AI_DRV.A1_6_4,	cycleTime,		KTO_AI_HMI.A1_6_4_P2_pump_P0201A);
+AI_017(SEN_A1_7_1_HMI,	KTO_AI_DRV.A1_7_1,	cycleTime,		KTO_AI_HMI.A1_7_1_P2_pump_P0201B);
+AI_018(SEN_A1_7_2_HMI,	KTO_AI_DRV.A1_7_2,	cycleTime,		KTO_AI_HMI.A1_7_2_P2_regul_C0201);
+AI_019(SEN_A1_7_3_HMI,	KTO_AI_DRV.A1_7_3,	cycleTime,		KTO_AI_HMI.A1_7_3_Sen_flame_dtc_GU_main_BR);
+AI_020(SEN_A1_7_4_HMI,	KTO_AI_DRV.A1_7_4,	cycleTime,		KTO_AI_HMI.A1_7_4_Sen_flame_dtc_GU_secon_BR);
+AI_021(SEN_A1_8_1_HMI,	KTO_AI_DRV.A1_8_1,	cycleTime,		KTO_AI_HMI.A1_8_1_GRPSH_dP1_F1);
+AI_022(SEN_A1_8_2_HMI,	KTO_AI_DRV.A1_8_2,	cycleTime,		KTO_AI_HMI.A1_8_2_GRPSH_Q_GC1_1);
+AI_023(SEN_A1_8_3_HMI,	KTO_AI_DRV.A1_8_3,	cycleTime,		KTO_AI_HMI.A1_8_3_GRPSH_P_GC1_1);
+AI_024(SEN_A1_8_4_HMI,	KTO_AI_DRV.A1_8_4,	cycleTime,		KTO_AI_HMI.A1_8_4_SV_pos);
+AI_025(SEN_A1_9_1_HMI,	KTO_AI_DRV.A1_9_1,	cycleTime,		KTO_AI_HMI.A1_9_1_rez);
+AI_026(SEN_A1_9_2_HMI,	KTO_AI_DRV.A1_9_2,	cycleTime,		KTO_AI_HMI.A1_9_2_rez);
+AI_027(SEN_A1_9_3_HMI,	KTO_AI_DRV.A1_9_3,	cycleTime,		KTO_AI_HMI.A1_9_3_rez);
+AI_028(SEN_A1_9_4_HMI,	KTO_AI_DRV.A1_9_4,	cycleTime,		KTO_AI_HMI.A1_9_4_SH_pos);
+AI_029(SEN_A1_10_1_HMI,	KTO_AI_DRV.A1_10_1,	cycleTime,		KTO_AI_HMI.A1_10_1_L_hi_LT1);
+AI_030(SEN_A1_10_2_HMI,	KTO_AI_DRV.A1_10_2,	cycleTime,		KTO_AI_HMI.A1_10_2_L_hi_LT2);
+AI_031(SEN_A1_10_3_HMI,	KTO_AI_DRV.A1_10_3,	cycleTime,		KTO_AI_HMI.A1_10_3_rez);
+AI_032(SEN_A1_10_4_HMI,	KTO_AI_DRV.A1_10_4,	cycleTime,		KTO_AI_HMI.A1_10_4_rez);
+
+]]></ST>
+        </FunctionBlock>
+    </FBLibrary>
+</Program>

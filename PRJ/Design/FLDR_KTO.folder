@@ -3,6 +3,9 @@
 <Folder Name="KTO">
     <Items>
         <Item Name="AT_DRV_A1.int" />
-        <Item Name="AT_DRV_A2.int" />	
+        <Item Name="AT_DRV_A2.int" />
+        <Item Name="AT_DRV_A3.int" />
+        <Item Name="AT_MAIN_LOGIC_A2.int" />
+        <Item Name="AT_MAIN_LOGIC_A1.int" />
     </Items>
 </Folder>

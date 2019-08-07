@@ -3,6 +3,10 @@
 *.doc
 *.xlsx
 *.old
+*.zip
 
 # ignore all files in the DOC/ directory
 DOC/
+
+# ignore all files in the IMPORT/ directory
+IMPORT/

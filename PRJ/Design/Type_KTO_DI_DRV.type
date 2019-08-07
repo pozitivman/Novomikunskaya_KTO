@@ -2,141 +2,141 @@
 <!DOCTYPE Type v. 1.0 >
 <Type Name="KTO_DI_DRV" Kind="Struct" UUID="D32C33364CE8C5E11D92228B89B4AAA0">
     <Fields>
-        <Field Name="A2_6_1" Type="BOOL" UUID="A89E81D749DCC06D218232B86425AE15" Comment="Подогреватель теплоносителя GB1.1 включен" />
-        <Field Name="A2_6_2" Type="BOOL" UUID="355BDC6C4AFA8682E4446DBE9128267B" Comment="Подогреватель теплоносителя GB1.2 включен" />
-        <Field Name="A2_6_3" Type="BOOL" UUID="3F721B1C4298D4ECF6F496BF852F4CDE" Comment="Включить вентилятор ТО" />
-        <Field Name="A2_6_4" Type="BOOL" UUID="B0BA10C04DB01B5F1FD509A82AB693C9" Comment="Пожар в технологическом отсеке" />
-        <Field Name="A2_6_5" Type="BOOL" UUID="8B7B8E6B43FCB6B2DB855ABA76793019" Comment="Пожар в отсеке подготовки теплоносителя" />
-        <Field Name="A2_6_6" Type="BOOL" UUID="D69F54E84D2CA8B91D2A3B998F2B8415" Comment="Пожар в отсеке управления" />
-        <Field Name="A2_6_7" Type="BOOL" UUID="0499B0EA4D74680929A64A919DAA1ED0" Comment="Загазованность по метану 10% НКПР (технологический отсек)" />
-        <Field Name="A2_6_8" Type="BOOL" UUID="24E7F51F4D9EF0E524CB799659B365F4" Comment="Загазованность по метану 20% НКПР (технологический отсек)" />
-        <Field Name="A2_6_9" Type="BOOL" UUID="DF7E93334ED4551D72ADB6BCA4CFDFEA" Comment="Загазованность по метану 10% НКПР (отсек подготовки теплоносителя)" />
-        <Field Name="A2_6_10" Type="BOOL" UUID="D45E49B049E78B161F649C8B0D941F47" Comment="Загазованность по метану 20% НКПР (отсек подготовки теплоносителя)" />
-        <Field Name="A2_6_11" Type="BOOL" UUID="12B4F26F4BA5F7F0460126AAA065389B" Comment="Загазованность по CO 20 мг/м³" />
-        <Field Name="A2_6_12" Type="BOOL" UUID="21C014BE43DD163942EB5E8DA268DD3C" Comment="Загазованность по CO 100 мг/м³" />
-        <Field Name="A2_6_13" Type="BOOL" UUID="48C63E5743157ACBAE5FB6960FDF45D8" Comment="Неисправность ПК" />
-        <Field Name="A2_6_14" Type="BOOL" UUID="367B17BF468A026073C525A419F7E6D5" Comment="Неисправность АСПС, СКЗ и СОУЭ" />
-        <Field Name="A2_6_15" Type="BOOL" UUID="51A65CD640F6C63CFD4064B8277B41BB" Comment="УПИГ исправен" />
-        <Field Name="A2_6_16" Type="BOOL" UUID="F857A58044D8405C52FFDDB6DAAF9FA0" Comment="Давление испульсного газа низкое" />
-        <Field Name="A2_7_1" Type="BOOL" UUID="3E450015418257A8DAEADCB67CD95684" Comment="Давление испульсного газа высокое" />
-        <Field Name="A2_7_2" Type="BOOL" UUID="3A71D1AF4F15713F8115539083E584F3" Comment="Кран XV3.1 открыт" />
-        <Field Name="A2_7_3" Type="BOOL" UUID="30AE815443F6F2D61B54719B249988F2" Comment="Кран XV3.1 закрыт" />
-        <Field Name="A2_7_4" Type="BOOL" UUID="2B982C3A4A42343489F8218429726588" Comment="Кран XV3.2 открыт" />
-        <Field Name="A2_7_5" Type="BOOL" UUID="44C7C6BD4687B69193F006A8F2768FD2" Comment="Кран XV3.2 закрыт" />
-        <Field Name="A2_7_6" Type="BOOL" UUID="96E398754DAFD0B555B352B3BDB4C39E" Comment="Резерв" />
-        <Field Name="A2_7_7" Type="BOOL" UUID="B5DC26224E71CE37B4792BB977AA5C67" Comment="Резерв" />
-        <Field Name="A2_7_8" Type="BOOL" UUID="D17FBB8D44881A1A5380F4AB45EC7561" Comment="Аварийный останов" />
-        <Field Name="A2_7_9" Type="BOOL" UUID="CC9B02914BF73909BB053F933469F085" Comment="Входной кран открыт" />
-        <Field Name="A2_7_10" Type="BOOL" UUID="BA0D9FA24B608A7CEAC80A88FCD833DC" Comment="Входной кран закрыт" />
-        <Field Name="A2_7_11" Type="BOOL" UUID="8C261D474BA75EDCDE359E8C3929D368" Comment="Свечной кран открыт" />
-        <Field Name="A2_7_12" Type="BOOL" UUID="597736744692634395AAACABD9372C39" Comment="Свечной кран закрыт" />
-        <Field Name="A2_7_13" Type="BOOL" UUID="E73F4D4C4EB76E995CB15F8C0AEC76A0" Comment="Экстренный останов" />
-        <Field Name="A2_7_14" Type="BOOL" UUID="761E9B044C904FAEEB8DB9A809A812B2" Comment="АВР включен" />
-        <Field Name="A2_7_15" Type="BOOL" UUID="868DCC784F435E8DCC00E697496DA38A" Comment="УЗИП неисправен" />
-        <Field Name="A2_7_16" Type="BOOL" UUID="761871C84283C2F344C633AB379E282B" Comment="Резерв" />
-        <Field Name="A2_8_1" Type="BOOL" UUID="6135D8A646B660BB0E6885AEE3253188" Comment="Наружное освещение. Готовность" />
-        <Field Name="A2_8_2" Type="BOOL" UUID="DCBECA4542418842B33DAE8BADE16C0D" Comment="Наружное освещение. В работе" />
-        <Field Name="A2_8_3" Type="BOOL" UUID="948DDCDE48F6A112604E1B893D79A2D6" Comment="Вентилятор ТО. Готовность" />
-        <Field Name="A2_8_4" Type="BOOL" UUID="EAE5E8F44D041604D36494BB9072D0E3" Comment="Вентилятор ТО. В работе" />
-        <Field Name="A2_8_5" Type="BOOL" UUID="24E0EDE9465F30E02CBEE28C5B15D780" Comment="Насос P1.1. Готовность" />
-        <Field Name="A2_8_6" Type="BOOL" UUID="FB111AF645D333010BCAE69E4B52AC9B" Comment="Насос P1.2. Готовность" />
-        <Field Name="A2_8_7" Type="BOOL" UUID="454B34D9411B9B66B3BCFEA18CEE9433" Comment="Насос P1.3. Готовность" />
-        <Field Name="A2_8_8" Type="BOOL" UUID="DFB7C25745519555764A8EA38D99E88B" Comment="Насос P1.4. Готовность" />
-        <Field Name="A2_8_9" Type="BOOL" UUID="F7AF768140A28F4AE4B200940FF3FA5D" Comment="Насос P1.5. Готовность" />
-        <Field Name="A2_8_10" Type="BOOL" UUID="29641935479F95D40BC71288DA43A9EC" Comment="Насос P1.6. Готовность" />
-        <Field Name="A2_8_11" Type="BOOL" UUID="953E4977483CEB26A7A4D7B02FD1B343" Comment="Насос P1.1. В работе" />
-        <Field Name="A2_8_12" Type="BOOL" UUID="2425BFDE4FDFEDE174C762842611A3EB" Comment="Насос P1.2. В работе" />
-        <Field Name="A2_8_13" Type="BOOL" UUID="43B7CAFF4CE8BD1E5CF5B4B06AACE039" Comment="Насос P1.3. В работе" />
-        <Field Name="A2_8_14" Type="BOOL" UUID="453F23C4457380456C432D8329A0D447" Comment="Насос P1.4. В работе" />
-        <Field Name="A2_8_15" Type="BOOL" UUID="D4D6509C4EBF98D033C15AB92D0543E6" Comment="Насос P1.5. В работе" />
-        <Field Name="A2_8_16" Type="BOOL" UUID="817FC89C494743E074CB9E8DF6D46B86" Comment="Насос P1.6. В работе" />
-        <Field Name="A2_9_1" Type="BOOL" UUID="3FBF2D864D357F975DC841958CCD802A" Comment="Открыть кран XV3.2. КЦУ" />
-        <Field Name="A2_9_2" Type="BOOL" UUID="DE53CA384BC4BC95BCD8E4AB3702724F" Comment="Закрыть кран XV3.2. КЦУ" />
-        <Field Name="A2_9_3" Type="BOOL" UUID="E377838141DFADF009FC7F89557FB9CB" Comment="Резерв. КЦУ" />
-        <Field Name="A2_9_4" Type="BOOL" UUID="909A77F140E46328DC14FBA4B40748E3" Comment="Резерв. КЦУ" />
-        <Field Name="A2_9_5" Type="BOOL" UUID="4EFD73DD417F92B630FED992917CB363" Comment="Съем звука (кнопка)" />
-        <Field Name="A2_9_6" Type="BOOL" UUID="47090A5E4232B1C4334BFEA94ACFAC6E" Comment="Сброс АО (кнопка)" />
-        <Field Name="A2_9_7" Type="BOOL" UUID="C22D3E18457F9F8F1D3CFFB04C6738E1" Comment="Двери закрыты" />
-        <Field Name="A2_9_8" Type="BOOL" UUID="19B7D65E410AD90A5D338F82B326FD1A" Comment="ЭО в ПЛК" />
-        <Field Name="A2_9_9" Type="BOOL" UUID="FFB65C40486B635DC62A7CB6FE789155" Comment="Не подключен" />
-        <Field Name="A2_9_10" Type="BOOL" UUID="FA7A9F024152D17C6B2E0C904D5A7DAE" Comment="Не подключен" />
-        <Field Name="A2_9_11" Type="BOOL" UUID="4D9D5BD844EF4CDD194B549DA5BB03C0" Comment="Не подключен" />
-        <Field Name="A2_9_12" Type="BOOL" UUID="BDF8839849881C4863C97691BDF59E3C" Comment="Не подключен" />
-        <Field Name="A2_9_13" Type="BOOL" UUID="468F973449347B8157255A8219845C6B" Comment="Не подключен" />
-        <Field Name="A2_9_14" Type="BOOL" UUID="AB6DB5FC4E9FD9957A83E693CFE62C99" Comment="Не подключен" />
-        <Field Name="A2_9_15" Type="BOOL" UUID="2FA38CE349B49466E5BC9A9EB4902399" Comment="Не подключен" />
-        <Field Name="A2_9_16" Type="BOOL" UUID="3864CE3A438E4FCDEF8B23B8927B8A46" Comment="Не подключен" />
-        <Field Name="A2_10_1" Type="BOOL" UUID="135429BA4B97AC91655BD396A1C4A556" Comment="Уровень конденсата в нижней емкости фильтра F2.1" />
-        <Field Name="A2_10_2" Type="BOOL" UUID="BD8E1E3845DCD22904D374B2A026A2E7" Comment="Уровень конденсата в верхней емкости фильтра F2.1" />
-        <Field Name="A2_10_3" Type="BOOL" UUID="1E04FA2C4EAACFBE572AC787351B41D7" Comment="Уровень конденсата в нижней емкости фильтра F2.2" />
-        <Field Name="A2_10_4" Type="BOOL" UUID="40A7767241017C3FB61B2ABD28471A0D" Comment="Уровень конденсата в верхней емкости фильтра F2.2" />
-        <Field Name="A2_10_5" Type="BOOL" UUID="DEDB327E43FC300B69DAEA9683DBCE0E" Comment="Ввод 1 (~380 В, 50 Гц) в норме" />
-        <Field Name="A2_10_6" Type="BOOL" UUID="8B2D8C9646BD13077406699CCA799A17" Comment="Ввод 2 (~380 В, 50 Гц) в норме" />
-        <Field Name="A2_10_7" Type="BOOL" UUID="389910304A9C672FAC30109B9D7EF6D8" Comment="Ввод 3 (=220 В) в норме" />
-        <Field Name="A2_10_8" Type="BOOL" UUID="D1E3059F4EC572CEBDAA679D9D4D9F1E" Comment="Ввод 1, ~380 В, 50 Гц, автомат включен" />
-        <Field Name="A2_10_9" Type="BOOL" UUID="130A87264E90A15B2CF2FFAAE65F31CC" Comment="Ввод 1, ~380 В, 50 Гц, автомат отключен" />
-        <Field Name="A2_10_10" Type="BOOL" UUID="F21BEA164AF2EF32F0E5E99F9EDAC7D3" Comment="Ввод 1, ~380 В, 50 Гц, аварийное отключение" />
-        <Field Name="A2_10_11" Type="BOOL" UUID="E78534AD4B00BB043969BAB455E1B3DD" Comment="Ввод 2, ~380 В, 50 Гц, автомат включен" />
-        <Field Name="A2_10_12" Type="BOOL" UUID="E8E7E32C480FF850B24300A947970803" Comment="Ввод 2, ~380 В, 50 Гц, автомат отключен" />
-        <Field Name="A2_10_13" Type="BOOL" UUID="78168F524738D2363CA04D9C6163BFDB" Comment="Ввод 2, ~380 В, 50 Гц, аварийное отключение" />
-        <Field Name="A2_10_14" Type="BOOL" UUID="2A953C904BB411032E901CB5301251F5" Comment="Ввод 3 (=220 В) автомат включен" />
-        <Field Name="A2_10_15" Type="BOOL" UUID="43777F214042CBB78B5A14A513A9961E" Comment="Ввод 3 (=220 В) автомат отключен" />
-        <Field Name="A2_10_16" Type="BOOL" UUID="87D332D24EB417E1E89803B6056DED37" Comment="Ввод 3 (=220 В) аварийное отключение" />
-        <Field Name="A3_3_1" Type="BOOL" UUID="3B5ABB7449AB6E34FB408CBF949485ED" Comment="Контроль основного питания ~220 В" />
-        <Field Name="A3_3_2" Type="BOOL" UUID="59C8B7704A55865386E541A62CDA6EAB" Comment="Контроль резервного питания =220 В" />
-        <Field Name="A3_3_3" Type="BOOL" UUID="0073E18742C6232AEB072D8CEE96066F" Comment="Автоматы питания включены" />
-        <Field Name="A3_3_4" Type="BOOL" UUID="0E4000E74F0FFCE7EC6E49AD6E39AEA3" Comment="Контроль исправности разрядников" />
-        <Field Name="A3_3_5" Type="BOOL" UUID="61DA558F43C55A046BDD4ABFF6997583" Comment="Исправность осн. ИП =24В внутренних цепей" />
-        <Field Name="A3_3_6" Type="BOOL" UUID="3295E6AE43BC4B620599309D23B51BD9" Comment="Исправность рез. ИП =24В внутренних цепей" />
-        <Field Name="A3_3_7" Type="BOOL" UUID="6DCDC89640335B0FCBD077BC8D4F8A59" Comment="Исправность осн. ИП =24В AI" />
-        <Field Name="A3_3_8" Type="BOOL" UUID="7CE0470548AA23FA97B8E8AA4F50C0B5" Comment="Исправность рез. ИП =24В AI" />
-        <Field Name="A3_3_9" Type="BOOL" UUID="1219D20B4CF555806774ADB88F266BB3" Comment="Исправность осн. ИП =24В DI" />
-        <Field Name="A3_3_10" Type="BOOL" UUID="76B9DD6A4F993F6DD9B4D3B973C86C4E" Comment="Исправность рез. ИП =24В DI" />
-        <Field Name="A3_3_11" Type="BOOL" UUID="FE8D99BE47A3C647F550C7A03AD52113" Comment="Исправность осн. ИП =24В DO внутр." />
-        <Field Name="A3_3_12" Type="BOOL" UUID="9960D5CD47BF53A73CF766987982BCC1" Comment="Исправность рез. ИП =24В DO внутр." />
-        <Field Name="A3_3_13" Type="BOOL" UUID="4F8F5C884052C869332CA3966069850B" Comment="Исправность осн. ИП =24В внешних устройств" />
-        <Field Name="A3_3_14" Type="BOOL" UUID="889ADF0E420C40608AD007B8D31E018B" Comment="Исправность рез. ИП =24В внешних устройств" />
-        <Field Name="A3_3_15" Type="BOOL" UUID="FCE02E094078D80BC1C34295DC7E706B" Comment="Контроль основного питания БЭАО ~220 В" />
-        <Field Name="A3_3_16" Type="BOOL" UUID="D99696DB45F92D2433CC89AB737F3C2D" Comment="Контроль основного резервного БЭАО =220 В" />
-        <Field Name="A3_4_1" Type="BOOL" UUID="906D32334445E804FD44418C9279C63E" Comment="Исправность осн. ИП =24В БЭАО" />
-        <Field Name="A3_4_2" Type="BOOL" UUID="782F0D344F72AE96ED9B53AFEF3AAFB2" Comment="Исправность рез. ИП =24В БЭАО" />
-        <Field Name="A3_4_3" Type="BOOL" UUID="E880A7D74A3FCF981D745BAB0540EFFD" Comment="Резерв" />
-        <Field Name="A3_4_4" Type="BOOL" UUID="635A33164FE3DF786DB2CE807A116401" Comment="Резерв" />
-        <Field Name="A3_4_5" Type="BOOL" UUID="6E05B47F4324212D3E9564B6185F979B" Comment="Резерв" />
-        <Field Name="A3_4_6" Type="BOOL" UUID="C4C9DF454970E1EF2E0E0DAD170579FA" Comment="Не подключен" />
-        <Field Name="A3_4_7" Type="BOOL" UUID="7B1749C14D9FAA4E14F5F3840DD14C7D" Comment="Не подключен" />
-        <Field Name="A3_4_8" Type="BOOL" UUID="EF3F7632497AA2E7FB9D3BB4091ED8DC" Comment="Не подключен" />
-        <Field Name="A3_4_9" Type="BOOL" UUID="CB96D9DE4CAD82F815E8AAA1F536EB47" Comment="Не подключен" />
-        <Field Name="A3_4_10" Type="BOOL" UUID="B025E39B4E2CDC6FD19FAC8CC2980EDC" Comment="Не подключен" />
-        <Field Name="A3_4_11" Type="BOOL" UUID="CEA20E7341CBBF8C50E3F1AE5DAF2BF9" Comment="Не подключен" />
-        <Field Name="A3_4_12" Type="BOOL" UUID="81F5C3D741274FC5931FB29AB77DAEE5" Comment="Не подключен" />
-        <Field Name="A3_4_13" Type="BOOL" UUID="D0F47B00433E34099A133781298E252A" Comment="Не подключен" />
-        <Field Name="A3_4_14" Type="BOOL" UUID="BD87180A4CC218AB94D972B850BA1D91" Comment="Не подключен" />
-        <Field Name="A3_4_15" Type="BOOL" UUID="111666154AE8BE78FFC34DA25020B2BA" Comment="Не подключен" />
-        <Field Name="A3_4_16" Type="BOOL" UUID="0E758DE94B222023E0F6118B003CBADB" Comment="Не подключен" />
-        <Field Name="A3_5_1" Type="BOOL" UUID="B90BE50E43F24CAA5B5EBCBB6936977C" Comment="Включить вентилятор. КЦУ" />
-        <Field Name="A3_5_2" Type="BOOL" UUID="1F5B2E224FE8BC2DDC0387963B3D033F" Comment="Включение наружного освещения. КЦУ" />
-        <Field Name="A3_5_3" Type="BOOL" UUID="4FB50C4A400F75A10A179E985DC31BA2" Comment="Общая неисправность САУ УПГСН. КЦУ" />
-        <Field Name="A3_5_4" Type="BOOL" UUID="750B06FB4F5EE163D05AF8AFEBF05F7E" Comment="Разрешена работа GB1.1. КЦУ" />
-        <Field Name="A3_5_5" Type="BOOL" UUID="58A74A964ED8EE5F572FCBA62F77E4B1" Comment="Разрешена работа GB1.2. КЦУ" />
-        <Field Name="A3_5_6" Type="BOOL" UUID="A731F7A840F51E7E7E4635B0D66ED900" Comment="ЭО УПГСН. КЦУ" />
-        <Field Name="A3_5_7" Type="BOOL" UUID="0EB0AD5B44CDD06D943377B3FBD08B09" Comment="Включить насос Р1.1. КЦУ" />
-        <Field Name="A3_5_8" Type="BOOL" UUID="2387CA434A38CD767CF05D84AD84C8FC" Comment="Включить насос Р1.2. КЦУ" />
-        <Field Name="A3_5_9" Type="BOOL" UUID="BDE283D14DAF2336BBCA8CBC54A5D30A" Comment="Открыть входной кран. КЦУ" />
-        <Field Name="A3_5_10" Type="BOOL" UUID="7F3A11224C08AA8488D292BEC932D96A" Comment="Закрыть входной кран. КЦУ" />
-        <Field Name="A3_5_11" Type="BOOL" UUID="23E730F34A6FD83D651EFCBB4E63ACA3" Comment="Открыть свечной кран. КЦУ" />
-        <Field Name="A3_5_12" Type="BOOL" UUID="A972E3E74FF615F19FE4419A1AE51324" Comment="Закрыть свечной кран. КЦУ" />
-        <Field Name="A3_5_13" Type="BOOL" UUID="1E2BF1F84A3DA403ACA537A38C351F67" Comment="Открыть клапан SV1.1. КЦУ" />
-        <Field Name="A3_5_14" Type="BOOL" UUID="00F19A184D69C57EA99E91A49D9F7CB5" Comment="Звуковой сигнал. КЦУ" />
-        <Field Name="A3_5_15" Type="BOOL" UUID="55F5B6B04C44E9590FD9C9A11B9CA453" Comment="Открыть кран XV3.1. КЦУ" />
-        <Field Name="A3_5_16" Type="BOOL" UUID="97E4A0194032E5D1B692D2B8BB42A0CE" Comment="Закрыть кран XV3.1. КЦУ" />
-        <Field Name="A2_6_STATUS" Type="BOOL" UUID="CEAF35814758371C0A621FABBE2274D8" />
-        <Field Name="A2_7_STATUS" Type="BOOL" UUID="3DE27DA147927C1A1D0D8E87A627DB87" />
-        <Field Name="A2_8_STATUS" Type="BOOL" UUID="BAE6B7E14DD14270CA01C8B9F38B8EE0" />
-        <Field Name="A2_9_STATUS" Type="BOOL" UUID="7EABD2C0450E7E68D95E9DB98FE2076C" />
-        <Field Name="A2_10_STATUS" Type="BOOL" UUID="B818A55543F50070BE971F9786E20452" />
-        <Field Name="A3_3_STATUS" Type="BOOL" UUID="EEB940A74A6CDD459D454E8EAC1EA7CA" />
-        <Field Name="A3_4_STATUS" Type="BOOL" UUID="E9EC3B6B4329DD31C836AEBFB808F71C" />
-        <Field Name="A3_5_STATUS" Type="BOOL" UUID="C4E34F834267C6817EAB049B87A405FB" />
+        <Field Name="A2_3_1" Type="BOOL" UUID="67BA908847D1FCF86334AE80DDE0EBA8" Comment="Датчик загазованности по метану - Авария (QT1)" />
+        <Field Name="A2_3_2" Type="BOOL" UUID="9C2B4C294ACCAB37E5BCE6B005310E64" Comment="Датчик загазованности по метану - Порог 1 (QT1)" />
+        <Field Name="A2_3_3" Type="BOOL" UUID="64A5E2B849249B3F8F64C2A9C088CECC" Comment="Датчик загазованности по метану - Порог 2 (QT1)" />
+        <Field Name="A2_3_4" Type="BOOL" UUID="5A8B8A054DE56498E4C97A97E19EC0E4" Comment="Предупредительная сигнализация оксида углерода (QT2)" />
+        <Field Name="A2_3_5" Type="BOOL" UUID="2738C6AF4F275A02CAC137AD4F54A540" Comment="Аварийная сигнализация оксида углерода (QT2)" />
+        <Field Name="A2_3_6" Type="BOOL" UUID="F1A656DC42C16B6FDD097384092BC126" Comment="Опробование сигнализации (SB1)" />
+        <Field Name="A2_3_7" Type="BOOL" UUID="89F471D54EFA83F22A74A7AB68B5AEDF" Comment="Клапан отсечной в положении &quot;Открыто&quot; (CV-0201)" />
+        <Field Name="A2_3_8" Type="BOOL" UUID="46AF08CC41DDA2C5880A0389F8E27639" Comment="Клапан отсечной в положении &quot;Закрыто&quot; (CV-0201)" />
+        <Field Name="A2_3_9" Type="BOOL" UUID="A997046B45E632994BCDAEB1424DC0AD" Comment="Клапан отсечной в положении &quot;Готовность&quot; (CV-0201)" />
+        <Field Name="A2_3_10" Type="BOOL" UUID="B2B91C1E453A8B2226ACE4811F8AC096" Comment="Клапан отсечной в положении &quot;Неисправность&quot; (CV-0201)" />
+        <Field Name="A2_3_11" Type="BOOL" UUID="041C7CE247AA6DD1A8CD5EB32290045B" Comment="Клапан отсечной в положении &quot;Авария&quot; (CV-0201)" />
+        <Field Name="A2_3_12" Type="BOOL" UUID="1AE29DCB44F12D20B1F773AF0758CC04" Comment="Реле низкого давления системы подачи газа на ГУ основной камеры сгорания (PS-0101A)" />
+        <Field Name="A2_3_13" Type="BOOL" UUID="0781C3DD4DF192B6132B91B32EF665BB" Comment="Реле высокого давления системы подачи газа на ГУ основной камеры сгорания (PS-0102A)" />
+        <Field Name="A2_3_14" Type="BOOL" UUID="1F20018D4867195A8302A9BB2F675B5A" Comment="Реле низкого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0101B)" />
+        <Field Name="A2_3_15" Type="BOOL" UUID="491EED2344ED7486AA40D68997F8E4FE" Comment="Реле высокого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0102B)" />
+        <Field Name="A2_3_16" Type="BOOL" UUID="F7058D4548FC1910C42A648FEA78A556" Comment="Реле давления в системе подачи воздуха на ГУ первичной камеры сгорания (PS-0103A) " />
+        <Field Name="A2_4_1" Type="BOOL" UUID="98DAD39A453C84C082501D8D9A9B1F0A" Comment="Реле давления в системе подачи воздуха на ГУ вторичной камеры сгорания (PS-0103B) " />
+        <Field Name="A2_4_2" Type="BOOL" UUID="73BE4DB544992FC5F51BFB8109C3E944" Comment="Ворошитель инсинератора в крайнем закрытом положении (ZSC-0204)" />
+        <Field Name="A2_4_3" Type="BOOL" UUID="0303445B4773313B8180DA8A12F3A3CF" Comment="Ворошитель инсинератора в крайнем открытом положении (ZSO-0204)" />
+        <Field Name="A2_4_4" Type="BOOL" UUID="B6471DF84DD25FDE62AEA08B9CCD6E8F" Comment="Датчик двери выема золы из инсинератора в сост. &quot;закрыто&quot; (ZSC-0207)" />
+        <Field Name="A2_4_5" Type="BOOL" UUID="661159C54609420734B760B496C9FB51" Comment="Датчик двери обслуживания инсинератора в сост. &quot;закрыто&quot; (ZSC-0206)" />
+        <Field Name="A2_4_6" Type="BOOL" UUID="AA15B92046F36B041574CB932E5D2419" Comment="Минимальный уровень в баке дозатора реагентов в систему охлаждения дым. газов (LSL-0201)" />
+        <Field Name="A2_4_7" Type="BOOL" UUID="949EA94944F843456899879F4AB094C2" Comment="Датчик огнестойкой двери загрузки инсинератора в состоянии &quot;закрыто&quot; (ZSC-0201)" />
+        <Field Name="A2_4_8" Type="BOOL" UUID="282D568143A8E27335C3CA89FE99818C" Comment="Датчик огнестойкой двери загрузки инсинератора в состоянии &quot;открыто&quot; (ZSO-0201)" />
+        <Field Name="A2_4_9" Type="BOOL" UUID="15958FA44ACA2823CD6BD0B6ABAE5BB4" Comment="Датчик заслонки загрузки устройства подачи в инсинератор в состоянии &quot;закрыто&quot; (ZSC-0202)" />
+        <Field Name="A2_4_10" Type="BOOL" UUID="61529C1948D9CF60BB2122AD64BB26C4" Comment="Датчик заслонки загрузки устройства подачи в инсинератор в состоянии &quot;открыто&quot; (ZSO-0202)" />
+        <Field Name="A2_4_11" Type="BOOL" UUID="88BA77C34196EF280CF480A842D3A579" Comment="Датчик толкателя устройства подачи в инсинератор в состоянии &quot;закрыт&quot; (ZSC-0203)" />
+        <Field Name="A2_4_12" Type="BOOL" UUID="64F3A1C144BB39F2C5A851997988968E" Comment="Датчик толкателя устройства подачи в инсинератор в состоянии &quot;открыт&quot; (ZSO-0203)" />
+        <Field Name="A2_4_13" Type="BOOL" UUID="3A84463B42EB7261987E2E88A15CA7CE" Comment="Датчик толкателя устройства подачи в инсинератор в состоянии &quot;промежуточное&quot; (ZSO-0205)" />
+        <Field Name="A2_4_14" Type="BOOL" UUID="967D49734E4978F5703D9D83CDBE58C5" Comment="Переключатель температуры масляного бака (TS-0202)" />
+        <Field Name="A2_4_15" Type="BOOL" UUID="6F22E2064C1A6D084821B290C8944D1F" Comment="Минимальный уровень масла в баке гидравлической системы привода заслонок (LS-0102)" />
+        <Field Name="A2_4_16" Type="BOOL" UUID="F2FCFBA3413614C012F93DA06FA7BA11" Comment="Вентилятор аварийный включен (B1)" />
+        <Field Name="A2_5_1" Type="BOOL" UUID="93CE035049761DFBBBF39495B412B88D" Comment="Вентилятор подачи воздуха в основную камеру сгорания включен (CF-0201)" />
+        <Field Name="A2_5_2" Type="BOOL" UUID="8961166B4816143FB0354BB932DAA785" Comment="Вентилятор подачи воздуха в основную камеру сгорания в аварии (CF-0201)" />
+        <Field Name="A2_5_3" Type="BOOL" UUID="1F6275394B215115C3B5739CBFAA67D6" Comment="Вентилятор подачи воздуха во вторичную камеру сгорания включен (CF-0202)" />
+        <Field Name="A2_5_4" Type="BOOL" UUID="89C007154F4DCE9BE06108A7802B81D6" Comment="Вентилятор подачи воздуха во вторичную камеру сгорания в аварии (CF-0202)" />
+        <Field Name="A2_5_5" Type="BOOL" UUID="366075294E3381AE3F718B891C1BB85F" Comment="Вентилятор подачи дымовых газов в трубу включен (CF-0301) " />
+        <Field Name="A2_5_6" Type="BOOL" UUID="A461ADF944B945076DEF07AD4B73C0A1" Comment="Вентилятор подачи дымовых газов в трубу в аварии (CF-0301) " />
+        <Field Name="A2_5_7" Type="BOOL" UUID="05D9FD82421D538F91717CB4A79CB8F9" Comment="Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)" />
+        <Field Name="A2_5_8" Type="BOOL" UUID="7B48BB974CF35DBE8E92788F00A90091" Comment="Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)" />
+        <Field Name="A2_5_9" Type="BOOL" UUID="75A349A1496351E966BFA597EDC39A9F" Comment="Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (RAL-0201)" />
+        <Field Name="A2_5_10" Type="BOOL" UUID="CA313F9C4635BE0B92545ABE6942E2D3" Comment="Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (RAL-0201)" />
+        <Field Name="A2_5_11" Type="BOOL" UUID="CE664FD046E692D6A3D5AF83B577D87B" Comment="Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (CH-0201 )" />
+        <Field Name="A2_5_12" Type="BOOL" UUID="DC9B7DC54BDB81D0E038759B6534D812" Comment="Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (CH-0201 )" />
+        <Field Name="A2_5_13" Type="BOOL" UUID="A7F4A4734B40F3CE5377A2B6819F13AB" Comment="Насос (рабочий) включен (P-0201A)" />
+        <Field Name="A2_5_14" Type="BOOL" UUID="EA2D0D3D470FE63A4B19C18032A35526" Comment="Дист. управл. насосом (рабочим) включено (P-0201A)" />
+        <Field Name="A2_5_15" Type="BOOL" UUID="4B8B4AEC422350B1D590D096E72D7479" Comment="Свеча зажигания устройства горелочного основной камеры сгорания включена (TR-0101A)" />
+        <Field Name="A2_5_16" Type="BOOL" UUID="5B6212B24F46F16E07971AB442C47682" Comment="Дист. управл. свечой зажигания устройства горелочного основной камеры сгорания включено (TR-0101A)" />
+        <Field Name="A2_6_1" Type="BOOL" UUID="9CFD37264090A4FB8ECDCC9CB9B4BC4C" Comment="Свеча зажигания устройства горелочного вторичной камеры сгорания включена (TR-0101B)" />
+        <Field Name="A2_6_2" Type="BOOL" UUID="5C19995B488A6DA6DFB161BA8D9902D9" Comment="Дист. управл. свечой зажигания устройства горелочного вторичной камеры сгорания включено (TR-0101B)" />
+        <Field Name="A2_6_3" Type="BOOL" UUID="D7E427C04AC474CCA2249D9719CF2E4A" Comment="Клапан системы подачи воздуха на горелочное устройство вторичной камеры сгорания открыт (SV-0101b)" />
+        <Field Name="A2_6_4" Type="BOOL" UUID="E74E287E4715B71EF07F1981713DD697" Comment="Дист. управл. клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания включено (SV-0101B)" />
+        <Field Name="A2_6_5" Type="BOOL" UUID="CFA3CF0C41A8543818B32988C766FC36" Comment="Клапан системы подачи газа на горелочное устройство основной камеры сгорания открыт (TV-0101A)" />
+        <Field Name="A2_6_6" Type="BOOL" UUID="3DF20DB74D816692C00DCAB678E8C22E" Comment="Дист. управл. клапана системы подачи газа на горелочное устройство основной камеры сгорания включено (TV-0101A)" />
+        <Field Name="A2_6_7" Type="BOOL" UUID="CB3B10EC44510E964A105D80601F5EB1" Comment="Клапан системы подачи газа на горелочное устройство вторичной камеры сгорания открыт (TV-0101В)" />
+        <Field Name="A2_6_8" Type="BOOL" UUID="F146476C44F977E1B2E5C7BC850F2D72" Comment="Дист. управл. клапана системы подачи газа на горелочное устройство вторичной камеры сгорания включено (TV-0101В)" />
+        <Field Name="A2_6_9" Type="BOOL" UUID="F148D8434E4BAED11E23A48FDFB00C96" Comment="Клапан отсечной КМО-3 включен (CV-0201) сигнал от ВРУ" />
+        <Field Name="A2_6_10" Type="BOOL" UUID="429E199D42B1A049A243839268218D57" Comment="Дист. управл. клапаном отсечным КМО-3 включено (CV-0201) сигнал от ВРУ" />
+        <Field Name="A2_6_11" Type="BOOL" UUID="155BEB9A4C2B78E89C414A871E8C5ACF" Comment="Клапан системы подачи воздуха на горелочное устройство основной камеры сгорания открыт (TV-0102A)" />
+        <Field Name="A2_6_12" Type="BOOL" UUID="1917BA3E4ECF231EB4346A80D1AA4838" Comment="Дист. управл. клапаном системы подачи воздуха на горелочное устройство основной камеры сгорания включено (TV-0102A)" />
+        <Field Name="A2_6_13" Type="BOOL" UUID="902A8EA14CA6528D8FE595B7A72114D7" Comment="Насос (резервный) включен (P-0201B)" />
+        <Field Name="A2_6_14" Type="BOOL" UUID="0694641B41807A55C9E9B496B757D635" Comment="Дист. управл. насосом (резервным) включено (P-0201B)" />
+        <Field Name="A2_6_15" Type="BOOL" UUID="D9A939FA4366D0EDA26F23BC217897AA" Comment="Компрессор включен (C-0201)" />
+        <Field Name="A2_6_16" Type="BOOL" UUID="8C4F615C4A83DC1369CAA6BE73422B22" Comment="Дист. управл. компрессором включено (C-0201)" />
+        <Field Name="A2_7_1" Type="BOOL" UUID="03C3EABD459FC2B3D9772C94B55546AE" Comment="Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (SC-0203)" />
+        <Field Name="A2_7_2" Type="BOOL" UUID="C43398F2424CE738C0E75A90F7D18726" Comment="Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)" />
+        <Field Name="A2_7_3" Type="BOOL" UUID="43CA79B94AF4DBB3CDF9318084EA7581" Comment="Вентилятор системы подачи воздуха на горелочное устройство основной камеры сгорания включен (СF-0102)" />
+        <Field Name="A2_7_4" Type="BOOL" UUID="34B5CA9F43D3103ECA46BEB099000C07" Comment="Вентилятор системы подачи воздуха на горелочное устройство вторичной камеры сгорания включен (СF-0101)&#x0A;" />
+        <Field Name="A2_7_5" Type="BOOL" UUID="54A02F614773411660CF6DA70CC80155" Comment="Шнек выгрузки золы из инсинератора включен (SС-0201 )" />
+        <Field Name="A2_7_6" Type="BOOL" UUID="E39A93264B80B63A18D322999FDCE24C" Comment="Шнек выгрузки золы из мультициклона включен (SС-0202) " />
+        <Field Name="A2_7_7" Type="BOOL" UUID="6E7A209646899CF03476DDB6194AD23C" Comment="Насос подачи масла гидравлической системы привода заслонок включен (P-0401)" />
+        <Field Name="A2_7_8" Type="BOOL" UUID="3D17E2DA497C816B07E30FA01A91E14C" Comment="Подогреватель масла гидравлической системы привода заслонок включен (EH-0401)" />
+        <Field Name="A2_7_9" Type="BOOL" UUID="14E523C548195828CCF9DBA64F1DC139" Comment="Срабатывание расцепителя (от ВРУ1)" />
+        <Field Name="A2_7_10" Type="BOOL" UUID="AFF56315430603E6674C69AB2F33F937" Comment="Резерв" />
+        <Field Name="A2_7_11" Type="BOOL" UUID="2A89C3424576E12A2CFD369F755BF986" Comment="Резерв" />
+        <Field Name="A2_7_12" Type="BOOL" UUID="86D312C64969F9F93E61978CB8FABC14" Comment="Резерв" />
+        <Field Name="A2_7_13" Type="BOOL" UUID="5B441770438C6C609AEAD3A69A7B3493" Comment="Резерв" />
+        <Field Name="A2_7_14" Type="BOOL" UUID="CBFC4A9148C1422995D75E92BC8114F4" Comment="Резерв" />
+        <Field Name="A2_7_15" Type="BOOL" UUID="E7BDC11D42FEB2126F9BA08F21AC4748" Comment="Резерв" />
+        <Field Name="A2_7_16" Type="BOOL" UUID="27510521467D42B20A31F88ABFFA70B7" Comment="Резерв" />
+        <Field Name="A2_8_1" Type="BOOL" UUID="62F9A681467ABBE7959EEDAE3B3CE9C1" Comment="Наличие напряжения ~380 В ввода 1 ВРУ КТО1,2" />
+        <Field Name="A2_8_2" Type="BOOL" UUID="E8EFB6544A83C1EC16AF74B7DF726B99" Comment="Наличие напряжения ~380 В ввода 2 ВРУ КТО1,2" />
+        <Field Name="A2_8_3" Type="BOOL" UUID="66B030254040564F994A628D794BBDDF" Comment="Автоматический выключатель на вводе 1 включен ВРУ КТО1,2" />
+        <Field Name="A2_8_4" Type="BOOL" UUID="D4D33C304CE92924787F3FB5363959ED" Comment="Автоматический выключатель на вводе 2 включен ВРУ КТО1,2" />
+        <Field Name="A2_8_5" Type="BOOL" UUID="691458CA4D1CA65F1225E093891F01D7" Comment="Срабатывание АВР ВРУ КТО1,2" />
+        <Field Name="A2_8_6" Type="BOOL" UUID="F73976B64B2BD230037A9992C0A94EB7" Comment="Пожар сигнал от ШПС" />
+        <Field Name="A2_8_7" Type="BOOL" UUID="AB037C8D4A7F21F04958C6BBF7C5D72C" Comment="Неисправность сигнал от ШПС" />
+        <Field Name="A2_8_8" Type="BOOL" UUID="8DD823334A1C784FFB04458402DB900B" Comment="Резерв" />
+        <Field Name="A2_8_9" Type="BOOL" UUID="A79193494DA7CFF6ED89C8B7108F6D31" Comment="Резерв" />
+        <Field Name="A2_8_10" Type="BOOL" UUID="BC3B8FA0496E163019A77F81CC59BC56" Comment="Резерв" />
+        <Field Name="A2_8_11" Type="BOOL" UUID="4AB5924E4508C0FCA1B4299EB82E3E69" Comment="Резерв" />
+        <Field Name="A2_8_12" Type="BOOL" UUID="916569E7464CAE63CAE174B3CEE59465" Comment="Резерв" />
+        <Field Name="A2_8_13" Type="BOOL" UUID="89641F7F4DAEFEA7BEBD41A2CAB3CD29" Comment="Резерв" />
+        <Field Name="A2_8_14" Type="BOOL" UUID="ECF106CE44FFFB68A10DD7A779E479BB" Comment="Резерв" />
+        <Field Name="A2_8_15" Type="BOOL" UUID="CB1083D64F6066E83109F08E8B5C6607" Comment="Резерв" />
+        <Field Name="A2_8_16" Type="BOOL" UUID="B0217EB7462DD23D9FC88F96419257C1" Comment="Резерв" />
+        <Field Name="A2_9_1" Type="BOOL" UUID="4EBA33264E939705461E3FB74FB84B65" Comment="Аварийный останов" />
+        <Field Name="A2_9_2" Type="BOOL" UUID="A16D4EBD487B04A5ECBC6899EB7FFD65" Comment="Запуск" />
+        <Field Name="A2_9_3" Type="BOOL" UUID="6A1103E349C0FC5F6D634D9342A9C17A" Comment="Открыть подающую дверь" />
+        <Field Name="A2_9_4" Type="BOOL" UUID="EA4F6E33496BE8C2A287CA9EEC71EF66" Comment="Закрыть подающую дверь" />
+        <Field Name="A2_9_5" Type="BOOL" UUID="EB67250348D9BAD9D3EC2D859EAABA98" Comment="Открыть дверь выгрузки золы" />
+        <Field Name="A2_9_6" Type="BOOL" UUID="478EE8AD4BF2D1CA1BEF589050CB28E0" Comment="Открыть дверь выгрузки золы" />
+        <Field Name="A2_9_7" Type="BOOL" UUID="60DB377C433EA64C68AF12BB0526EC15" Comment="Подача отходов в автоматическом режиме" />
+        <Field Name="A2_9_8" Type="BOOL" UUID="52C10D044678B5E4A772B98352012E18" Comment="Подача отходов в ручном режиме" />
+        <Field Name="A2_9_9" Type="BOOL" UUID="8F8AD5694038A0A321D8E48EB44B3C6F" Comment="Подача отходов - пуск" />
+        <Field Name="A2_9_10" Type="BOOL" UUID="D21AA4874B6CD6B3169192AF6E068869" Comment="Подача отходов - стоп" />
+        <Field Name="A2_9_11" Type="BOOL" UUID="DE50A40F4B6907C5177506B2C427F5A2" Comment="Цикл загрузки" />
+        <Field Name="A2_9_12" Type="BOOL" UUID="E2B5CC384A671990D6DABAB91392FB85" Comment="Запуск охлаждения" />
+        <Field Name="A2_9_13" Type="BOOL" UUID="138077444CB52F12AD2EAE8FE189D674" Comment="Квитирование" />
+        <Field Name="A2_9_14" Type="BOOL" UUID="27B1D36048C0C8A5FC87BAA3FEBEE1F8" Comment="Опробование сигнализации" />
+        <Field Name="A2_9_15" Type="BOOL" UUID="AF746FC8491573B78F6B1C876BF4B0C7" Comment="Не подключен" />
+        <Field Name="A2_9_16" Type="BOOL" UUID="E508047B4CB55871740AAC83108B7F34" Comment="Не подключен" />
+        <Field Name="A2_10_1" Type="BOOL" UUID="2D02B9104FC159C6F815F9AF17EAFE03" Comment="Контроль основного питания  ~220 В" />
+        <Field Name="A2_10_2" Type="BOOL" UUID="71E004F4403DFE545BAF0684499BBA0E" Comment="Контроль питания от ИБП ~220 В" />
+        <Field Name="A2_10_3" Type="BOOL" UUID="3B60714E4CB2EEFA88162CA07BEFA89F" Comment="Автоматы питания включены" />
+        <Field Name="A2_10_4" Type="BOOL" UUID="44AB608F48AB441FEC42B6B55CA89B72" Comment="Контроль исправности разрядников" />
+        <Field Name="A2_10_5" Type="BOOL" UUID="331B8F65472F1B57FF9AA6B9A0926E14" Comment="Исправность осн. ИП =24В внутренних цепей" />
+        <Field Name="A2_10_6" Type="BOOL" UUID="5DD856FF40BD7EAF4E98BF8BF5AAF066" Comment="Исправность рез. ИП =24В внутренних цепей" />
+        <Field Name="A2_10_7" Type="BOOL" UUID="FF9AEE8B418C6051299869AA17009F96" Comment="Исправность осн. ИП =24В AI, AO" />
+        <Field Name="A2_10_8" Type="BOOL" UUID="B7604B224749E3E9D2919496965B157E" Comment="Исправность рез. ИП =24В AI, AO" />
+        <Field Name="A2_10_9" Type="BOOL" UUID="21885B4046C841D634F1F3A7851D746D" Comment="Исправность осн. ИП =24В DI (внеш.)" />
+        <Field Name="A2_10_10" Type="BOOL" UUID="06E468A248FD42C0F3A1A5894FC257FB" Comment="Исправность рез. ИП =24В DI (внеш.)" />
+        <Field Name="A2_10_11" Type="BOOL" UUID="03522A284940B0D6751E73BA7E412B9B" Comment="Исправность осн. ИП =24В DO (внеш.)" />
+        <Field Name="A2_10_12" Type="BOOL" UUID="5A796995449BA147190C44B4D91F61D4" Comment="Исправность рез. ИП =24В DO (внеш.)" />
+        <Field Name="A2_10_13" Type="BOOL" UUID="0FFA0C8E44EFB17C375BB2976DFCB548" Comment="Исправность осн. ИП =24В внешн. Устройств" />
+        <Field Name="A2_10_14" Type="BOOL" UUID="3700640141A171DA41F82395293F5ED2" Comment="Исправность рез. ИП =24В внешн. Устройств" />
+        <Field Name="A2_10_15" Type="BOOL" UUID="B7BDD41F4B43FC490B5931BB8BAFFF23" Comment="Не подключен" />
+        <Field Name="A2_10_16" Type="BOOL" UUID="B9F8A8D344752EBE509D50AE44AED743" Comment="Не подключен" />
+        <Field Name="A2_3_STATUS" Type="BOOL" UUID="CEAF35814758371C0A621FABBE2274D8" />
+        <Field Name="A2_4_STATUS" Type="BOOL" UUID="3DE27DA147927C1A1D0D8E87A627DB87" />
+        <Field Name="A2_5_STATUS" Type="BOOL" UUID="BAE6B7E14DD14270CA01C8B9F38B8EE0" />
+        <Field Name="A2_6_STATUS" Type="BOOL" UUID="7EABD2C0450E7E68D95E9DB98FE2076C" />
+        <Field Name="A2_7_STATUS" Type="BOOL" UUID="B818A55543F50070BE971F9786E20452" />
+        <Field Name="A2_8_STATUS" Type="BOOL" UUID="EEB940A74A6CDD459D454E8EAC1EA7CA" />
+        <Field Name="A2_9_STATUS" Type="BOOL" UUID="E9EC3B6B4329DD31C836AEBFB808F71C" />
+        <Field Name="A2_10_STATUS" Type="BOOL" UUID="C4E34F834267C6817EAB049B87A405FB" />
     </Fields>
 </Type>
