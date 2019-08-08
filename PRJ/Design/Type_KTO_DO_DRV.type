@@ -2,6 +2,86 @@
 <!DOCTYPE Type v. 1.0 >
 <Type Name="KTO_DO_DRV" Kind="Struct" UUID="0F6D678243CE8828D7655F9553C3A52B">
     <Fields>
+        <Field Name="A3_6_1" Type="BOOL" UUID="3D3A46114393E0425687CFA379B1EF2C" Comment="Световая сигнализация &quot;Загазованность 1 порог 10%&quot; (HL3)" />
+        <Field Name="A3_6_2" Type="BOOL" UUID="EE22FEEB42C657CC96DC828D6C9477C0" Comment="Световая сигнализация &quot;Загазованность 2 порог 20%&quot; (HL4)" />
+        <Field Name="A3_6_3" Type="BOOL" UUID="DBE49B574A54BB9734843E81C9994B30" Comment="Световая сигнализация &quot;Загазованность 1 порог 20мг/м3&quot; (HL5)" />
+        <Field Name="A3_6_4" Type="BOOL" UUID="6BF6F2644F5436EC1F80FD88E8330403" Comment="Световая сигнализация &quot;Загазованность 2 порог 95мг/м3&quot; (HL6)" />
+        <Field Name="A3_6_5" Type="BOOL" UUID="1620D4E04C3DE214206929A7DB1720C5" Comment="Световое табло &quot;аварийный вентилятор включен&quot; (HL8)" />
+        <Field Name="A3_6_6" Type="BOOL" UUID="452EF5294E7C0BA6854E5CAA6D748646" Comment="Звуковая сигнализация загазованности (HA1)" />
+        <Field Name="A3_6_7" Type="BOOL" UUID="797D34B4438E8D74BC502E99BEE5CCF8" Comment="Светозвуковая сигнализация &quot;Авария инсинератора&quot;(HLA-1)" />
+        <Field Name="A3_6_8" Type="BOOL" UUID="B9AFBF2C4CE5D470403650A4426301D2" Comment="Открыть клапан отсечной (CV-0201)" />
+        <Field Name="A3_6_9" Type="BOOL" UUID="C3D362AB40854087CD87F3972D77A1AE" Comment="Закрыть клапан отсечной (CV-0201)" />
+        <Field Name="A3_6_10" Type="BOOL" UUID="57CE1F9347C364D5410820BB7D97FAC1" Comment="Активизировать дискретное управления  клапана отсечного (CV-0201)" />
+        <Field Name="A3_6_11" Type="BOOL" UUID="F6B5B58D480A16DEA8590091DC021B94" Comment="Блокировка магнитного замка двери выема золы из инсинератора (XY0205)" />
+        <Field Name="A3_6_12" Type="BOOL" UUID="0BFB0FF94761228744D884AE73A9D703" Comment="Входной электромагнитный клапан гидравлической системы привода заслонок (EV-0103)" />
+        <Field Name="A3_6_13" Type="BOOL" UUID="6F758B81451CB741528E3498882E8CF2" Comment="Открыть ворошитель гидравлической системы привода заслонок (EV-0105)" />
+        <Field Name="A3_6_14" Type="BOOL" UUID="5E2C0EB34C80F1C9069B258623561B7D" Comment="Закрыть ворошитель гидравлической системы привода заслонок (EV-0106)" />
+        <Field Name="A3_6_15" Type="BOOL" UUID="4B27117742E55A796031C3B76499CD0D" Comment="Открыть огнестойкую дверь гидравлической системы привода заслонок (EV-0107)" />
+        <Field Name="A3_6_16" Type="BOOL" UUID="B9FFC2724E15BABE88E6E192679EFFB8" Comment="Заткрыть огнестойкую дверь гидравлической системы привода заслонок (EV-0108)" />
+        <Field Name="A3_7_1" Type="BOOL" UUID="CF8984804771D75A8CD81899F1B2E37A" Comment="Открыть заслонку загрузки гидравлической системы привода заслонок (EV-0109)" />
+        <Field Name="A3_7_2" Type="BOOL" UUID="969FAD0D47F1DD026D4F2EB5D7E80925" Comment="Закрыть заслонку загрузки гидравлической системы привода заслонок (EV-0110)" />
+        <Field Name="A3_7_3" Type="BOOL" UUID="1AFA0E78453EE92BEFB604BD8D91E7A5" Comment="Открыть толкатель гидравлической системы привода заслонок (EV-0111)" />
+        <Field Name="A3_7_4" Type="BOOL" UUID="F7467DD042CE63F0FEAB86886D800162" Comment="Закрыть толкатель гидравлической системы привода заслонок (EV-0112)" />
+        <Field Name="A3_7_5" Type="BOOL" UUID="C9DB42BA4FDC0EBFAB61E681677A13A8" Comment="ГРПШ.Открыть клапан (КЭ1)" />
+        <Field Name="A3_7_6" Type="BOOL" UUID="A758DDE248325202B6CB6E9DF1CA2805" Comment="Пуск вентилятора аварийного (B1)" />
+        <Field Name="A3_7_7" Type="BOOL" UUID="42630A8447256828875FCD9B03D08CCF" Comment="Стоп вентилятора аварийного (B1)" />
+        <Field Name="A3_7_8" Type="BOOL" UUID="90D35F8349437DCB01C048B9840A0BB6" Comment="Пуск вентилятора подачи воздуха в основную камеру сгорания (CF-0201)" />
+        <Field Name="A3_7_9" Type="BOOL" UUID="B3899C6741CC31EA4D7A0E80D3E763DD" Comment="Стоп вентилятора подачи воздуха в основную камеру сгорания (CF-0201)" />
+        <Field Name="A3_7_10" Type="BOOL" UUID="85BBC1E040B8CD0A5D0C8F8C299092B7" Comment="Пуск вентилятора подачи воздуха во вторичную камеру сгорания (CF-0202)" />
+        <Field Name="A3_7_11" Type="BOOL" UUID="CD5339FE4445599A8B66DEB75CD2E495" Comment="Стоп вентилятора подачи воздуха во вторичную камеру сгорания (CF-0202)" />
+        <Field Name="A3_7_12" Type="BOOL" UUID="48DE30E546202C9BEFF1EFA5239F92E5" Comment="Пуск вентилятора подачи дымовых газов в трубу (CF-0301) " />
+        <Field Name="A3_7_13" Type="BOOL" UUID="50D5AF6E440390A73BB5FF9CD58FA4FF" Comment="Стоп вентилятора подачи дымовых газов в трубу (CF-0301) " />
+        <Field Name="A3_7_14" Type="BOOL" UUID="CCC1DA4A464F60D1C3AA01BA4BCE462B" Comment="Пуск вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201) " />
+        <Field Name="A3_7_15" Type="BOOL" UUID="29B03B3B4D19E072742D7BB90FD53B4E" Comment="Стоп вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201) " />
+        <Field Name="A3_7_16" Type="BOOL" UUID="D155B314420E18EB3D0CC19AC5110741" Comment="Пуск дозатора реагентов в систему охлаждения дымовых газов инсинератора (RAL-0201)" />
+        <Field Name="A3_8_1" Type="BOOL" UUID="E77A94AB46EB784ACDBE9BA75A7CE1E4" Comment="Стоп дозатора реагентов в систему охлаждения дымовых газов инсинератора (RAL-0201)" />
+        <Field Name="A3_8_2" Type="BOOL" UUID="06A2939647F50C35486BC9A1F94F0364" Comment="Пуск дозатора реагентов в систему охлаждения дымовых газов инсинератора (CH-0201 )" />
+        <Field Name="A3_8_3" Type="BOOL" UUID="D2360B954BF9724A2D69AD8679C8D6B6" Comment="Стоп дозатора реагентов в систему охлаждения дымовых газов инсинератора (CH-0201 )" />
+        <Field Name="A3_8_4" Type="BOOL" UUID="1DB8119D4BA6190AD7EC5B99E7B6ABE5" Comment="Пуск насоса (рабочий) (P-0201A)" />
+        <Field Name="A3_8_5" Type="BOOL" UUID="4B8CDA9E4A85B8B58DBAA793836FE919" Comment="Стоп насоса (рабочий) (P-0201A)" />
+        <Field Name="A3_8_6" Type="BOOL" UUID="C502F4BD49E84C26FC569EACF1D82C80" Comment="Пуск свечи зажигания устройства горелочного основной камеры сгорания (TR-0101A)" />
+        <Field Name="A3_8_7" Type="BOOL" UUID="74FAEC964E471F0C7BA005AB548AC5DF" Comment="Стоп свечи зажигания устройства горелочного основной камеры сгорания (TR-0101A)" />
+        <Field Name="A3_8_8" Type="BOOL" UUID="5363DB6F41759A2FCB173D8D6D211335" Comment="Пуск свечи зажигания устройства горелочного вторичной камеры сгорания (TR-0101B)" />
+        <Field Name="A3_8_9" Type="BOOL" UUID="8EBB5AB846E0E9475EBD27BE811C1209" Comment="Стоп свечи зажигания устройства горелочного вторичной камеры сгорания (TR-0101B)" />
+        <Field Name="A3_8_10" Type="BOOL" UUID="51BCE2DF44F1B671F0719CA568007F18" Comment="Пуск клапана системы подачи воздуха на горелочное устройство основной камеры сгорания (TV-0102A)" />
+        <Field Name="A3_8_11" Type="BOOL" UUID="EBFA003743A35964C98974B76DE6590C" Comment="Стоп клапана системы подачи воздуха на горелочное устройство основной камеры сгорания (TV-0102A)" />
+        <Field Name="A3_8_12" Type="BOOL" UUID="AF0EF4244960A12DFD6C2A93DE03858B" Comment="Пуск клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания (SV-0101B)" />
+        <Field Name="A3_8_13" Type="BOOL" UUID="734E36E4499ABDE4909F50A3D4114A4A" Comment="Стоп клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания (SV-0101B)" />
+        <Field Name="A3_8_14" Type="BOOL" UUID="520315DB4D4F04F656770CA7E3201381" Comment="Пуск клапана системы подачи газа на горелочное устройство основной камеры сгорания (TV-0101A)" />
+        <Field Name="A3_8_15" Type="BOOL" UUID="F7C4B0C34FB198894A7D91B06BC1E8B1" Comment="Стоп клапана системы подачи газа на горелочное устройство основной камеры сгорания (TV-0101A)" />
+        <Field Name="A3_8_16" Type="BOOL" UUID="116D22F94681A730BE36709995697492" Comment="Пуск клапана системы подачи газа на горелочное устройство вторичной камеры сгорания (TV-0101B)" />
+        <Field Name="A3_9_1" Type="BOOL" UUID="6307F7B24998CAD4A5BF3984311367E0" Comment="Стоп клапана системы подачи газа на горелочное устройство вторичной камеры сгорания (TV-0101B)" />
+        <Field Name="A3_9_2" Type="BOOL" UUID="E0910DDA474A9BDE48BD7A967F97D963" Comment="Пуск клапана отсечного (CV-0201)" />
+        <Field Name="A3_9_3" Type="BOOL" UUID="2B4225B240F4DE359264D2834BF0704B" Comment="Стоп клапана отсечного (CV-0201)" />
+        <Field Name="A3_9_4" Type="BOOL" UUID="FCF1290949E258C1506C55BA3CE232E9" Comment="Пуск насоса (резервный) (P-0201B)" />
+        <Field Name="A3_9_5" Type="BOOL" UUID="B68FADFA42766A96E80DE6B7116964B6" Comment="Стоп насоса (резервный) (P-0201B)" />
+        <Field Name="A3_9_6" Type="BOOL" UUID="B62FC74541E1F374695588A85C9B7A4A" Comment="Пуск компрессора (C-0201)" />
+        <Field Name="A3_9_7" Type="BOOL" UUID="CB4C0D4E4796DDED74C20EBDBB63C99C" Comment="Стоп компрессора (C-0201)" />
+        <Field Name="A3_9_8" Type="BOOL" UUID="2AA2E56943763FC202A7B59F1FA95B48" Comment="Пуск дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)" />
+        <Field Name="A3_9_9" Type="BOOL" UUID="32EA858C41861EC16D68ABA79A5FB120" Comment="Стоп дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)" />
+        <Field Name="A3_9_10" Type="BOOL" UUID="F5100B1A49C637C152B73EA45AD2754E" Comment="Пуск вентилятора системы подачи воздуха на горелочное устройство основной камеры сгорания (СF-0101A)" />
+        <Field Name="A3_9_11" Type="BOOL" UUID="47AB147040F4C233F579EEBC8862674D" Comment="Стоп вентилятора системы подачи воздуха на горелочное устройство основной камеры сгорания (СF-0101A)" />
+        <Field Name="A3_9_12" Type="BOOL" UUID="F92D29714D1A80DC74327AA6289CD46F" Comment="Пуск вентилятора системы подачи воздуха на горелочное устройство вторичной камеры сгорания (СF-0101B)" />
+        <Field Name="A3_9_13" Type="BOOL" UUID="C49B69344C127F56AB638B975E9EC848" Comment="Стоп вентилятора системы подачи воздуха на горелочное устройство вторичной камеры сгорания (СF-0101B)" />
+        <Field Name="A3_9_14" Type="BOOL" UUID="4C156E5D404A8014D3BBE5B7CB456A05" Comment="Пуск шнека выгрузки золы из инсинератора (SС-0201 )" />
+        <Field Name="A3_9_15" Type="BOOL" UUID="4C4CD6404AE8B6F1CB6A088F227CD7EE" Comment="Стоп шнека выгрузки золы из инсинератора (SС-0201 )" />
+        <Field Name="A3_9_16" Type="BOOL" UUID="4D098F8F4F17F3577851978B476F2F6D" Comment="Пуск шнека выгрузки золы из мультициклона (SС-0202) " />
+        <Field Name="A3_10_1" Type="BOOL" UUID="BBC57AFB4A58835CB2F5EFABB4344544" Comment="Стоп шнека выгрузки золы из мультициклона (SС-0202) " />
+        <Field Name="A3_10_2" Type="BOOL" UUID="A6ED6CF94528EFF3010FDFB934D889D3" Comment="Пуск насоса подачи масла гидравлической системы привода заслонок (P-0401)" />
+        <Field Name="A3_10_3" Type="BOOL" UUID="2DAF3E17468519C46D8CF0B42A626F2C" Comment="Стоп насоса подачи масла гидравлической системы привода заслонок (P-0401)" />
+        <Field Name="A3_10_4" Type="BOOL" UUID="D7F7C6B24DA1B6D97D2F98B0518252B3" Comment="Пуск подогревателя масла гидравлической системы привода заслонок (EH-0401)" />
+        <Field Name="A3_10_5" Type="BOOL" UUID="0F17DEEE4E5A5BC6C3DBE1810DD61FAE" Comment="Стоп подогревателя масла гидравлической системы привода заслонок (EH-0401)" />
+        <Field Name="A3_10_6" Type="BOOL" UUID="D6ADA2774F012333100C4CB34A273740" Comment="Расцепитель &quot;Загазованность порог 2&quot; (сигнал в ВРУ1)" />
+        <Field Name="A3_10_7" Type="BOOL" UUID="ACF452AB47B7543CA64275AD35F1F848" Comment="Расцепитель &quot;Пожар&quot; (сигнал в ВРУ1)" />
+        <Field Name="A3_10_8" Type="BOOL" UUID="1705759E46902C007331168DB6F8022C" Comment="Резерв" />
+        <Field Name="A3_10_9" Type="BOOL" UUID="C363814A4CECB1A24749A78F3EBC6909" Comment="Резерв" />
+        <Field Name="A3_10_10" Type="BOOL" UUID="081E15BC423B333FF289A68ADA345908" Comment="Резерв" />
+        <Field Name="A3_10_11" Type="BOOL" UUID="63853C114190BCDC241D4D96137328ED" Comment="Резерв" />
+        <Field Name="A3_10_12" Type="BOOL" UUID="E73E69A04679B4EE92C8509C61BE08EF" Comment="Резерв" />
+        <Field Name="A3_10_13" Type="BOOL" UUID="361D330144511D9C863ECEB345D96969" Comment="Резерв" />
+        <Field Name="A3_10_14" Type="BOOL" UUID="92231EF6435AD41BAD3A8D876085F4A1" Comment="Индикация кнопки на двери &quot;Аварийный останов&quot;" />
+        <Field Name="A3_10_15" Type="BOOL" UUID="B8C7B21F463E28C3DDFBADB8FEA66931" Comment="Предупредительная звуковая сигнализация" />
+        <Field Name="A3_10_16" Type="BOOL" UUID="A79C2B9847288253AE3CFDB0139DC91F" Comment="Аварийная звуковая сигнализация" />
         <Field Name="A3_6_STATUS" Type="BOOL" UUID="E711608D4E3CE5CB762DC18AD7110FAE" />
         <Field Name="A3_7_STATUS" Type="BOOL" UUID="C04F5C874D35DE0138CC8C9698F0424D" />
         <Field Name="A3_8_STATUS" Type="BOOL" UUID="5AF2DEAD4C1BEF781206F68BB51DA2EA" />

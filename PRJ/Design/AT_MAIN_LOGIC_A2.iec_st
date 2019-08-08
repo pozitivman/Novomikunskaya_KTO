@@ -60,6 +60,11 @@ cycleTime_AI_sys := clock_AI_cur - clock_AI_prev;]]></ST>
             <Field UUID="CF7E229443E1351DAA088F86810D2BC5" Name="Descr" Comment="Название дискрета" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" />
             <Field UUID="6A20C3BE40C40144566175922F96EEB6" Name="Nedost" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
         </Struct>
+        <Struct UUID="DB6F29104B460EFD234B3AAF41B5A86C" Name="DO_HMI">
+            <Field UUID="77E3D2D04EAC5FFE053266A5C23B7D35" Name="PV" Comment="Обработанное дискретное значение" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+            <Field UUID="1C82A30D4BF6CA5966AECDB8D7F4C90B" Name="Descr" Comment="Название дискрета" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" />
+            <Field UUID="E95DACBB4A3B3D72009756A400DAB510" Name="Nedost" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
+        </Struct>
     </DataTypes>
     <FBLibrary>
         <FunctionBlock UUID="90D0C5D044939603D0BD418B90A10328" Name="DI_Proc">
@@ -84,6 +89,15 @@ END_IF;
 
 DI_in_last := DI_Raw;
 DI_out.Descr := Descr;]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="6C89B03247257D32CFE585920A655092" Name="DO_Proc">
+            <Variables>
+                <Variable UUID="C05A88844838AB17B2D4E5A48643961F" Name="DO_in" Type="DO_HMI" TypeUUID="DB6F29104B460EFD234B3AAF41B5A86C" Usage="inout" />
+                <Variable UUID="4561503648200CEACA77619DBA776BA5" Name="DO_raw" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="output" />
+                <Variable UUID="A1FE3DF945115238B43084AF7ED463FF" Name="Descr" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" InitialValue="&apos;FALSE&apos;" Usage="input" />
+            </Variables>
+            <ST><![CDATA[DO_in.Descr := Descr;
+DO_raw := DO_in.PV;]]></ST>
         </FunctionBlock>
         <FunctionBlock UUID="9018116F43FC2E443834D486159520D8" Name="FB_DI">
             <Variables>
@@ -217,134 +231,301 @@ DI_out.Descr := Descr;]]></ST>
                 <Variable UUID="7ACE42664558DA688FAAB785D02C1128" Name="DI_128" Type="DI_Proc" TypeUUID="90D0C5D044939603D0BD418B90A10328" Usage="internal" />
             </Variables>
             <ST><![CDATA[if not IMIT then
-DI_001(KTO_DI_DRV.A2_3_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_1_SEN_QT1_CH4_zagaz_flt,	'Датчик загазованности по метану - Авария (QT1)');
-DI_002(KTO_DI_DRV.A2_3_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_2_SEN_QT1_CH4_zagaz_lim_1,	'Датчик загазованности по метану - Порог 1 (QT1)');
-DI_003(KTO_DI_DRV.A2_3_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_3_SEN_QT1_CH4_zagaz_lim_2,	'Датчик загазованности по метану - Порог 2 (QT1)');
-DI_004(KTO_DI_DRV.A2_3_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_4_SEN_QT2_CO2_warn_ala,	'Предупредительная сигнализация оксида углерода (QT2)');
-DI_005(KTO_DI_DRV.A2_3_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_5_SEN_QT2_CO2_emerg_ala,	'Аварийная сигнализация оксида углерода (QT2)');
-DI_006(KTO_DI_DRV.A2_3_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_6_Check_signal,	'Опробование сигнализации (SB1)');
-DI_007(KTO_DI_DRV.A2_3_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_7_SV1_ON,	'Клапан отсечной в положении "Открыто" (CV-0201)');
-DI_008(KTO_DI_DRV.A2_3_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_8_SV1_OFF,	'Клапан отсечной в положении "Закрыто" (CV-0201)');
-DI_009(KTO_DI_DRV.A2_3_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_9_SV1_RDY,	'Клапан отсечной в положении "Готовность" (CV-0201)');
-DI_010(KTO_DI_DRV.A2_3_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_10_SV1_FLT,	'Клапан отсечной в положении "Неисправность" (CV-0201)');
-DI_011(KTO_DI_DRV.A2_3_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_11_SV1_EMG,	'Клапан отсечной в положении "Авария" (CV-0201)');
-DI_012(KTO_DI_DRV.A2_3_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_12_R1_P_lo_gaz_GU_BBR,	'Реле низкого давления системы подачи газа на ГУ основной камеры сгорания (PS-0101A)');
-DI_013(KTO_DI_DRV.A2_3_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_13_R2_P_hi_gaz_GU_BBR,	'Реле высокого давления системы подачи газа на ГУ основной камеры сгорания (PS-0102A)');
-DI_014(KTO_DI_DRV.A2_3_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_14_R3_P_lo_gaz_GU_SBR,	'Реле низкого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0101B)');
-DI_015(KTO_DI_DRV.A2_3_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_15_R4_P_hi_gaz_GU_SBR,	'Реле высокого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0102B)');
-DI_016(KTO_DI_DRV.A2_3_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_16_R5_P_air_GU_BBR,	'Реле давления в системе подачи воздуха на ГУ первичной камеры сгорания (PS-0103A) ');
-DI_017(KTO_DI_DRV.A2_4_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_1_R6_P_air_GU_SBR,	'Реле давления в системе подачи воздуха на ГУ вторичной камеры сгорания (PS-0103B) ');
-DI_018(KTO_DI_DRV.A2_4_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_2_AG1_OFF,	'Ворошитель инсинератора в крайнем закрытом положении (ZSC-0204)');
-DI_019(KTO_DI_DRV.A2_4_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_3_AG1_ON,	'Ворошитель инсинератора в крайнем открытом положении (ZSO-0204)');
-DI_020(KTO_DI_DRV.A2_4_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_4_SEN_door_extr_ash_OFF,	'Датчик двери выема золы из инсинератора в сост. "закрыто" (ZSC-0207)');
-DI_021(KTO_DI_DRV.A2_4_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_5_SEN_door_serv_ins_OFF,	'Датчик двери обслуживания инсинератора в сост. "закрыто" (ZSC-0206)');
-DI_022(KTO_DI_DRV.A2_4_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_6_Lmin_tank_RD_CSSG,	'Минимальный уровень в баке дозатора реагентов в систему охлаждения дым. газов (LSL-0201)');
-DI_023(KTO_DI_DRV.A2_4_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_7_SEN_FP_door_ins_ld_OFF,	'Датчик огнестойкой двери загрузки инсинератора в состоянии "закрыто" (ZSC-0201)');
-DI_024(KTO_DI_DRV.A2_4_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_8_SEN_FP_door_ins_ld_ON,	'Датчик огнестойкой двери загрузки инсинератора в состоянии "открыто" (ZSO-0201)');
-DI_025(KTO_DI_DRV.A2_4_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_9_SEN_damp_ld_dev_feed_OFF,	'Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "закрыто" (ZSC-0202)');
-DI_026(KTO_DI_DRV.A2_4_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_10_SEN_damp_ld_dev_feed_ON,	'Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "открыто" (ZSO-0202)');
-DI_027(KTO_DI_DRV.A2_4_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_11_SEN_push_ld_dev_feed_OFF,	'Датчик толкателя устройства подачи в инсинератор в состоянии "закрыт" (ZSC-0203)');
-DI_028(KTO_DI_DRV.A2_4_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_12_SEN_push_ld_dev_feed_ON,	'Датчик толкателя устройства подачи в инсинератор в состоянии "открыт" (ZSO-0203)');
-DI_029(KTO_DI_DRV.A2_4_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_13_SEN_push_ld_dev_feed_IMT,	'Датчик толкателя устройства подачи в инсинератор в состоянии "промежуточное" (ZSO-0205)');
-DI_030(KTO_DI_DRV.A2_4_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_14_SW_T_oil_tank,	'Переключатель температуры масляного бака (TS-0202)');
-DI_031(KTO_DI_DRV.A2_4_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_15_Lmin_oil_GSDD,	'Минимальный уровень масла в баке гидравлической системы привода заслонок (LS-0102)');
-DI_032(KTO_DI_DRV.A2_4_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_16_V1_emg_ON,	'Вентилятор аварийный включен (B1)');
-DI_033(KTO_DI_DRV.A2_5_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_1_V2_air_feed_BBR_ON,	'Вентилятор подачи воздуха в основную камеру сгорания включен (CF-0201)');
-DI_034(KTO_DI_DRV.A2_5_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_2_V2_air_feed_BBR_FLT,	'Вентилятор подачи воздуха в основную камеру сгорания в аварии (CF-0201)');
-DI_035(KTO_DI_DRV.A2_5_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_3_V3_air_feed_SBR_ON,	'Вентилятор подачи воздуха во вторичную камеру сгорания включен (CF-0202)');
-DI_036(KTO_DI_DRV.A2_5_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_4_V3_air_feed_SBR_FLT,	'Вентилятор подачи воздуха во вторичную камеру сгорания в аварии (CF-0202)');
-DI_037(KTO_DI_DRV.A2_5_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_5_V4_ash_gaz_feed_ON,	'Вентилятор подачи дымовых газов в трубу включен (CF-0301) ');
-DI_038(KTO_DI_DRV.A2_5_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_6_V4_ash_gaz_feed_FLT,	'Вентилятор подачи дымовых газов в трубу в аварии (CF-0301) ');
-DI_039(KTO_DI_DRV.A2_5_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_7_V5_air_feed_CSG_ins_ON,	'Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)');
-DI_040(KTO_DI_DRV.A2_5_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_8_V5_air_feed_CSG_ins_FLT,	'Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)');
-DI_041(KTO_DI_DRV.A2_5_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_9_RD1_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (RAL-0201)');
-DI_042(KTO_DI_DRV.A2_5_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_10_RD1_RA_CSG_ON,	'Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (RAL-0201)');
-DI_043(KTO_DI_DRV.A2_5_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_11_RD2_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (CH-0201 )');
-DI_044(KTO_DI_DRV.A2_5_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_12_RD2_RA_CSG_ON,	'Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (CH-0201 )');
-DI_045(KTO_DI_DRV.A2_5_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_13_N1_work_ON,	'Насос (рабочий) включен (P-0201A)');
-DI_046(KTO_DI_DRV.A2_5_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_14_N1_work_RA_ON,	'Дист. управл. насосом (рабочим) включено (P-0201A)');
-DI_047(KTO_DI_DRV.A2_5_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_15_IC1_burn_dev_BBR_ON,	'Свеча зажигания устройства горелочного основной камеры сгорания включена (TR-0101A)');
-DI_048(KTO_DI_DRV.A2_5_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_16_IC1_RA_burn_dev_BBR_ON,	'Дист. управл. свечой зажигания устройства горелочного основной камеры сгорания включено (TR-0101A)');
-DI_049(KTO_DI_DRV.A2_6_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_1_IC1_burn_dev_SBR_ON,	'Свеча зажигания устройства горелочного вторичной камеры сгорания включена (TR-0101B)');
-DI_050(KTO_DI_DRV.A2_6_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_2_IC1_RA_burn_dev_SBR_ON,	'Дист. управл. свечой зажигания устройства горелочного вторичной камеры сгорания включено (TR-0101B)');
-DI_051(KTO_DI_DRV.A2_6_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_3_SV2_air_feed_burn_dev_SBR_ON,	'Клапан системы подачи воздуха на горелочное устройство вторичной камеры сгорания открыт (SV-0101b)');
-DI_052(KTO_DI_DRV.A2_6_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_4_SV2_RA_air_feed_burn_dev_SBR_ON,	'Дист. управл. клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания включено (SV-0101B)');
-DI_053(KTO_DI_DRV.A2_6_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_5_SV3_gaz_feed_burn_dev_BBR_ON,	'Клапан системы подачи газа на горелочное устройство основной камеры сгорания открыт (TV-0101A)');
-DI_054(KTO_DI_DRV.A2_6_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_6_SV3_RA_air_feed_burn_dev_BBR_ON,	'Дист. управл. клапана системы подачи газа на горелочное устройство основной камеры сгорания включено (TV-0101A)');
-DI_055(KTO_DI_DRV.A2_6_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_7_SV4_gaz_feed_burn_dev_SBR_ON,	'Клапан системы подачи газа на горелочное устройство вторичной камеры сгорания открыт (TV-0101В)');
-DI_056(KTO_DI_DRV.A2_6_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_8_SV4_RA_air_feed_burn_dev_SBR_ON,	'Дист. управл. клапана системы подачи газа на горелочное устройство вторичной камеры сгорания включено (TV-0101В)');
-DI_057(KTO_DI_DRV.A2_6_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_9_SV5_KMO3_ON,	'Клапан отсечной КМО-3 включен (CV-0201) сигнал от ВРУ');
-DI_058(KTO_DI_DRV.A2_6_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_10_SV5_RA_KMO3_ON,	'Дист. управл. клапаном отсечным КМО-3 включено (CV-0201) сигнал от ВРУ');
-DI_059(KTO_DI_DRV.A2_6_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_11_SV6_air_feed_burn_dev_BBR_ON,	'Клапан системы подачи воздуха на горелочное устройство основной камеры сгорания открыт (TV-0102A)');
-DI_060(KTO_DI_DRV.A2_6_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_12_SV6_RA_air_feed_burn_dev_BBR_ON,	'Дист. управл. клапаном системы подачи воздуха на горелочное устройство основной камеры сгорания включено (TV-0102A)');
-DI_061(KTO_DI_DRV.A2_6_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_13_N2_rez_ON,	'Насос (резервный) включен (P-0201B)');
-DI_062(KTO_DI_DRV.A2_6_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_14_N2_rez_RA_ON,	'Дист. управл. насосом (резервным) включено (P-0201B)');
-DI_063(KTO_DI_DRV.A2_6_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_15_C1_ON,	'Компрессор включен (C-0201)');
-DI_064(KTO_DI_DRV.A2_6_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_16_C1_RA_ON,	'Дист. управл. компрессором включено (C-0201)');
-DI_065(KTO_DI_DRV.A2_7_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_1_RD3_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (SC-0203)');
-DI_066(KTO_DI_DRV.A2_7_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_2_RD3_RA_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)');
-DI_067(KTO_DI_DRV.A2_7_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_3_V6_air_feed_burn_dev_BBR_ON,	'Вентилятор системы подачи воздуха на горелочное устройство основной камеры сгорания включен (СF-0102)');
-DI_068(KTO_DI_DRV.A2_7_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_4_V7_air_feed_burn_dev_SBR_ON,	'Вентилятор системы подачи воздуха на горелочное устройство вторичной камеры сгорания включен (СF-0101)');
-DI_069(KTO_DI_DRV.A2_7_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_5_SC1_disch_ash_INS_ON,	'Шнек выгрузки золы из инсинератора включен (SС-0201 )');
-DI_070(KTO_DI_DRV.A2_7_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_6_SC2_disch_ash_MC_ON,	'Шнек выгрузки золы из мультициклона включен (SС-0202) ');
-DI_071(KTO_DI_DRV.A2_7_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_7_N3_oil_feed_DD_ON,	'Насос подачи масла гидравлической системы привода заслонок включен (P-0401)');
-DI_072(KTO_DI_DRV.A2_7_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_8_H1_oil_feed_DD_ON,	'Подогреватель масла гидравлической системы привода заслонок включен (EH-0401)');
-DI_073(KTO_DI_DRV.A2_7_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_9_C1_ON,	'Срабатывание расцепителя (от ВРУ1)');
-DI_074(KTO_DI_DRV.A2_7_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_10_Rez,	'Резерв');
-DI_075(KTO_DI_DRV.A2_7_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_11_Rez,	'Резерв');
-DI_076(KTO_DI_DRV.A2_7_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_12_Rez,	'Резерв');
-DI_077(KTO_DI_DRV.A2_7_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_13_Rez,	'Резерв');
-DI_078(KTO_DI_DRV.A2_7_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_14_Rez,	'Резерв');
-DI_079(KTO_DI_DRV.A2_7_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_15_Rez,	'Резерв');
-DI_080(KTO_DI_DRV.A2_7_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_16_Rez,	'Резерв');
-DI_081(KTO_DI_DRV.A2_8_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_1_CHECK_Uop_AC_220,	'Наличие напряжения ~380 В ввода 1 ВРУ КТО1,2');
-DI_082(KTO_DI_DRV.A2_8_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_2_CHECK_Urp_DC_220,	'Наличие напряжения ~380 В ввода 2 ВРУ КТО1,2');
-DI_083(KTO_DI_DRV.A2_8_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_3_QFS_PIT_ON,	'Автоматический выключатель на вводе 1 включен ВРУ КТО1,2');
-DI_084(KTO_DI_DRV.A2_8_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_4_CHECK_GC_DISCH,	'Автоматический выключатель на вводе 2 включен ВРУ КТО1,2');
-DI_085(KTO_DI_DRV.A2_8_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_5_GC_OSN_IP_DC_24_VC,	'Срабатывание АВР ВРУ КТО1,2');
-DI_086(KTO_DI_DRV.A2_8_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_6_GC_REZ_IP_DC_24_VC,	'Пожар сигнал от ШПС');
-DI_087(KTO_DI_DRV.A2_8_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_7_GC_OSN_IP_DC_24_AI,	'Неисправность сигнал от ШПС');
-DI_088(KTO_DI_DRV.A2_8_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_8_Rez,	'Резерв');
-DI_089(KTO_DI_DRV.A2_8_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_9_Rez,	'Резерв');
-DI_090(KTO_DI_DRV.A2_8_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_10_Rez,	'Резерв');
-DI_091(KTO_DI_DRV.A2_8_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_11_Rez,	'Резерв');
-DI_092(KTO_DI_DRV.A2_8_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_12_Rez,	'Резерв');
-DI_093(KTO_DI_DRV.A2_8_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_13_Rez,	'Резерв');
-DI_094(KTO_DI_DRV.A2_8_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_14_Rez,	'Резерв');
-DI_095(KTO_DI_DRV.A2_8_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_15_Rez,	'Резерв');
-DI_096(KTO_DI_DRV.A2_8_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_16_Rez,	'Резерв');
-DI_097(KTO_DI_DRV.A2_9_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_1_BT_ES,	'Аварийный останов');
-DI_098(KTO_DI_DRV.A2_9_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_2_BT_Start,	'Запуск');
-DI_099(KTO_DI_DRV.A2_9_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_3_BT_door_feed_ON,	'Открыть подающую дверь');
-DI_100(KTO_DI_DRV.A2_9_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_4_BT_door_feed_OFF,	'Закрыть подающую дверь');
-DI_101(KTO_DI_DRV.A2_9_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_5_BT_door_ash_unload_ON,	'Открыть дверь выгрузки золы');
-DI_102(KTO_DI_DRV.A2_9_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_6_BT_door_ash_unload_OFF,	'Открыть дверь выгрузки золы');
-DI_103(KTO_DI_DRV.A2_9_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_7_BT_feed_waste_auto,	'Подача отходов в автоматическом режиме');
-DI_104(KTO_DI_DRV.A2_9_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_8_BT_feed_waste_man,	'Подача отходов в ручном режиме');
-DI_105(KTO_DI_DRV.A2_9_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_9_BT_feed_waste_start,	'Подача отходов - пуск');
-DI_106(KTO_DI_DRV.A2_9_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_10_BT_feed_waste_stop,	'Подача отходов - стоп');
-DI_107(KTO_DI_DRV.A2_9_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_11_BT_load_cycle,	'Цикл загрузки');
-DI_108(KTO_DI_DRV.A2_9_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_12_BT_cool_start,	'Запуск охлаждения');
-DI_109(KTO_DI_DRV.A2_9_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_13_BT_Kvitir,	'Квитирование');
-DI_110(KTO_DI_DRV.A2_9_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_14_BT_Check_alarm,	'Опробование сигнализации');
-DI_111(KTO_DI_DRV.A2_9_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_15_NC,	'Не подключен');
-DI_112(KTO_DI_DRV.A2_9_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_16_NC,	'Не подключен');
-DI_113(KTO_DI_DRV.A2_10_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_1_CTRL_OP_AC220,	'Контроль основного питания  ~220 В');
-DI_114(KTO_DI_DRV.A2_10_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_2_CTRL_P_UPS_AC220,	'Контроль питания от ИБП ~220 В');
-DI_115(KTO_DI_DRV.A2_10_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_3_SW_P_ON,	'Автоматы питания включены');
-DI_116(KTO_DI_DRV.A2_10_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_4_CTRL_ISP_DISCH,	'Контроль исправности разрядников');
-DI_117(KTO_DI_DRV.A2_10_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_5_ISP_OSN_IP_DC24_IC,	'Исправность осн. ИП =24В внутренних цепей');
-DI_118(KTO_DI_DRV.A2_10_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_6_ISP_REZ_IP_DC24_IC,	'Исправность рез. ИП =24В внутренних цепей');
-DI_119(KTO_DI_DRV.A2_10_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_7_ISP_OSN_IP_DC24_AI_AO,	'Исправность осн. ИП =24В AI, AO');
-DI_120(KTO_DI_DRV.A2_10_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_8_ISP_REZ_IP_DC24_AI_AO,	'Исправность рез. ИП =24В AI, AO');
-DI_121(KTO_DI_DRV.A2_10_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_9_ISP_OSN_IP_DC24_DI_EXT,	'Исправность осн. ИП =24В DI (внеш.)');
-DI_122(KTO_DI_DRV.A2_10_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_10_ISP_REZ_IP_DC24_DI_EXT,	'Исправность рез. ИП =24В DI (внеш.)');
-DI_123(KTO_DI_DRV.A2_10_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_11_ISP_OSN_IP_DC24_DO_EXT,	'Исправность осн. ИП =24В DO (внеш.)');
-DI_124(KTO_DI_DRV.A2_10_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_12_ISP_REZ_IP_DC24_DO_EXT,	'Исправность рез. ИП =24В DO (внеш.)');
-DI_125(KTO_DI_DRV.A2_10_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_13_ISP_OSN_IP_DC24_EXT_DEV,	'Исправность осн. ИП =24В внешн. Устройств');
-DI_126(KTO_DI_DRV.A2_10_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_14_ISP_REZ_IP_DC24_EXT_DEV,	'Исправность рез. ИП =24В внешн. Устройств');
-DI_127(KTO_DI_DRV.A2_10_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_15_NC,	'Не подключен');
-DI_128(KTO_DI_DRV.A2_10_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_16_NC,	'Не подключен');
+	DI_001(KTO_DI_DRV.A2_3_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_1_SEN_QT1_CH4_zagaz_flt,	'Датчик загазованности по метану - Авария (QT1)');
+	DI_002(KTO_DI_DRV.A2_3_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_2_SEN_QT1_CH4_zagaz_1p,	'Датчик загазованности по метану - Порог 1 (QT1)');
+	DI_003(KTO_DI_DRV.A2_3_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_3_SEN_QT1_CH4_zagaz_2p,	'Датчик загазованности по метану - Порог 2 (QT1)');
+	DI_004(KTO_DI_DRV.A2_3_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_4_SEN_QT2_CO2_warn_ala,	'Предупредительная сигнализация оксида углерода (QT2)');
+	DI_005(KTO_DI_DRV.A2_3_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_5_SEN_QT2_CO2_emerg_ala,	'Аварийная сигнализация оксида углерода (QT2)');
+	DI_006(KTO_DI_DRV.A2_3_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_6_SB1_Check_signal,	'Опробование сигнализации (SB1)');
+	DI_007(KTO_DI_DRV.A2_3_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_7_CV0201_ON,	'Клапан отсечной в положении "Открыто" (CV-0201)');
+	DI_008(KTO_DI_DRV.A2_3_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_8_CV0201_OFF,	'Клапан отсечной в положении "Закрыто" (CV-0201)');
+	DI_009(KTO_DI_DRV.A2_3_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_9_CV0201_RDY,	'Клапан отсечной в положении "Готовность" (CV-0201)');
+	DI_010(KTO_DI_DRV.A2_3_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_10_CV0201_FLT,	'Клапан отсечной в положении "Неисправность" (CV-0201)');
+	DI_011(KTO_DI_DRV.A2_3_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_11_CV0201_EMG,	'Клапан отсечной в положении "Авария" (CV-0201)');
+	DI_012(KTO_DI_DRV.A2_3_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_12_R1_P_lo_gaz_GU_BBR,	'Реле низкого давления системы подачи газа на ГУ основной камеры сгорания (PS-0101A)');
+	DI_013(KTO_DI_DRV.A2_3_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_13_R2_P_hi_gaz_GU_BBR,	'Реле высокого давления системы подачи газа на ГУ основной камеры сгорания (PS-0102A)');
+	DI_014(KTO_DI_DRV.A2_3_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_14_R3_P_lo_gaz_GU_SBR,	'Реле низкого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0101B)');
+	DI_015(KTO_DI_DRV.A2_3_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_15_R4_P_hi_gaz_GU_SBR,	'Реле высокого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0102B)');
+	DI_016(KTO_DI_DRV.A2_3_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_3_16_R5_P_air_GU_BBR,	'Реле давления в системе подачи воздуха на ГУ первичной камеры сгорания (PS-0103A) ');
+	DI_017(KTO_DI_DRV.A2_4_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_1_R6_P_air_GU_SBR,	'Реле давления в системе подачи воздуха на ГУ вторичной камеры сгорания (PS-0103B) ');
+	DI_018(KTO_DI_DRV.A2_4_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_2_AG1_OFF,	'Ворошитель инсинератора в крайнем закрытом положении (ZSC-0204)');
+	DI_019(KTO_DI_DRV.A2_4_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_3_AG1_ON,	'Ворошитель инсинератора в крайнем открытом положении (ZSO-0204)');
+	DI_020(KTO_DI_DRV.A2_4_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_4_SEN_door_extr_ash_OFF,	'Датчик двери выема золы из инсинератора в сост. "закрыто" (ZSC-0207)');
+	DI_021(KTO_DI_DRV.A2_4_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_5_SEN_door_serv_ins_OFF,	'Датчик двери обслуживания инсинератора в сост. "закрыто" (ZSC-0206)');
+	DI_022(KTO_DI_DRV.A2_4_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_6_Lmin_tank_RD_CSSG,	'Минимальный уровень в баке дозатора реагентов в систему охлаждения дым. газов (LSL-0201)');
+	DI_023(KTO_DI_DRV.A2_4_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_7_SEN_FP_door_ins_ld_OFF,	'Датчик огнестойкой двери загрузки инсинератора в состоянии "закрыто" (ZSC-0201)');
+	DI_024(KTO_DI_DRV.A2_4_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_8_SEN_FP_door_ins_ld_ON,	'Датчик огнестойкой двери загрузки инсинератора в состоянии "открыто" (ZSO-0201)');
+	DI_025(KTO_DI_DRV.A2_4_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_9_SEN_damp_ld_dev_feed_OFF,	'Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "закрыто" (ZSC-0202)');
+	DI_026(KTO_DI_DRV.A2_4_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_10_SEN_damp_ld_dev_feed_ON,	'Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "открыто" (ZSO-0202)');
+	DI_027(KTO_DI_DRV.A2_4_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_11_SEN_push_ld_dev_feed_OFF,	'Датчик толкателя устройства подачи в инсинератор в состоянии "закрыт" (ZSC-0203)');
+	DI_028(KTO_DI_DRV.A2_4_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_12_SEN_push_ld_dev_feed_ON,	'Датчик толкателя устройства подачи в инсинератор в состоянии "открыт" (ZSO-0203)');
+	DI_029(KTO_DI_DRV.A2_4_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_13_SEN_push_ld_dev_feed_IMT,	'Датчик толкателя устройства подачи в инсинератор в состоянии "промежуточное" (ZSO-0205)');
+	DI_030(KTO_DI_DRV.A2_4_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_14_SW_T_oil_tank,	'Переключатель температуры масляного бака (TS-0202)');
+	DI_031(KTO_DI_DRV.A2_4_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_15_Lmin_oil_GSDD,	'Минимальный уровень масла в баке гидравлической системы привода заслонок (LS-0102)');
+	DI_032(KTO_DI_DRV.A2_4_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_4_16_V1_emg_ON,	'Вентилятор аварийный включен (B1)');
+	DI_033(KTO_DI_DRV.A2_5_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_1_CF0201_air_feed_BBR_ON,	'Вентилятор подачи воздуха в основную камеру сгорания включен (CF-0201)');
+	DI_034(KTO_DI_DRV.A2_5_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_2_CF0201_air_feed_BBR_FLT,	'Вентилятор подачи воздуха в основную камеру сгорания в аварии (CF-0201)');
+	DI_035(KTO_DI_DRV.A2_5_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_3_CF0202_air_feed_SBR_ON,	'Вентилятор подачи воздуха во вторичную камеру сгорания включен (CF-0202)');
+	DI_036(KTO_DI_DRV.A2_5_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_4_CF0202_air_feed_SBR_FLT,	'Вентилятор подачи воздуха во вторичную камеру сгорания в аварии (CF-0202)');
+	DI_037(KTO_DI_DRV.A2_5_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_5_CF0301_ash_gaz_feed_ON,	'Вентилятор подачи дымовых газов в трубу включен (CF-0301) ');
+	DI_038(KTO_DI_DRV.A2_5_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_6_CF0301_ash_gaz_feed_FLT,	'Вентилятор подачи дымовых газов в трубу в аварии (CF-0301) ');
+	DI_039(KTO_DI_DRV.A2_5_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_7_AF0201_air_feed_CSG_ins_ON,	'Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)');
+	DI_040(KTO_DI_DRV.A2_5_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_8_AF0201_air_feed_CSG_ins_FLT,	'Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)');
+	DI_041(KTO_DI_DRV.A2_5_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_9_RAL0201_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (RAL-0201)');
+	DI_042(KTO_DI_DRV.A2_5_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_10_RAL0201_RA_CSG_ON,	'Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (RAL-0201)');
+	DI_043(KTO_DI_DRV.A2_5_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_11_CH0201_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (CH-0201 )');
+	DI_044(KTO_DI_DRV.A2_5_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_12_CH0201_RA_CSG_ON,	'Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (CH-0201 )');
+	DI_045(KTO_DI_DRV.A2_5_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_13_P0201A_work_ON,	'Насос (рабочий) включен (P-0201A)');
+	DI_046(KTO_DI_DRV.A2_5_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_14_P0201A_work_RA_ON,	'Дист. управл. насосом (рабочим) включено (P-0201A)');
+	DI_047(KTO_DI_DRV.A2_5_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_15_TR0101A_burn_dev_BBR_ON,	'Свеча зажигания устройства горелочного основной камеры сгорания включена (TR-0101A)');
+	DI_048(KTO_DI_DRV.A2_5_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_5_16_TR0101A_RA_burn_dev_BBR_ON,	'Дист. управл. свечой зажигания устройства горелочного основной камеры сгорания включено (TR-0101A)');
+	DI_049(KTO_DI_DRV.A2_6_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_1_TR0101B_burn_dev_SBR_ON,	'Свеча зажигания устройства горелочного вторичной камеры сгорания включена (TR-0101B)');
+	DI_050(KTO_DI_DRV.A2_6_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_2_TR0101B_RA_burn_dev_SBR_ON,	'Дист. управл. свечой зажигания устройства горелочного вторичной камеры сгорания включено (TR-0101B)');
+	DI_051(KTO_DI_DRV.A2_6_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_3_SV0101B_air_feed_burn_dev_SBR_ON,	'Клапан системы подачи воздуха на горелочное устройство вторичной камеры сгорания открыт (SV-0101b)');
+	DI_052(KTO_DI_DRV.A2_6_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_4_SV0101B_RA_air_feed_burn_dev_SBR_ON,	'Дист. управл. клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания включено (SV-0101B)');
+	DI_053(KTO_DI_DRV.A2_6_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_5_TV0101A_gaz_feed_burn_dev_BBR_ON,	'Клапан системы подачи газа на горелочное устройство основной камеры сгорания открыт (TV-0101A)');
+	DI_054(KTO_DI_DRV.A2_6_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_6_TV0101A_RA_air_feed_burn_dev_BBR_ON,	'Дист. управл. клапана системы подачи газа на горелочное устройство основной камеры сгорания включено (TV-0101A)');
+	DI_055(KTO_DI_DRV.A2_6_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_7_TV0101B_gaz_feed_burn_dev_SBR_ON,	'Клапан системы подачи газа на горелочное устройство вторичной камеры сгорания открыт (TV-0101В)');
+	DI_056(KTO_DI_DRV.A2_6_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_8_TV0101B_RA_air_feed_burn_dev_SBR_ON,	'Дист. управл. клапана системы подачи газа на горелочное устройство вторичной камеры сгорания включено (TV-0101В)');
+	DI_057(KTO_DI_DRV.A2_6_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_9_CV0201_KMO3_FROM_VRU_ON,	'Клапан отсечной КМО-3 включен (CV-0201) сигнал от ВРУ');
+	DI_058(KTO_DI_DRV.A2_6_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_10_CV0201_RA_KMO3_FROM_VRU_ON,	'Дист. управл. клапаном отсечным КМО-3 включено (CV-0201) сигнал от ВРУ');
+	DI_059(KTO_DI_DRV.A2_6_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_11_TV0102A_air_feed_burn_dev_BBR_ON,	'Клапан системы подачи воздуха на горелочное устройство основной камеры сгорания открыт (TV-0102A)');
+	DI_060(KTO_DI_DRV.A2_6_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_12_TV0102A_RA_air_feed_burn_dev_BBR_ON,	'Дист. управл. клапаном системы подачи воздуха на горелочное устройство основной камеры сгорания включено (TV-0102A)');
+	DI_061(KTO_DI_DRV.A2_6_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_13_P0201B_rez_ON,	'Насос (резервный) включен (P-0201B)');
+	DI_062(KTO_DI_DRV.A2_6_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_14_P0201B_rez_RA_ON,	'Дист. управл. насосом (резервным) включено (P-0201B)');
+	DI_063(KTO_DI_DRV.A2_6_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_15_C0201_ON,	'Компрессор включен (C-0201)');
+	DI_064(KTO_DI_DRV.A2_6_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_16_C0201_RA_ON,	'Дист. управл. компрессором включено (C-0201)');
+	DI_065(KTO_DI_DRV.A2_7_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_1_SC0203_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (SC-0203)');
+	DI_066(KTO_DI_DRV.A2_7_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_2_SC0203_RA_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)');
+	DI_067(KTO_DI_DRV.A2_7_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_3_CF0101A_air_feed_burn_dev_BBR_ON,	'Вентилятор системы подачи воздуха на горелочное устройство основной камеры сгорания включен (СF-0101A)');
+	DI_068(KTO_DI_DRV.A2_7_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON,	'Вентилятор системы подачи воздуха на горелочное устройство вторичной камеры сгорания включен (СF-0101B)');
+	DI_069(KTO_DI_DRV.A2_7_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_5_SC0201_disch_ash_INS_ON,	'Шнек выгрузки золы из инсинератора включен (SС-0201 )');
+	DI_070(KTO_DI_DRV.A2_7_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_6_SC0202_disch_ash_MC_ON,	'Шнек выгрузки золы из мультициклона включен (SС-0202) ');
+	DI_071(KTO_DI_DRV.A2_7_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_7_P0401_oil_feed_DD_ON,	'Насос подачи масла гидравлической системы привода заслонок включен (P-0401)');
+	DI_072(KTO_DI_DRV.A2_7_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_8_EH0401_oil_feed_DD_ON,	'Подогреватель масла гидравлической системы привода заслонок включен (EH-0401)');
+	DI_073(KTO_DI_DRV.A2_7_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_9_C1_FROM_VRU_ON,	'Срабатывание расцепителя (от ВРУ1)');
+	DI_074(KTO_DI_DRV.A2_7_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_10_Rez,	'Резерв');
+	DI_075(KTO_DI_DRV.A2_7_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_11_Rez,	'Резерв');
+	DI_076(KTO_DI_DRV.A2_7_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_12_Rez,	'Резерв');
+	DI_077(KTO_DI_DRV.A2_7_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_13_Rez,	'Резерв');
+	DI_078(KTO_DI_DRV.A2_7_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_14_Rez,	'Резерв');
+	DI_079(KTO_DI_DRV.A2_7_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_15_Rez,	'Резерв');
+	DI_080(KTO_DI_DRV.A2_7_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_16_Rez,	'Резерв');
+	DI_081(KTO_DI_DRV.A2_8_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_1_PRES_AC380_INC1_VRU,	'Наличие напряжения ~380 В ввода 1 ВРУ КТО1,2');
+	DI_082(KTO_DI_DRV.A2_8_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_2_PRES_AC380_INC2_VRU,	'Наличие напряжения ~380 В ввода 2 ВРУ КТО1,2');
+	DI_083(KTO_DI_DRV.A2_8_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_3_QF_INC1_VRU_ON,	'Автоматический выключатель на вводе 1 включен ВРУ КТО1,2');
+	DI_084(KTO_DI_DRV.A2_8_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_4_QF_INC2_VRU_ON,	'Автоматический выключатель на вводе 2 включен ВРУ КТО1,2');
+	DI_085(KTO_DI_DRV.A2_8_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_5_TRIG_AVR_VRU,	'Срабатывание АВР ВРУ КТО1,2');
+	DI_086(KTO_DI_DRV.A2_8_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_6_Fire_from_SHPS,	'Пожар сигнал от ШПС');
+	DI_087(KTO_DI_DRV.A2_8_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_7_Flt_from_SHPS,	'Неисправность сигнал от ШПС');
+	DI_088(KTO_DI_DRV.A2_8_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_8_Rez,	'Резерв');
+	DI_089(KTO_DI_DRV.A2_8_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_9_Rez,	'Резерв');
+	DI_090(KTO_DI_DRV.A2_8_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_10_Rez,	'Резерв');
+	DI_091(KTO_DI_DRV.A2_8_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_11_Rez,	'Резерв');
+	DI_092(KTO_DI_DRV.A2_8_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_12_Rez,	'Резерв');
+	DI_093(KTO_DI_DRV.A2_8_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_13_Rez,	'Резерв');
+	DI_094(KTO_DI_DRV.A2_8_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_14_Rez,	'Резерв');
+	DI_095(KTO_DI_DRV.A2_8_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_15_Rez,	'Резерв');
+	DI_096(KTO_DI_DRV.A2_8_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_8_16_Rez,	'Резерв');
+	DI_097(KTO_DI_DRV.A2_9_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_1_BT_ES,	'Аварийный останов');
+	DI_098(KTO_DI_DRV.A2_9_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_2_BT_Start,	'Запуск');
+	DI_099(KTO_DI_DRV.A2_9_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_3_BT_door_feed_ON,	'Открыть подающую дверь');
+	DI_100(KTO_DI_DRV.A2_9_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_4_BT_door_feed_OFF,	'Закрыть подающую дверь');
+	DI_101(KTO_DI_DRV.A2_9_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_5_BT_door_ash_unload_ON,	'Открыть дверь выгрузки золы');
+	DI_102(KTO_DI_DRV.A2_9_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_6_BT_door_ash_unload_OFF,	'Открыть дверь выгрузки золы');
+	DI_103(KTO_DI_DRV.A2_9_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_7_BT_feed_waste_auto,	'Подача отходов в автоматическом режиме');
+	DI_104(KTO_DI_DRV.A2_9_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_8_BT_feed_waste_man,	'Подача отходов в ручном режиме');
+	DI_105(KTO_DI_DRV.A2_9_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_9_BT_feed_waste_start,	'Подача отходов - пуск');
+	DI_106(KTO_DI_DRV.A2_9_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_10_BT_feed_waste_stop,	'Подача отходов - стоп');
+	DI_107(KTO_DI_DRV.A2_9_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_11_BT_load_cycle,	'Цикл загрузки');
+	DI_108(KTO_DI_DRV.A2_9_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_12_BT_cool_start,	'Запуск охлаждения');
+	DI_109(KTO_DI_DRV.A2_9_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_13_BT_Kvitir,	'Квитирование');
+	DI_110(KTO_DI_DRV.A2_9_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_14_BT_Check_alarm,	'Опробование сигнализации');
+	DI_111(KTO_DI_DRV.A2_9_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_15_NC,	'Не подключен');
+	DI_112(KTO_DI_DRV.A2_9_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_9_16_NC,	'Не подключен');
+	DI_113(KTO_DI_DRV.A2_10_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_1_CTRL_OP_AC220,	'Контроль основного питания  ~220 В');
+	DI_114(KTO_DI_DRV.A2_10_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_2_CTRL_P_UPS_AC220,	'Контроль питания от ИБП ~220 В');
+	DI_115(KTO_DI_DRV.A2_10_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_3_QF_P_ON,	'Автоматы питания включены');
+	DI_116(KTO_DI_DRV.A2_10_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_4_CTRL_ISP_DISCH,	'Контроль исправности разрядников');
+	DI_117(KTO_DI_DRV.A2_10_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_5_ISP_OSN_IP_DC24_IC,	'Исправность осн. ИП =24В внутренних цепей');
+	DI_118(KTO_DI_DRV.A2_10_6,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_6_ISP_REZ_IP_DC24_IC,	'Исправность рез. ИП =24В внутренних цепей');
+	DI_119(KTO_DI_DRV.A2_10_7,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_7_ISP_OSN_IP_DC24_AI_AO,	'Исправность осн. ИП =24В AI, AO');
+	DI_120(KTO_DI_DRV.A2_10_8,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_8_ISP_REZ_IP_DC24_AI_AO,	'Исправность рез. ИП =24В AI, AO');
+	DI_121(KTO_DI_DRV.A2_10_9,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_9_ISP_OSN_IP_DC24_DI_EXT,	'Исправность осн. ИП =24В DI (внеш.)');
+	DI_122(KTO_DI_DRV.A2_10_10,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_10_ISP_REZ_IP_DC24_DI_EXT,	'Исправность рез. ИП =24В DI (внеш.)');
+	DI_123(KTO_DI_DRV.A2_10_11,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_11_ISP_OSN_IP_DC24_DO_EXT,	'Исправность осн. ИП =24В DO (внеш.)');
+	DI_124(KTO_DI_DRV.A2_10_12,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_12_ISP_REZ_IP_DC24_DO_EXT,	'Исправность рез. ИП =24В DO (внеш.)');
+	DI_125(KTO_DI_DRV.A2_10_13,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_13_ISP_OSN_IP_DC24_EXT_DEV,	'Исправность осн. ИП =24В внешн. Устройств');
+	DI_126(KTO_DI_DRV.A2_10_14,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_14_ISP_REZ_IP_DC24_EXT_DEV,	'Исправность рез. ИП =24В внешн. Устройств');
+	DI_127(KTO_DI_DRV.A2_10_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_15_NC,	'Не подключен');
+	DI_128(KTO_DI_DRV.A2_10_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_10_16_NC,	'Не подключен');
+end_if;]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="BBCB778D49A7D5C4203B66B139CF5C01" Name="FB_DO">
+            <Variables>
+                <Variable UUID="0794F508468B5D2D0DDF5AB4BBA1832E" Name="DO_001" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="842CC3274A934C10B7E783AFD5F1BF68" Name="DO_002" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="6958CF5C4046C6F44C6FCD9CFA80EAFA" Name="DO_003" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="B708C8414DFF78521CA3088B9104A395" Name="DO_004" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="D606062140BE48B4713AE082F068EAC7" Name="DO_005" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="FC39F6654614E581C23E519B0548B267" Name="DO_006" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="44DF8083409A71AA17839496A048A4F5" Name="DO_007" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="D683A5AA4A48C7BF70D112BEAEAB648B" Name="DO_008" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="7F242A8D4ACE12EFFE48848922FCDAC2" Name="DO_009" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="AB6D9D874DDBB99369D335BDFC94C9DB" Name="DO_010" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="2E07F84F479A8D4B8F935EBEB2D48D31" Name="DO_011" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="1E47A69446BA8D2707179887D13E3175" Name="DO_012" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="414F95F74485A421AA452A8BA9737280" Name="DO_013" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="AB58BC884B1B3387D16E33AFB09FD3CF" Name="DO_014" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="F20963AF422308B07520ACB2B7A48CE6" Name="DO_015" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="CECDF3F14D5D78AA3C7148B106733EC8" Name="DO_016" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="9F912DCA4754C584959A31982ABEE2A6" Name="DO_017" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="F3C2CED5472AA863AFB736BE68029904" Name="DO_018" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="7A43F5CD41E1189FEAD29FBDA5902684" Name="DO_019" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="631215AB41C3D609744FE0BC2EA710DC" Name="DO_020" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="D3F77AFB4A72ADBAB64732A04D703920" Name="DO_021" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="1486406D441166CFF8396B9B0B3B3D0F" Name="DO_022" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="949A6D4941DAC594DB0407887A622567" Name="DO_023" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="1D7B48D54E51661F619302BCFD16F6E4" Name="DO_024" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="970CF5874BC130DDE0B5BCA96A2DE8F7" Name="DO_025" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="607AD2904C7B0F29477D1A9B2CC0E2CF" Name="DO_026" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="1E7F29B14C27BA6B87967D897DAE6089" Name="DO_027" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="3735444546B22305A2120DB6D5DBC99C" Name="DO_028" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="DF81C42642C1A6A5E4F24C925F866831" Name="DO_029" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="75FBEDAA46DCE6870304E299130B46E3" Name="DO_030" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="196DBBCB400F4197B5F2A197F1EA9D6B" Name="DO_031" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="3196340A4D8FFB0D3C018FBBFF09C85D" Name="DO_032" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="437EC07C4D35975CA3294094231F8037" Name="DO_033" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="6D276B1646F382CCCB887A9B3F1B2089" Name="DO_034" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="21F6FDDD48DBC74E01A5B5836902F5EE" Name="DO_035" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="F290BED94AA836CC807D369F7D365EAE" Name="DO_036" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="D3D0B72540DA372D4CE226AAB01FBDF1" Name="DO_037" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="C3006C07407C9CD2B4B898A2C3E7AE27" Name="DO_038" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="C62B044F4B86E87495780597B526D6A5" Name="DO_039" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="44C5D4EB4140640F006B599E2B5A90CA" Name="DO_040" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="88BA7EE6450433517B9E8994395104A7" Name="DO_041" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="77275A4A4C4123736DD522AE99F3C797" Name="DO_042" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="A2B15A9C4BCE61CA10F70587554D1F5B" Name="DO_043" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="56DC99BF4BEA4906E613C78B20CB9CB4" Name="DO_044" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="3CBD29CB4FAED7F456BCACBC996A6D3F" Name="DO_045" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="A2F0A04141AA9AB2DD4426AC517BAEF5" Name="DO_046" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="BEEB3DDA4E6D7D373E6D848976D46016" Name="DO_047" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="998469C34722BAEBD149818A475EE842" Name="DO_048" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="84343D314A6AAA25795915A8C51EE247" Name="DO_049" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="1311038745A74C5A52F0C1B0FE921BC1" Name="DO_050" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="D7D7EE434DE437AC7755A3BF47CEF702" Name="DO_051" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="6868CFAC4A1CC080001C9C9934E5B7ED" Name="DO_052" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="469DF2C14E5B625F9923B1980366A75D" Name="DO_053" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="408479C34C1A802E7B9162BAC3E19A23" Name="DO_054" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="D665BA4148A97683820B74B8817FA4D1" Name="DO_055" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="FD09A33642FE1985E585A995D3707B7B" Name="DO_056" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="6916E2C34185EE194DE66884E285F73D" Name="DO_057" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="DF84F3A949F9093B28A28DBC56819B91" Name="DO_058" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="5F1DFBE941243C2125BC608D2EEDC840" Name="DO_059" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="154226AF44689116EEF334B80DD4EA34" Name="DO_060" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="5CC7CA8A4C6997E8189B89ABA46F0B0D" Name="DO_061" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="85D5B3534913A6EDB7B92A822B938F3B" Name="DO_062" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="54902E4944D4A9D8F31A8FA9CFE55A5B" Name="DO_063" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="81BC3A854B8A125FEFEE9FBD9705B4D4" Name="DO_064" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="B8DFCD674D08BA6C1531459C8D32EBA6" Name="DO_065" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="95E3D9B34671FFB079C262A37DD3901D" Name="DO_066" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="2E2511EB4B446B739D3A09AA21BD8216" Name="DO_067" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="27C971FF450C803F5F2C9398655F1C0E" Name="DO_068" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="BC89959640073AC2A4E0BEB11B10B319" Name="DO_069" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="BC8A26554C8D0D7B22FEE4A09E80F124" Name="DO_070" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="FC1D76C749BDD2FAE9E9E6A31557517F" Name="DO_071" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="301E53584E350A3F390533BB46376577" Name="DO_072" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="52E15C894B70F3BF05556D87AA5D0B47" Name="DO_073" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="8691D3B8468DBD1C7FA16E9ECAE6090A" Name="DO_074" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="BD4E28254A23293DA99C09B2B7D26626" Name="DO_075" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="9D55D0A9400AA4E61F6F43935FB0FBA8" Name="DO_076" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="B960290E435C73C3DE5AF2AB24859954" Name="DO_077" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="48DEA17C4EE4468B580A5F8BAAD99FA1" Name="DO_078" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="F97B833648CDBD3320FC7BB3D3866795" Name="DO_079" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+                <Variable UUID="DC3E29FD4799389F5F72EE9D3F821C31" Name="DO_080" Type="DO_Proc" TypeUUID="6C89B03247257D32CFE585920A655092" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[if not IMIT then
+	DO_001(KTO_DO_HMI.A3_6_1_HL3_zagaz_1p_10p,	KTO_DO_DRV.A3_6_1,	'Световая сигнализация "Загазованность 1 порог 10%" (HL3)');
+	DO_002(KTO_DO_HMI.A3_6_2_HL4_zagaz_2p_20p,	KTO_DO_DRV.A3_6_2,	'Световая сигнализация "Загазованность 2 порог 20%" (HL4)');
+	DO_003(KTO_DO_HMI.A3_6_3_HL5_zagaz_1p_20,	KTO_DO_DRV.A3_6_3,	'Световая сигнализация "Загазованность 1 порог 20мг/м3" (HL5)');
+	DO_004(KTO_DO_HMI.A3_6_4_HL6_zagaz_2p_95,	KTO_DO_DRV.A3_6_4,	'Световая сигнализация "Загазованность 2 порог 95мг/м3" (HL6)');
+	DO_005(KTO_DO_HMI.A3_6_5_HL8_V1_emg_ON,	KTO_DO_DRV.A3_6_5,	'Световое табло "аварийный вентилятор включен" (HL8)');
+	DO_006(KTO_DO_HMI.A3_6_6_HA1_sound_ala,	KTO_DO_DRV.A3_6_6,	'Звуковая сигнализация загазованности (HA1)');
+	DO_007(KTO_DO_HMI.A3_6_7_HLA1_SZS_flt_ins,	KTO_DO_DRV.A3_6_7,	'Светозвуковая сигнализация "Авария инсинератора"(HLA-1)');
+	DO_008(KTO_DO_HMI.A3_6_8_CV0201_ON,	KTO_DO_DRV.A3_6_8,	'Открыть клапан отсечной (CV-0201)');
+	DO_009(KTO_DO_HMI.A3_6_9_CV0201_OFF,	KTO_DO_DRV.A3_6_9,	'Закрыть клапан отсечной (CV-0201)');
+	DO_010(KTO_DO_HMI.A3_6_10_CV0201_set_discr_ctrl_ON,	KTO_DO_DRV.A3_6_10,	'Активизировать дискретное управления  клапана отсечного (CV-0201)');
+	DO_011(KTO_DO_HMI.A3_6_11_XY0205_BLK_ML_door_extr_ash_ON,	KTO_DO_DRV.A3_6_11,	'Блокировка магнитного замка двери выема золы из инсинератора (XY0205)');
+	DO_012(KTO_DO_HMI.A3_6_12_EV0103_GSDD_ON,	KTO_DO_DRV.A3_6_12,	'Входной электромагнитный клапан гидравлической системы привода заслонок (EV-0103)');
+	DO_013(KTO_DO_HMI.A3_6_13_AG1_ON,	KTO_DO_DRV.A3_6_13,	'Открыть ворошитель гидравлической системы привода заслонок (EV-0105)');
+	DO_014(KTO_DO_HMI.A3_6_14_AG1_OFF,	KTO_DO_DRV.A3_6_14,	'Закрыть ворошитель гидравлической системы привода заслонок (EV-0106)');
+	DO_015(KTO_DO_HMI.A3_6_15_FP_door_ON,	KTO_DO_DRV.A3_6_15,	'Открыть огнестойкую дверь гидравлической системы привода заслонок (EV-0107)');
+	DO_016(KTO_DO_HMI.A3_6_16_FP_door_OFF,	KTO_DO_DRV.A3_6_16,	'Заткрыть огнестойкую дверь гидравлической системы привода заслонок (EV-0108)');
+	DO_017(KTO_DO_HMI.A3_7_1_DAMP_ld_ON,	KTO_DO_DRV.A3_7_1,	'Открыть заслонку загрузки гидравлической системы привода заслонок (EV-0109)');
+	DO_018(KTO_DO_HMI.A3_7_2_DAMP_ld_OFF,	KTO_DO_DRV.A3_7_2,	'Закрыть заслонку загрузки гидравлической системы привода заслонок (EV-0110)');
+	DO_019(KTO_DO_HMI.A3_7_3_PUSH_ld_ON,	KTO_DO_DRV.A3_7_3,	'Открыть толкатель гидравлической системы привода заслонок (EV-0111)');
+	DO_020(KTO_DO_HMI.A3_7_4_PUSH_ld_OFF,	KTO_DO_DRV.A3_7_4,	'Закрыть толкатель гидравлической системы привода заслонок (EV-0112)');
+	DO_021(KTO_DO_HMI.A3_7_5_V_KE1_ON,	KTO_DO_DRV.A3_7_5,	'ГРПШ.Открыть клапан (КЭ1)');
+	DO_022(KTO_DO_HMI.A3_7_6_V1_emg_ON,	KTO_DO_DRV.A3_7_6,	'Пуск вентилятора аварийного (B1)');
+	DO_023(KTO_DO_HMI.A3_7_7_V1_emg_OFF,	KTO_DO_DRV.A3_7_7,	'Стоп вентилятора аварийного (B1)');
+	DO_024(KTO_DO_HMI.A3_7_8_CF0201_air_feed_BBR_ON,	KTO_DO_DRV.A3_7_8,	'Пуск вентилятора подачи воздуха в основную камеру сгорания (CF-0201)');
+	DO_025(KTO_DO_HMI.A3_7_9_CF0201_air_feed_BBR_OFF,	KTO_DO_DRV.A3_7_9,	'Стоп вентилятора подачи воздуха в основную камеру сгорания (CF-0201)');
+	DO_026(KTO_DO_HMI.A3_7_10_CF0202_air_feed_SBR_ON,	KTO_DO_DRV.A3_7_10,	'Пуск вентилятора подачи воздуха во вторичную камеру сгорания (CF-0202)');
+	DO_027(KTO_DO_HMI.A3_7_11_CF0202_feed_SBR_OFF,	KTO_DO_DRV.A3_7_11,	'Стоп вентилятора подачи воздуха во вторичную камеру сгорания (CF-0202)');
+	DO_028(KTO_DO_HMI.A3_7_12_CF0301_ash_gaz_feed_ON,	KTO_DO_DRV.A3_7_12,	'Пуск вентилятора подачи дымовых газов в трубу (CF-0301) ');
+	DO_029(KTO_DO_HMI.A3_7_13_CF0301_ash_gaz_feed_OFF,	KTO_DO_DRV.A3_7_13,	'Стоп вентилятора подачи дымовых газов в трубу (CF-0301) ');
+	DO_030(KTO_DO_HMI.A3_7_14_AF0201_air_feed_CSG_ins_ON,	KTO_DO_DRV.A3_7_14,	'Пуск вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201) ');
+	DO_031(KTO_DO_HMI.A3_7_15_AF0201_air_feed_CSG_ins_OFF,	KTO_DO_DRV.A3_7_15,	'Стоп вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201) ');
+	DO_032(KTO_DO_HMI.A3_7_16_RAL0201_CSG_ON,	KTO_DO_DRV.A3_7_16,	'Пуск дозатора реагентов в систему охлаждения дымовых газов инсинератора (RAL-0201)');
+	DO_033(KTO_DO_HMI.A3_8_1_RAL0201_CSG_OFF,	KTO_DO_DRV.A3_8_1,	'Стоп дозатора реагентов в систему охлаждения дымовых газов инсинератора (RAL-0201)');
+	DO_034(KTO_DO_HMI.A3_8_2_CH0201_CSG_ON,	KTO_DO_DRV.A3_8_2,	'Пуск дозатора реагентов в систему охлаждения дымовых газов инсинератора (CH-0201 )');
+	DO_035(KTO_DO_HMI.A3_8_3_CH0201_CSG_OFF,	KTO_DO_DRV.A3_8_3,	'Стоп дозатора реагентов в систему охлаждения дымовых газов инсинератора (CH-0201 )');
+	DO_036(KTO_DO_HMI.A3_8_4_P0201A_work_ON,	KTO_DO_DRV.A3_8_4,	'Пуск насоса (рабочий) (P-0201A)');
+	DO_037(KTO_DO_HMI.A3_8_5_P0201A_work_OFF,	KTO_DO_DRV.A3_8_5,	'Стоп насоса (рабочий) (P-0201A)');
+	DO_038(KTO_DO_HMI.A3_8_6_TR0101A_burn_dev_BBR_ON,	KTO_DO_DRV.A3_8_6,	'Пуск свечи зажигания устройства горелочного основной камеры сгорания (TR-0101A)');
+	DO_039(KTO_DO_HMI.A3_8_7_TR0101A_burn_dev_BBR_OFF,	KTO_DO_DRV.A3_8_7,	'Стоп свечи зажигания устройства горелочного основной камеры сгорания (TR-0101A)');
+	DO_040(KTO_DO_HMI.A3_8_8_TR0101B_burn_dev_SBR_ON,	KTO_DO_DRV.A3_8_8,	'Пуск свечи зажигания устройства горелочного вторичной камеры сгорания (TR-0101B)');
+	DO_041(KTO_DO_HMI.A3_8_9_TR0101B_burn_dev_SBR_OFF,	KTO_DO_DRV.A3_8_9,	'Стоп свечи зажигания устройства горелочного вторичной камеры сгорания (TR-0101B)');
+	DO_042(KTO_DO_HMI.A3_8_10_TV0102A_air_feed_burn_dev_BBR_ON,	KTO_DO_DRV.A3_8_10,	'Пуск клапана системы подачи воздуха на горелочное устройство основной камеры сгорания (TV-0102A)');
+	DO_043(KTO_DO_HMI.A3_8_11_TV0102A_air_feed_burn_dev_BBR_OFF,	KTO_DO_DRV.A3_8_11,	'Стоп клапана системы подачи воздуха на горелочное устройство основной камеры сгорания (TV-0102A)');
+	DO_044(KTO_DO_HMI.A3_8_12_SV0101B_air_feed_burn_dev_SBR_ON,	KTO_DO_DRV.A3_8_12,	'Пуск клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания (SV-0101B)');
+	DO_045(KTO_DO_HMI.A3_8_13_SV0101B_air_feed_burn_dev_SBR_OFF,	KTO_DO_DRV.A3_8_13,	'Стоп клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания (SV-0101B)');
+	DO_046(KTO_DO_HMI.A3_8_14_TV0101A_gaz_feed_burn_dev_BBR_ON,	KTO_DO_DRV.A3_8_14,	'Пуск клапана системы подачи газа на горелочное устройство основной камеры сгорания (TV-0101A)');
+	DO_047(KTO_DO_HMI.A3_8_15_TV0101A_gaz_feed_burn_dev_BBR_OFF,	KTO_DO_DRV.A3_8_15,	'Стоп клапана системы подачи газа на горелочное устройство основной камеры сгорания (TV-0101A)');
+	DO_048(KTO_DO_HMI.A3_8_16_TV0101B_gaz_feed_burn_dev_SBR_ON,	KTO_DO_DRV.A3_8_16,	'Пуск клапана системы подачи газа на горелочное устройство вторичной камеры сгорания (TV-0101B)');
+	DO_049(KTO_DO_HMI.A3_9_1_TV0101B_gaz_feed_burn_dev_SBR_OFF,	KTO_DO_DRV.A3_9_1,	'Стоп клапана системы подачи газа на горелочное устройство вторичной камеры сгорания (TV-0101B)');
+	DO_050(KTO_DO_HMI.A3_9_2_CV0201_START,	KTO_DO_DRV.A3_9_2,	'Пуск клапана отсечного (CV-0201)');
+	DO_051(KTO_DO_HMI.A3_9_3_CV0201_STOP,	KTO_DO_DRV.A3_9_3,	'Стоп клапана отсечного (CV-0201)');
+	DO_052(KTO_DO_HMI.A3_9_4_P0201B_rez_ON,	KTO_DO_DRV.A3_9_4,	'Пуск насоса (резервный) (P-0201B)');
+	DO_053(KTO_DO_HMI.A3_9_5_P0201B_rez_OFF,	KTO_DO_DRV.A3_9_5,	'Стоп насоса (резервный) (P-0201B)');
+	DO_054(KTO_DO_HMI.A3_9_6_C0201_ON,	KTO_DO_DRV.A3_9_6,	'Пуск компрессора (C-0201)');
+	DO_055(KTO_DO_HMI.A3_9_7_C0201_OFF,	KTO_DO_DRV.A3_9_7,	'Стоп компрессора (C-0201)');
+	DO_056(KTO_DO_HMI.A3_9_8_SC0203_CSG_ON,	KTO_DO_DRV.A3_9_8,	'Пуск дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)');
+	DO_057(KTO_DO_HMI.A3_9_9_SC0203_CSG_OFF,	KTO_DO_DRV.A3_9_9,	'Стоп дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)');
+	DO_058(KTO_DO_HMI.A3_9_10_CF0101A_air_feed_burn_dev_BBR_ON,	KTO_DO_DRV.A3_9_10,'Пуск вентилятора системы подачи воздуха на горелочное устройство основной камеры сгорания (СF-0101A)');
+	DO_059(KTO_DO_HMI.A3_9_11_CF0101A_air_feed_burn_dev_BBR_OFF,	KTO_DO_DRV.A3_9_11,	'Стоп вентилятора системы подачи воздуха на горелочное устройство основной камеры сгорания (СF-0101A)');
+	DO_060(KTO_DO_HMI.A3_9_12_CF0102B_air_feed_burn_dev_SBR_ON,	KTO_DO_DRV.A3_9_12,	'Пуск вентилятора системы подачи воздуха на горелочное устройство вторичной камеры сгорания (СF-0101B)');
+	DO_061(KTO_DO_HMI.A3_9_13_CF0102B_air_feed_burn_dev_SBR_OFF,	KTO_DO_DRV.A3_9_13,	'Стоп вентилятора системы подачи воздуха на горелочное устройство вторичной камеры сгорания (СF-0101B)');
+	DO_062(KTO_DO_HMI.A3_9_14_SC0201_disch_ash_INS_ON,	KTO_DO_DRV.A3_9_14,	'Пуск шнека выгрузки золы из инсинератора (SС-0201 )');
+	DO_063(KTO_DO_HMI.A3_9_15_SC0201_disch_ash_INS_OFF,	KTO_DO_DRV.A3_9_15,	'Стоп шнека выгрузки золы из инсинератора (SС-0201 )');
+	DO_064(KTO_DO_HMI.A3_9_16_SC0202_disch_ash_MC_ON,	KTO_DO_DRV.A3_9_16,	'Пуск шнека выгрузки золы из мультициклона (SС-0202) ');
+	DO_065(KTO_DO_HMI.A3_10_1_SC0202_disch_ash_MC_OFF,	KTO_DO_DRV.A3_10_1,	'Стоп шнека выгрузки золы из мультициклона (SС-0202) ');
+	DO_066(KTO_DO_HMI.A3_10_2_P0401_oil_feed_DD_ON,	KTO_DO_DRV.A3_10_2,	'Пуск насоса подачи масла гидравлической системы привода заслонок (P-0401)');
+	DO_067(KTO_DO_HMI.A3_10_3_P0401_oil_feed_DD_OFF,	KTO_DO_DRV.A3_10_3,	'Стоп насоса подачи масла гидравлической системы привода заслонок (P-0401)');
+	DO_068(KTO_DO_HMI.A3_10_4_EH0401_oil_feed_DD_ON,	KTO_DO_DRV.A3_10_4,	'Пуск подогревателя масла гидравлической системы привода заслонок (EH-0401)');
+	DO_069(KTO_DO_HMI.A3_10_5_EH0401_oil_feed_DD_OFF,	KTO_DO_DRV.A3_10_5,	'Стоп подогревателя масла гидравлической системы привода заслонок (EH-0401)');
+	DO_070(KTO_DO_HMI.A3_10_6_C1_zagaz_2p_to_VRU,	KTO_DO_DRV.A3_10_6,	'Расцепитель "Загазованность порог 2" (сигнал в ВРУ1)');
+	DO_071(KTO_DO_HMI.A3_10_7_C1_fire_to_VRU,	KTO_DO_DRV.A3_10_7,	'Расцепитель "Пожар" (сигнал в ВРУ1)');
+	DO_072(KTO_DO_HMI.A3_10_8_Rez,	KTO_DO_DRV.A3_10_8,	'Резерв');
+	DO_073(KTO_DO_HMI.A3_10_9_Rez,	KTO_DO_DRV.A3_10_9,	'Резерв');
+	DO_074(KTO_DO_HMI.A3_10_10_Rez,	KTO_DO_DRV.A3_10_10,	'Резерв');
+	DO_075(KTO_DO_HMI.A3_10_11_Rez,	KTO_DO_DRV.A3_10_11,	'Резерв');
+	DO_076(KTO_DO_HMI.A3_10_12_Rez,	KTO_DO_DRV.A3_10_12,	'Резерв');
+	DO_077(KTO_DO_HMI.A3_10_13_Rez,	KTO_DO_DRV.A3_10_13,	'Резерв');
+	DO_078(KTO_DO_HMI.A3_10_14_BT_highlight_ES,	KTO_DO_DRV.A3_10_14,	'Индикация кнопки на двери "Аварийный останов"');
+	DO_079(KTO_DO_HMI.A3_10_15_Sound_warn,	KTO_DO_DRV.A3_10_15,	'Предупредительная звуковая сигнализация');
+	DO_080(KTO_DO_HMI.A3_10_16_Sound_emerg,	KTO_DO_DRV.A3_10_16,	'Аварийная звуковая сигнализация');
+
 end_if;]]></ST>
         </FunctionBlock>
     </FBLibrary>
