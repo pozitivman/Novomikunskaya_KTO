@@ -11,7 +11,7 @@
         <Field Name="A3_6_7_HLA1_SZS_flt_ins" Type="DB6F29104B460EFD234B3AAF41B5A86C" UUID="FCAEC0B947707C226248C4ADFD81E64E" Comment="Светозвуковая сигнализация &quot;Авария инсинератора&quot;(HLA-1)" />
         <Field Name="A3_6_8_CV0201_ON" Type="DB6F29104B460EFD234B3AAF41B5A86C" UUID="F3AC878E48B47CAB1F442BB9274A5578" Comment="Открыть клапан отсечной (CV-0201)" />
         <Field Name="A3_6_9_CV0201_OFF" Type="DB6F29104B460EFD234B3AAF41B5A86C" UUID="8688AC84487E709BDA6AD8B046108866" Comment="Закрыть клапан отсечной (CV-0201)" />
-        <Field Name="A3_6_10_CV0201_set_discr_ctrl_ON" Type="DB6F29104B460EFD234B3AAF41B5A86C" UUID="385241484C67797F16A39D848B8AA4C2" Comment="Активизировать дискретное управления  клапана отсечного (CV-0201)" />
+        <Field Name="A3_6_10_CV0201_set_discr_ctrl_ON" Type="DB6F29104B460EFD234B3AAF41B5A86C" UUID="385241484C67797F16A39D848B8AA4C2" Comment="Активизировать дискретное управление  клапана отсечного (CV-0201)" />
         <Field Name="A3_6_11_XY0205_BLK_ML_door_extr_ash_ON" Type="DB6F29104B460EFD234B3AAF41B5A86C" UUID="244DDDF34E762FFC419C03BEA23E2C46" Comment="Блокировка магнитного замка двери выема золы из инсинератора (XY0205)" />
         <Field Name="A3_6_12_EV0103_GSDD_ON" Type="DB6F29104B460EFD234B3AAF41B5A86C" UUID="9FC5A8804BE65D41B48A98BB4D0D0B30" Comment="Входной электромагнитный клапан гидравлической системы привода заслонок (EV-0103)" />
         <Field Name="A3_6_13_AG1_ON" Type="DB6F29104B460EFD234B3AAF41B5A86C" UUID="3B821C444BFF6B93405FBF8571519B85" Comment="Открыть ворошитель гидравлической системы привода заслонок (EV-0105)" />

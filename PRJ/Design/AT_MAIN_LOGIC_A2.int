@@ -29,5 +29,7 @@
         <Signal Name="KTO_DI_HMI" UUID="CC055E5E4FBD18715494DDAD80F3C25A" Type="3D9354EF4F58D8D30A7C508A1429A0D1" Usage="" Global="TRUE" Comment="Дискретные входы. Логика" />
         <Signal Name="KTO_DO_DRV" UUID="C42BC1D84BE117E5355CD6B9A636784C" Type="0F6D678243CE8828D7655F9553C3A52B" Usage="" Global="TRUE" Comment="Дискретные выходы. Драйвер" />
         <Signal Name="KTO_DO_HMI" UUID="6BB8886144EA4B796E170AAEF9087015" Type="C59E9B4E412222AEB12F7E9E698DC22C" Usage="" Global="TRUE" Comment="Дискретные выходы. Логика" />
+        <Signal Name="KTO_AO_DRV" UUID="6B6013124403B2C454A085B4408EDB6F" Type="7811C38640FA9428C2E7C591157859A9" Usage="" Global="TRUE" Comment="Аналоговые выходы. Драйвер" />
+        <Signal Name="KTO_AO_HMI" UUID="4D34A84A424BBCA64906658883518319" Type="591E5E474CD17211AC6B85A08AAF7A46" Usage="" Global="TRUE" Comment="Аналоговые выходы. Логика" />
     </InterfaceList>
 </SubAppType>

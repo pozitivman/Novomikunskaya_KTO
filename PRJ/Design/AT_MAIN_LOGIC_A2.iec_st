@@ -8,6 +8,7 @@
         <Variable UUID="C2FD7ADB4965CAC731537696486D5AEC" Name="FScan" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Usage="internal" />
         <Variable UUID="3EA9581941B8E40ABDDB4596CF40E859" Name="DTC_start" Type="calc_dt" TypeUUID="E1A64949466CCCA81E37988A136D23C2" Usage="internal" />
         <Variable UUID="2AB06E3C4DF7D8940FE3ECBB850C1581" Name="DTC_duration" Type="calc_dt" TypeUUID="E1A64949466CCCA81E37988A136D23C2" Usage="internal" />
+        <Variable UUID="38E1BA704B0883787EE4328C90326365" Name="proc_DO" Type="FB_DO" TypeUUID="BBCB778D49A7D5C4203B66B139CF5C01" Usage="internal" />
     </Variables>
     <ST><![CDATA[//Использование C-библиотеки (время цикла и таймер 1с)
 clock_AI_cur := CLOCK();
@@ -31,7 +32,7 @@ proc_DI();
 //proc_ALG();
 //proc_VLV();
 
-//proc_DO();
+proc_DO();
 //proc_AO();
 //proc_APS();
 
@@ -55,6 +56,78 @@ IF Firstscan THEN Firstscan := BOOL#0; FScan := BYTE#0; END_IF;
 clock_AI_cur := CLOCK();
 cycleTime_AI_sys := clock_AI_cur - clock_AI_prev;]]></ST>
     <DataTypes>
+        <Struct UUID="DF862A704EA25816B1874FB86A0A7D3B" Name="ACT_Cfg">
+            <Field UUID="5FC7B8EC4CF918BB986C3680B3274107" Name="tmrCmdSP" Comment="таймер подачи команды" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="802040604BCDBF85174F8D940702E9BA" Name="tmrPressSP" Comment="таймер дожима" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+        </Struct>
+        <Struct UUID="52D944B2403BC50C292307B4E962B647" Name="ACT_Ctrl">
+            <Field UUID="B521CCB54178366AC90E38A8F01C4BDD" Name="RA" Comment="дистанционный или автоматический режим управления" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="FF6E228A4F4252AF7B044E93BF1C4CF9" Name="noR" Comment="блокировка дистанционного режима управления" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="D36AA2784D178751B98A68BA90AE140A" Name="rOnOff" Comment="команда &apos;включить/выключить&apos; (&apos;открыть/закрыть&apos;) в дистанционном режиме" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="AEFB037F488E7878DD36EC977CBD0949" Name="aOnOff" Comment="команда &apos;включить/выключить&apos; (&apos;открыть/закрыть&apos;) в автоматич режиме" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="234E1C79444037E76DA479B95D64F8D4" Name="rep" Comment="повторить последнюю команду" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="5F7B9A594BF0F6B0E30C3CB1709DCC4A" Name="cwOn" Comment="не учитывать контроль цепи управления команды &apos;открыть&apos;" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="013167D54FE220938D38F893DC2670CF" Name="cwOff" Comment="не учитывать контроль цепи управления команды &apos;закрыть&apos;" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="1A18D4AB4C52B0B9C231259E0399BE82" Name="dummy" Comment="резерв" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+        </Struct>
+        <Struct UUID="5BC06CBD428FE875B24A00B19578EAD4" Name="ACT_Dbg">
+            <Field UUID="523E6FD54252C6F48B9CD8A0A9B58654" Name="rev" Comment="дата разработки ревизии блока (число, месяц, год)" Type="DWORD" TypeUUID="53CAB7E947643F098D755BB9A02688FA" />
+            <Field UUID="95DD922A4665D89F245954BFD333F723" Name="tmrCmdon" Comment="Таймер команды &apos;включить&apos;: текущее значение" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="532D90284AC1370B647B91939E2DF5A1" Name="tmrCmdoff" Comment="Таймер команды &apos;выключить&apos;: текущее значение" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="F94992664E922629E17EDF9E9EBFA97B" Name="tmrPresson" Comment="Таймер дожима &apos;включить&apos;: текущее значение" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="4F340B7B4CEF0061BC1303AFB42B4AF8" Name="tmrPressoff" Comment="Таймер дожима &apos;выключить&apos;: текущее значение" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="22BE4D054887EA320E1A798B508E5B0D" Name="spDelayncon" Comment="Уставка таймера задержки сигнала &apos;не открыт&apos;" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="CEF957054BFEDBA5BB3880BC3E846A7C" Name="spDelayncoff" Comment="Уставка таймера задержки сигнала &apos;не закрыт&apos;" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="7CE3FB2D49F80561F49E519413549264" Name="tmrDelayncon" Comment="Таймер задержки сигнала &apos;не открыт&apos;" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="5DF45A6D42A69C38CEFB07946CC4361F" Name="tmrDelayncoff" Comment="Таймер задержки сигнала &apos;не закрыт&apos;" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" />
+            <Field UUID="7B8C5C5E43B8EA9861027CB60D88AF2F" Name="cmdon" Comment="Внутренняя команда &apos;включить/открыть&apos;" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="5CAF6BE948E310D1242DE1BC90E6DD29" Name="cmdoff" Comment="Внутренняя команда &apos;выключить/закрыть&apos;" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="5DD1E7AE4166F967CF25D1981A0BEBCF" Name="ONScmdon" Comment="Команда оператора &apos;включить&apos;-на один цикл" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="8F79C4FC45129E9BD806DE80E256B1B2" Name="ONScmdoff" Comment="Команда оператора &apos;выключить&apos;-на один цикл" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="AAACA97F486F5D2054BC8C90CB2D1DE9" Name="ONSon" Comment="Включен (открыт)-на один цикл" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="A83EB9C749722FADFB35C9843F16EDDF" Name="ONSoff" Comment="Выключен (открыт)-на один цикл" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="686055E8464E72A577603F885DCE4847" Name="ONSrep" Comment="Повторить последнюю команду-на один цикл" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="98032FB240110A38E290D7ACDC997456" Name="tmp" Comment="Вспомогательная переменная для ONScmdon" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="D1017C5643F8024A41272A886C2C6039" Name="tmp2" Comment="Вспомогательная переменная для ONSon" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="AF8FB49343098BEF281A239A408A36E0" Name="tmp3" Comment="Вспомогательная переменная для ONScmdoff" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="4E58906D406AC8BC52322E894F62BC58" Name="tmp4" Comment="Вспомогательная переменная для ONSoff" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="187398BC4C7E06D5227A9FA46B2DD6B2" Name="tmp5" Comment="Вспомогательная переменная для ONSrep" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="04D883F4483A0B71E445BBAEB8732E13" Name="storeCmdon" Comment="Подавалась команда оператора &apos;включить&apos;-запомнить" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="E046312940C857E2114086BE451D28CD" Name="storeCmdoff" Comment="Подавалась команда оператора &apos;выключить&apos;-запомнить" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="0FF2F10545ABE32C7A4D278CAD23EC22" Name="storeOn" Comment="Срабатывал концевик положения &apos;включен&apos;-запомнить" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="6B4FB4D144E9613B6E8731B8CD9FB41E" Name="storeOff" Comment="Срабатывал концевик положения &apos;выключен&apos;-запомнить" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="B928D2544460054293C69B969F60B7C1" Name="storeNon" Comment="Условия формирования флага &apos;не открыт&apos;-запомнить" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="03399E1E463C4AB28EE395B807BB24D6" Name="storeNoff" Comment="Условия формирования флага &apos;не закрыт&apos;-запомнить" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="2326BC7A45CD0A021B427384457AFF96" Name="storeRep" Comment="Условия формирования флага &apos;повтор последней команды&apos;-запомнить" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="03B94E7848CC387CE3EBA4BC7CEB3554" Name="prevOuton" Comment="Состояние команды &apos;включить/открыть&apos; на предыдущем цикле" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="968731204B11C9A24892F8A74F2006D3" Name="prevOutoff" Comment="Состояние команды &apos;выключить/закрыть&apos; на предыдущем цикле" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="84E01BFB45FAED8C4DFBAE91DCD69BE3" Name="chngOuton" Comment="Задний фронт команды &apos;включить/открыть&apos;" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="7086F09C41B4123CA8D2D9BAD4CCBE79" Name="chngOutoff" Comment="Задний фронт команды &apos;выключить/закрыть&apos;" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="A6CACC7C4544D1DD6468F1B219B08E15" Name="fstExe" Comment="При первом выполнении равен нулю" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="672B0B434F62B49954267CBF89A35477" Name="starter" Comment="Классический пускатель (справедливо для механизма типа 12)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+        </Struct>
+        <Struct UUID="7829E08243446F5A8EE514AD074C6A67" Name="ACT_In">
+            <Field UUID="01C69AF94D51500C37AC7EA94CC76521" Name="on" Comment="включен (открыт)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="3646458945E05F268E776294D710283E" Name="off" Comment="выключен (закрыт)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="160A3CC94C2AFB9DB43B649B3B269A96" Name="con" Comment="контроль цепи включения (открытия)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="243D85F2475A066F95F984A4FA4E52A3" Name="coff" Comment="контроль цепи выключения (закрытия)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+        </Struct>
+        <Struct UUID="DBA024624283EA9FF84BED80ED43B6AE" Name="ACT_Oper">
+            <Field UUID="63CBB398402DC985D61AC996AD5FCB8E" Name="non" Comment="Не включен (не открыт)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="CFBEFF5C4039215506069BB7EE7259E5" Name="noff" Comment="Не выключен (не закрыт)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="28EAEC3E4E56AFA4F8FAE4BBB853ACBA" Name="nstart" Comment="Не стронулся" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="1A0EC4E6457C42C7BC41FA9E3402BA2B" Name="selfon" Comment="Самопроизвольное включение (открытие)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="3979071A40215F915671DA9DF1C54259" Name="selfoff" Comment="Самопроизвольное закрытие (выключение)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="A502DED244B99EC30C85AF850291F940" Name="flt" Comment="Неисправность концевых выключателей" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="E77A54F841B412D712D7749212ED7557" Name="ncon" Comment="Нет контроля цепи включения (открытия)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="DCECC5484F293734DD9717B24B0DC132" Name="ncoff" Comment="Нет контроля цепи выключения (закрытия)" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+        </Struct>
+        <Struct UUID="14C3C2B743D75D0477AA66873580B3B2" Name="ACT_Out">
+            <Field UUID="F667F7D94948573E99A575B79FB68CB1" Name="outon" Comment="Управляющая команда &apos;включить/открыть&apos; на механизм" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="D30A2C6D47150544B19A3FB86E6EF771" Name="outoff" Comment="Управляющая команда &apos;отключить/закрыть&apos; на механизм" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="4FDB28FA463D4C3F8FD03DB6206E7A97" Name="dummy" Comment="Резерв" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+            <Field UUID="DC1021DF4ADB119F31CDB5BB62704656" Name="dummy2" Comment="Резерв" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" />
+        </Struct>
         <Struct UUID="24096E3F4C0C396B81199DA606D417FF" Name="DI_HMI">
             <Field UUID="70988A694DD85D0E78079BBD6216FA79" Name="PV" Comment="Обработанное дискретное значение" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
             <Field UUID="CF7E229443E1351DAA088F86810D2BC5" Name="Descr" Comment="Название дискрета" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" />
@@ -65,8 +138,68 @@ cycleTime_AI_sys := clock_AI_cur - clock_AI_prev;]]></ST>
             <Field UUID="1C82A30D4BF6CA5966AECDB8D7F4C90B" Name="Descr" Comment="Название дискрета" Type="STRING" TypeUUID="38FDDE3B442D86554C56C884065F87B7" />
             <Field UUID="E95DACBB4A3B3D72009756A400DAB510" Name="Nedost" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" />
         </Struct>
+        <Struct UUID="E2F512E0418E53D1482E2F9E54A664A9" Name="support_ACT">
+            <Field UUID="C128AC9F4B6FC9CAE98F99929AB61438" Name="Config" Comment="конфигурационные параметры" Type="ACT_Cfg" TypeUUID="DF862A704EA25816B1874FB86A0A7D3B" />
+            <Field UUID="9A0D205548B279A70FCE5AAC91CD9AAD" Name="Control" Comment="управляющие команды" Type="ACT_Ctrl" TypeUUID="52D944B2403BC50C292307B4E962B647" />
+            <Field UUID="D36203864CAC129BA092BABA6B5C5CCA" Name="Ins" Comment="входные сигналы" Type="ACT_In" TypeUUID="7829E08243446F5A8EE514AD074C6A67" />
+            <Field UUID="42F147E24EE30E8BA4D0AA8D3994A7A2" Name="Outs" Comment="выходные команды" Type="ACT_Out" TypeUUID="14C3C2B743D75D0477AA66873580B3B2" />
+            <Field UUID="B5837346411737AA71AEF5A2F846CB96" Name="Oper" Comment="параметры для интерфейса" Type="ACT_Oper" TypeUUID="DBA024624283EA9FF84BED80ED43B6AE" />
+            <Field UUID="72308134420C94E25CC2CFB61EBFE43D" Name="Debug" Comment="отладочные параметры" Type="ACT_Dbg" TypeUUID="5BC06CBD428FE875B24A00B19578EAD4" />
+        </Struct>
     </DataTypes>
     <FBLibrary>
+        <FunctionBlock UUID="8241A1A94DC7CD2DAF4A08841D436394" Name="Ctrl_crane">
+            <Variables>
+                <Variable UUID="82DB17654652389B8E9026BFE5E0043F" Name="PRU_DA_on" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="630D382B4428667D7CF1B4B25F67FC0D" Name="PRU_DA_off" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="F0AA46C8429DB17DFDCA94A0F1C228E4" Name="HMI_DA_on" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="59DDC0DE43A4921B4FC5049508EB3F21" Name="HMI_DA_off" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="2B8E09F841AC43C75984BB9F4BBB569F" Name="PRU_rOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="62802A5B4E680177727E43AA93133594" Name="PRU_rOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="577F618C49FF544C1823F5A50DB15121" Name="HMI_rOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="8E2AE4714002E8F2AEAC5283280EE478" Name="HMI_rOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="73F1D5D74FC303C22CE3C29F5A8151B9" Name="LG_state" Type="WORD" TypeUUID="05CD1AAB4891B30C004C2799CA460884" Usage="input" />
+                <Variable UUID="B4241ADC46CEED6CB48E978AEACCD611" Name="LG_flt_all" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="7BBEEA7D44FD2737525B40A87A86A8AF" Name="PRU_state" Type="WORD" TypeUUID="05CD1AAB4891B30C004C2799CA460884" Usage="inout" />
+                <Variable UUID="864DE8364A8C9FE134B595B047138C37" Name="HMI_state" Type="WORD" TypeUUID="05CD1AAB4891B30C004C2799CA460884" Usage="inout" />
+                <Variable UUID="BC1E72B44C026D240F32D2818F430749" Name="PRU_flt_all" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="072059D64441AD36402E2C8C25296063" Name="HMI_flt_all" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="2B5188684FACDC33646582A4BE7C8058" Name="DA" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="0240C45844E18D10DA6B64A6E90A10A1" Name="DA_PRU" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="35ABCCB44FA5E76BE05FF884CB8BCB36" Name="DA_HMI" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="77225DF145E844B392BAA0ABA49A8202" Name="rOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="CA50BEC9482710C5792FB98ABD3BBD0C" Name="rOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+            </Variables>
+            <ST><![CDATA[//перевод ИМ в дистанционный/автоматический режим
+if PRU_DA_on or HMI_DA_on then DA := BOOL#1; end_if;
+if PRU_DA_off or HMI_DA_off then DA := BOOL#0; end_if;
+
+//Передаем руч/дист ИМ из блока в разные приемники
+if DA then
+	DA_PRU := true;
+	DA_HMI := true;
+else
+	DA_PRU := false;
+	DA_HMI := false;
+end_if;
+
+//Передаем обобщенную аварию ИМ из блока в разные приемники
+if LG_flt_all then
+	PRU_flt_all := true;
+	HMI_flt_all := true;
+else
+	PRU_flt_all := false;
+	HMI_flt_all := false;
+end_if;
+
+//Передаем состояние ИМ из блока в разные приемники
+PRU_state := LG_state;
+HMI_state := LG_state;
+	
+//Дистанционное управление ИМ
+if PRU_rOn OR HMI_rOn then rOn := BOOL#1; end_if;
+if PRU_rOff OR HMI_rOff then rOff := BOOL#1; end_if;]]></ST>
+        </FunctionBlock>
         <FunctionBlock UUID="90D0C5D044939603D0BD418B90A10328" Name="DI_Proc">
             <Variables>
                 <Variable UUID="293790C0400AEE8E646241AF54168597" Name="DI_raw" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
@@ -98,6 +231,16 @@ DI_out.Descr := Descr;]]></ST>
             </Variables>
             <ST><![CDATA[DO_in.Descr := Descr;
 DO_raw := DO_in.PV;]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="C051E2DF429786EC5FA4C39A9C27CC61" Name="FB_AO">
+            <Variables>
+                <Variable UUID="6F28B0D847E3E903F15235AC8E9C14B8" Name="AO_min" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="internal" />
+                <Variable UUID="A5BE8AB6441DE0A3773B669BF674BCE8" Name="AO_max" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[(*Аналоговые выходы*)
+//Масштабирование AO для выходного модуля
+AO_min := lreal#13100;
+AO_max := lreal#65535;]]></ST>
         </FunctionBlock>
         <FunctionBlock UUID="9018116F43FC2E443834D486159520D8" Name="FB_DI">
             <Variables>
@@ -525,8 +668,437 @@ end_if;]]></ST>
 	DO_078(KTO_DO_HMI.A3_10_14_BT_highlight_ES,	KTO_DO_DRV.A3_10_14,	'Индикация кнопки на двери "Аварийный останов"');
 	DO_079(KTO_DO_HMI.A3_10_15_Sound_warn,	KTO_DO_DRV.A3_10_15,	'Предупредительная звуковая сигнализация');
 	DO_080(KTO_DO_HMI.A3_10_16_Sound_emerg,	KTO_DO_DRV.A3_10_16,	'Аварийная звуковая сигнализация');
-
 end_if;]]></ST>
         </FunctionBlock>
+        <FunctionBlock UUID="6365F2774F4DD22539CE50A3F08609D4" Name="FB_VLV">
+            <Variables>
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1943" Name="SEN_KTO_IM_CV0201" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1944" Name="SEN_KTO_IM_EV0103" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1945" Name="SEN_KTO_IM_AG1" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1946" Name="SEN_KTO_IM_FP" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1947" Name="SEN_KTO_IM_DAMP" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1948" Name="SEN_KTO_IM_PUSH" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1949" Name="SEN_KTO_IM_V_KE1" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1950" Name="SEN_KTO_IM_V1" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1951" Name="SEN_KTO_IM_CF0201" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1952" Name="SEN_KTO_IM_CF0202" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1953" Name="SEN_KTO_IM_CF0301" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1954" Name="SEN_KTO_IM_AF0201" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1955" Name="SEN_KTO_IM_RAL0201" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1956" Name="SEN_KTO_IM_CH0201" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1957" Name="SEN_KTO_IM_P0201A" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1958" Name="SEN_KTO_IM_TR0101A" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1959" Name="SEN_KTO_IM_TR0101B" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1960" Name="SEN_KTO_IM_TV0102A" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1961" Name="SEN_KTO_IM_SV0101B" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1962" Name="SEN_KTO_IM_TV0101A" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1963" Name="cfg_KTO_IM_CV0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1963" Name="cfg_KTO_IM_CV0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1964" Name="cfg_KTO_IM_EV0103" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1964" Name="cfg_KTO_IM_EV0103" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1965" Name="cfg_KTO_IM_AG1" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1965" Name="cfg_KTO_IM_AG1" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1966" Name="cfg_KTO_IM_FP" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1966" Name="cfg_KTO_IM_FP" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1967" Name="cfg_KTO_IM_DAMP" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1967" Name="cfg_KTO_IM_DAMP" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1968" Name="cfg_KTO_IM_PUSH" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1968" Name="cfg_KTO_IM_PUSH" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1969" Name="cfg_KTO_IM_V_KE1" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1969" Name="cfg_KTO_IM_V_KE1" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1970" Name="cfg_KTO_IM_V1" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1970" Name="cfg_KTO_IM_V1" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1971" Name="cfg_KTO_IM_CF0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1971" Name="cfg_KTO_IM_CF0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1972" Name="cfg_KTO_IM_CF0202" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1972" Name="cfg_KTO_IM_CF0202" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1973" Name="cfg_KTO_IM_CF0301" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1974" Name="cfg_KTO_IM_AF0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1975" Name="cfg_KTO_IM_RAL0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1976" Name="cfg_KTO_IM_CH0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1977" Name="cfg_KTO_IM_P0201A" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1978" Name="cfg_KTO_IM_TR0101A" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1979" Name="cfg_KTO_IM_TR0101B" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1980" Name="cfg_KTO_IM_TV0102A" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1981" Name="cfg_KTO_IM_SV0101B" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1982" Name="cfg_KTO_IM_TV0101A" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1983" Name="cfg_KTO_IM_TV0101B" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1984" Name="cfg_KTO_IM_P0201B" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1985" Name="cfg_KTO_IM_C0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1986" Name="cfg_KTO_IM_SC0203" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1987" Name="cfg_KTO_IM_CF0101A" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1988" Name="cfg_KTO_IM_СF0102B" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1989" Name="cfg_KTO_IM_SC0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1990" Name="cfg_KTO_IM_SC0202" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1991" Name="cfg_KTO_IM_P0401" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="5905D61046CA6B389F09ACB1CBCA1992" Name="cfg_KTO_IM_EH0401" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="1F91303941F67BC6B4EE199AA1760941" Name="im_KTO_IM_CV0201" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="2D90658C417B0241EAA8A488C5639E7A" Name="im_KTO_IM_EV0103" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="8DC4B511431E720DB998679A0F7A0984" Name="im_KTO_IM_AG1" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="947AAB9043BC4159491581ADC82308A5" Name="im_KTO_IM_FP" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="CE64853C490F0A73843B05A0DD9D8238" Name="im_KTO_IM_DAMP" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="386C6C334436301A1DE7FB9F0F5EF773" Name="im_KTO_IM_PUSH" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="F129C88C4A639E59C27D86973EC42E36" Name="im_KTO_IM_V_KE1" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="A6291D9A4A9A055179E705A1B5E923FD" Name="im_KTO_IM_V1" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="284975E54C41E7AF80AD2787524A6472" Name="im_KTO_IM_CF0201" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="C18C08E64A3BFCA821CA1B8166C3CA9A" Name="im_KTO_IM_CF0202" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="35B13B12471A25F3F0FA75966B4DB8D1" Name="im_KTO_IM_CF0301" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="B53B6AC24864526F420F289D8EE87448" Name="im_KTO_IM_AF0201" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="2B2034504A4C558D6AC2F997A7334761" Name="im_KTO_IM_RAL0201" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="6BDF737E4E14CA332F0B66BAE5217D06" Name="im_KTO_IM_CH0201" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="04EBACBB4DCE4EBC68F7BC91D59659EC" Name="im_KTO_IM_P0201A" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="AE51577A4C4D94A9EE5718A3BEA11D1E" Name="im_KTO_IM_TR0101A" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="F1E0C6B2452B346838D5F1A3396F5EDC" Name="im_KTO_IM_TR0101B" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="AF24FB01403C02DBF45906A3E38BB862" Name="im_KTO_IM_TV0102A" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="2306C99843205E89CF4CECB4357B139B" Name="im_KTO_IM_SV0101B" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="739581FA4993090257DF5F874CA6ADA7" Name="im_KTO_IM_TV0101A" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81846" Name="im_KTO_IM_TV0101B" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81847" Name="im_KTO_IM_P0201B" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81848" Name="im_KTO_IM_C0201" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81849" Name="im_KTO_IM_SC0203" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81850" Name="im_KTO_IM_CF0101A" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81851" Name="im_KTO_IM_СF0102B" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81852" Name="im_KTO_IM_SC0201" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81853" Name="im_KTO_IM_SC0202" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81854" Name="im_KTO_IM_P0401" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="0685D6E24645A68C351297A434E81855" Name="im_KTO_IM_EH0401" Type="proc_VLV22" TypeUUID="D462FA7146F4E9F333226CA88FF08990" Usage="internal" />
+                <Variable UUID="BE99BE3540E4DCD1A7ACB0B7D510D54A" Name="imit_KTO_IM_CV0201" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="A69DBF48474F8E40E6C6B387C5483A97" Name="imit_KTO_IM_EV0103" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="8C8BFBA04C919BDD0700838F3108C403" Name="imit_KTO_IM_AG1" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="724E85584B67995A6185A58F9FD92813" Name="imit_KTO_IM_FP" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="497A231C4A1920C5344C05A36E4672CC" Name="imit_KTO_IM_DAMP" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="18684C614BBB4541290635AE8D2E02C2" Name="imit_KTO_IM_PUSH" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="0ABAC53647C48C12EF0334BF5514D5FC" Name="imit_KTO_IM_V_KE1" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="A6EF8A8548E3BB62EADF7CAF1D8C6591" Name="imit_KTO_IM_V1" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="BE8AEAD64ABA75A186DBDF8A974DD5A2" Name="imit_KTO_IM_CF0201" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="189D1A3A49062D5FF227D6A1DA957BDB" Name="imit_KTO_IM_CF0202" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="B44CDE454AF35597277DF7883AAF3207" Name="imit_KTO_IM_CF0301" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="E592EB664B49D64A49BAD08CA6F959CC" Name="imit_KTO_IM_AF0201" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="9A145E51482DD537E10BD98F5DD6B737" Name="imit_KTO_IM_RAL0201" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="EB35CDB245CD5676888F4981F8486102" Name="imit_KTO_IM_CH0201" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="4AB607434EE59004B9086C90C49DAA4B" Name="imit_KTO_IM_P0201A" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="EAEFF4714BC7831D36C281B438110988" Name="imit_KTO_IM_TR0101A" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="64851CD44ED3ECD35D2A8E9339F6E896" Name="imit_KTO_IM_TR0101B" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="47C7C33E4DE3C7973BEE058B142F1473" Name="imit_KTO_IM_TV0102A" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="EE0309C047A73261F79D009053B7249D" Name="imit_KTO_IM_SV0101B" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="E13699884EFCE3B0BB9ACD92D2FAA88C" Name="imit_KTO_IM_TV0101A" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9BD" Name="imit_KTO_IM_TV0101B" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B1" Name="imit_KTO_IM_P0201B" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B2" Name="imit_KTO_IM_C0201" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B3" Name="imit_KTO_IM_SC0203" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B4" Name="imit_KTO_IM_CF0101A" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B5" Name="imit_KTO_IM_СF0102B" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B6" Name="imit_KTO_IM_SC0201" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B7" Name="imit_KTO_IM_SC0202" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B8" Name="imit_KTO_IM_P0401" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="C2795F624E80F4BA9DB4DCB75EFCA9B9" Name="imit_KTO_IM_EH0401" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[
+if Firstscan then		                               //таймер команды	//таймер дожима		//цепи "откр"	//цепи "закр"	//Дист/Авто
+SEN_KTO_IM_CV0201	 := VLV_init(	SEN_KTO_IM_CV0201, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_EV0103	 := VLV_init(	SEN_KTO_IM_EV0103, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_AG1	     := VLV_init(	SEN_KTO_IM_AG1,    LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_FP	     := VLV_init(	SEN_KTO_IM_FP,     LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_DAMP	     := VLV_init(	SEN_KTO_IM_DAMP,   LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_PUSH	     := VLV_init(	SEN_KTO_IM_PUSH,   LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_V_KE1	 := VLV_init(	SEN_KTO_IM_V_KE1,  LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_V1	     := VLV_init(	SEN_KTO_IM_V1,     LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_CF0201	 := VLV_init(	SEN_KTO_IM_CF0201, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_CF0202	 := VLV_init(	SEN_KTO_IM_CF0202, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_CF0301	 := VLV_init(	SEN_KTO_IM_CF0301, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_AF0201	 := VLV_init(	SEN_KTO_IM_AF0201, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_RAL0201	 := VLV_init(	SEN_KTO_IM_RAL0201,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_CH0201	 := VLV_init(	SEN_KTO_IM_CH0201, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_P0201A	 := VLV_init(	SEN_KTO_IM_P0201A, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_TR0101A	 := VLV_init(	SEN_KTO_IM_TR0101A,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_TR0101B	 := VLV_init(	SEN_KTO_IM_TR0101B,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_TV0102A	 := VLV_init(	SEN_KTO_IM_TV0102A,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_SV0101B	 := VLV_init(	SEN_KTO_IM_SV0101B,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_TV0101A	 := VLV_init(	SEN_KTO_IM_TV0101A,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_TV0101B	 := VLV_init(	SEN_KTO_IM_TV0101B,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_P0201B	 := VLV_init(	SEN_KTO_IM_P0201B, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_C0201	 := VLV_init(	SEN_KTO_IM_C0201,  LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_SC0203	 := VLV_init(	SEN_KTO_IM_SC0203, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_CF0101A	 := VLV_init(	SEN_KTO_IM_CF0101A,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_CF0102B	 := VLV_init(	SEN_KTO_IM_CF0102B,LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_SC0201	 := VLV_init(	SEN_KTO_IM_SC0201, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_SC0202	 := VLV_init(	SEN_KTO_IM_SC0202, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_P0401	 := VLV_init(	SEN_KTO_IM_P0401,  LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+SEN_KTO_IM_EH0401	 := VLV_init(	SEN_KTO_IM_EH0401, LREAL#15, LREAL#1, BYTE#1, BYTE#1, BOOL#1);
+end_if;
+(*
+
+//Обработка команд управления ИМ от разных источников
+//                  ручн PRU                      	    	автомат PRU                    	    	ручн HMI                         	автомат HMI                       	включить в ручном PRU          		откл в ручном PRU               	включить в ручном HMI          		откл в ручном HMI              		состояние крана из логики        обобщенная авария крана из логики	 состояние крана в PRU            	состояние крана в HMI               общая авария в PRU       				общая авария в HMI							RA в блок                    	RA в PRU                      	RA в HMI                      	вкл в ручном в блок           	откл в ручном в блок       
+ctrl_KC1_STU3_KR_IN(KC1_STU3_VLV_PRU.KR_IN.RA_on, 	    	KC1_STU3_VLV_PRU.KR_IN.RA_off, 	   	 	KC1_STU3_VLV_HMI.KR_IN.RA_on,    	KC1_STU3_VLV_HMI.KR_IN.RA_off,    	KC1_STU3_VLV_PRU.KR_IN.rOn,    		KC1_STU3_VLV_PRU.KR_IN.rOff,    	KC1_STU3_VLV_HMI.KR_IN.rOn,    		KC1_STU3_VLV_HMI.KR_IN.rOff,    	KC1_STU3_VLV_LG.KR_IN.state,	 KC1_STU3_VLV_LG.KR_IN.flt_all,    	 KC1_STU3_VLV_PRU.KR_IN.state,    	KC1_STU3_VLV_HMI.KR_IN.state,		KC1_STU3_VLV_PRU.KR_IN.flt_all,			KC1_STU3_VLV_HMI.KR_IN.flt_all,    			KC1_STU3_VLV_LG.KR_IN.RA,    	KC1_STU3_VLV_PRU.KR_IN.RA,    	KC1_STU3_VLV_HMI.KR_IN.RA,    	KC1_STU3_VLV_LG.KR_IN.rOn,    	KC1_STU3_VLV_LG.KR_IN.rOff);
+ctrl_KC1_STU3_KR_CDL(KC1_STU3_VLV_PRU.KR_CDL.RA_on,     	KC1_STU3_VLV_PRU.KR_CDL.RA_off,    	 	KC1_STU3_VLV_HMI.KR_CDL.RA_on,   	KC1_STU3_VLV_HMI.KR_CDL.RA_off,   	KC1_STU3_VLV_PRU.KR_CDL.rOn,   		KC1_STU3_VLV_PRU.KR_CDL.rOff,   	KC1_STU3_VLV_HMI.KR_CDL.rOn,   		KC1_STU3_VLV_HMI.KR_CDL.rOff,   	KC1_STU3_VLV_LG.KR_CDL.state,	 KC1_STU3_VLV_LG.KR_CDL.flt_all,   	 KC1_STU3_VLV_PRU.KR_CDL.state,   	KC1_STU3_VLV_HMI.KR_CDL.state,		KC1_STU3_VLV_PRU.KR_CDL.flt_all,		KC1_STU3_VLV_HMI.KR_CDL.flt_all,   			KC1_STU3_VLV_LG.KR_CDL.RA,   	KC1_STU3_VLV_PRU.KR_CDL.RA,   	KC1_STU3_VLV_HMI.KR_CDL.RA,   	KC1_STU3_VLV_LG.KR_CDL.rOn,   	KC1_STU3_VLV_LG.KR_CDL.rOff);
+//ctrl_KC1_STU3_KR_XV3_1(KC1_STU3_VLV_PRU.KR_XV3_1.RA_on, 	KC1_STU3_VLV_PRU.KR_XV3_1.RA_off,   	KC1_STU3_VLV_HMI.KR_XV3_1.RA_on, 	KC1_STU3_VLV_HMI.KR_XV3_1.RA_off, 	KC1_STU3_VLV_PRU.KR_XV3_1.rOn, 		KC1_STU3_VLV_PRU.KR_XV3_1.rOff, 	KC1_STU3_VLV_HMI.KR_XV3_1.rOn, 		KC1_STU3_VLV_HMI.KR_XV3_1.rOff, 	KC1_STU3_VLV_LG.KR_XV3_1.state,	 KC1_STU3_VLV_LG.KR_XV3_1.flt_all, 	 KC1_STU3_VLV_PRU.KR_XV3_1.state, 	KC1_STU3_VLV_HMI.KR_XV3_1.state,	KC1_STU3_VLV_PRU.KR_XV3_1.flt_all,		KC1_STU3_VLV_HMI.KR_XV3_1.flt_all, 			KC1_STU3_VLV_LG.KR_XV3_1.RA, 	KC1_STU3_VLV_PRU.KR_XV3_1.RA, 	KC1_STU3_VLV_HMI.KR_XV3_1.RA, 	KC1_STU3_VLV_LG.KR_XV3_1.rOn, 	KC1_STU3_VLV_LG.KR_XV3_1.rOff);
+//ctrl_KC1_STU3_KR_XV3_2(KC1_STU3_VLV_PRU.KR_XV3_2.RA_on, 	KC1_STU3_VLV_PRU.KR_XV3_2.RA_off,   	KC1_STU3_VLV_HMI.KR_XV3_2.RA_on, 	KC1_STU3_VLV_HMI.KR_XV3_2.RA_off, 	KC1_STU3_VLV_PRU.KR_XV3_2.rOn, 		KC1_STU3_VLV_PRU.KR_XV3_2.rOff, 	KC1_STU3_VLV_HMI.KR_XV3_2.rOn, 		KC1_STU3_VLV_HMI.KR_XV3_2.rOff, 	KC1_STU3_VLV_LG.KR_XV3_2.state,	 KC1_STU3_VLV_LG.KR_XV3_2.flt_all, 	 KC1_STU3_VLV_PRU.KR_XV3_2.state, 	KC1_STU3_VLV_HMI.KR_XV3_2.state,	KC1_STU3_VLV_PRU.KR_XV3_2.flt_all,		KC1_STU3_VLV_HMI.KR_XV3_2.flt_all, 			KC1_STU3_VLV_LG.KR_XV3_2.RA, 	KC1_STU3_VLV_PRU.KR_XV3_2.RA, 	KC1_STU3_VLV_HMI.KR_XV3_2.RA, 	KC1_STU3_VLV_LG.KR_XV3_2.rOn, 	KC1_STU3_VLV_LG.KR_XV3_2.rOff);
+ctrl_KC1_STU3_KR_SV1_1(KC1_STU3_VLV_PRU.KR_SV1_1.RA_on, 	KC1_STU3_VLV_PRU.KR_SV1_1.RA_off,   	KC1_STU3_VLV_HMI.KR_SV1_1.RA_on, 	KC1_STU3_VLV_HMI.KR_SV1_1.RA_off, 	KC1_STU3_VLV_PRU.KR_SV1_1.rOn, 		KC1_STU3_VLV_PRU.KR_SV1_1.rOff, 	KC1_STU3_VLV_HMI.KR_SV1_1.rOn, 		KC1_STU3_VLV_HMI.KR_SV1_1.rOff, 	KC1_STU3_VLV_LG.KR_SV1_1.state,  KC1_STU3_VLV_LG.KR_SV1_1.flt_all,	 KC1_STU3_VLV_PRU.KR_SV1_1.state, 	KC1_STU3_VLV_HMI.KR_SV1_1.state,	KC1_STU3_VLV_PRU.KR_SV1_1.flt_all,		KC1_STU3_VLV_HMI.KR_SV1_1.flt_all, 			KC1_STU3_VLV_LG.KR_SV1_1.RA, 	KC1_STU3_VLV_PRU.KR_SV1_1.RA, 	KC1_STU3_VLV_HMI.KR_SV1_1.RA, 	KC1_STU3_VLV_LG.KR_SV1_1.rOn, 	KC1_STU3_VLV_LG.KR_SV1_1.rOff);
+ctrl_KC1_STU3_IM_V_TO(KC1_STU3_VLV_PRU.IM_V_TO.RA_on, 		KC1_STU3_VLV_PRU.IM_V_TO.RA_off,    	KC1_STU3_VLV_HMI.IM_V_TO.RA_on,  	KC1_STU3_VLV_HMI.IM_V_TO.RA_off,  	KC1_STU3_VLV_PRU.IM_V_TO.rOn,  		KC1_STU3_VLV_PRU.IM_V_TO.rOff,  	KC1_STU3_VLV_HMI.IM_V_TO.rOn,  		KC1_STU3_VLV_HMI.IM_V_TO.rOff,  	KC1_STU3_VLV_LG.IM_V_TO.state,	 KC1_STU3_VLV_LG.IM_V_TO.flt_all,  	 KC1_STU3_VLV_PRU.IM_V_TO.state,  	KC1_STU3_VLV_HMI.IM_V_TO.state,		KC1_STU3_VLV_PRU.IM_V_TO.flt_all,		KC1_STU3_VLV_HMI.IM_V_TO.flt_all,  			KC1_STU3_VLV_LG.IM_V_TO.RA,  	KC1_STU3_VLV_PRU.IM_V_TO.RA,  	KC1_STU3_VLV_HMI.IM_V_TO.RA,  	KC1_STU3_VLV_LG.IM_V_TO.rOn,  	KC1_STU3_VLV_LG.IM_V_TO.rOff);
+ctrl_KC1_STU3_IM_N_P1_1(KC1_STU3_VLV_PRU.IM_N_P1_1.RA_on, 	KC1_STU3_VLV_PRU.IM_N_P1_1.RA_off,    	KC1_STU3_VLV_HMI.IM_N_P1_1.RA_on,  	KC1_STU3_VLV_HMI.IM_N_P1_1.RA_off,  KC1_STU3_VLV_PRU.IM_N_P1_1.rOn,  	KC1_STU3_VLV_PRU.IM_N_P1_1.rOff,  	KC1_STU3_VLV_HMI.IM_N_P1_1.rOn,  	KC1_STU3_VLV_HMI.IM_N_P1_1.rOff, 	KC1_STU3_VLV_LG.IM_N_P1_1.state, KC1_STU3_VLV_LG.IM_N_P1_1.flt_all,  KC1_STU3_VLV_PRU.IM_N_P1_1.state,  KC1_STU3_VLV_HMI.IM_N_P1_1.state,	KC1_STU3_VLV_PRU.IM_N_P1_1.flt_all,		KC1_STU3_VLV_HMI.IM_N_P1_1.flt_all,  		KC1_STU3_VLV_LG.IM_N_P1_1.RA,  	KC1_STU3_VLV_PRU.IM_N_P1_1.RA,  KC1_STU3_VLV_HMI.IM_N_P1_1.RA,  KC1_STU3_VLV_LG.IM_N_P1_1.rOn,  KC1_STU3_VLV_LG.IM_N_P1_1.rOff);
+ctrl_KC1_STU3_IM_N_P1_2(KC1_STU3_VLV_PRU.IM_N_P1_2.RA_on, 	KC1_STU3_VLV_PRU.IM_N_P1_2.RA_off,    	KC1_STU3_VLV_HMI.IM_N_P1_2.RA_on,  	KC1_STU3_VLV_HMI.IM_N_P1_2.RA_off,  KC1_STU3_VLV_PRU.IM_N_P1_2.rOn,  	KC1_STU3_VLV_PRU.IM_N_P1_2.rOff,  	KC1_STU3_VLV_HMI.IM_N_P1_2.rOn,  	KC1_STU3_VLV_HMI.IM_N_P1_2.rOff, 	KC1_STU3_VLV_LG.IM_N_P1_2.state, KC1_STU3_VLV_LG.IM_N_P1_2.flt_all,  KC1_STU3_VLV_PRU.IM_N_P1_2.state,  KC1_STU3_VLV_HMI.IM_N_P1_2.state,	KC1_STU3_VLV_PRU.IM_N_P1_2.flt_all,		KC1_STU3_VLV_HMI.IM_N_P1_2.flt_all,  		KC1_STU3_VLV_LG.IM_N_P1_2.RA,  	KC1_STU3_VLV_PRU.IM_N_P1_2.RA,  KC1_STU3_VLV_HMI.IM_N_P1_2.RA,  KC1_STU3_VLV_LG.IM_N_P1_2.rOn,  KC1_STU3_VLV_LG.IM_N_P1_2.rOff);
+ctrl_KC1_STU3_IM_N_P1_3(KC1_STU3_VLV_PRU.IM_N_P1_3.RA_on, 	KC1_STU3_VLV_PRU.IM_N_P1_3.RA_off,    	KC1_STU3_VLV_HMI.IM_N_P1_3.RA_on,  	KC1_STU3_VLV_HMI.IM_N_P1_3.RA_off,  KC1_STU3_VLV_PRU.IM_N_P1_3.rOn,  	KC1_STU3_VLV_PRU.IM_N_P1_3.rOff,  	KC1_STU3_VLV_HMI.IM_N_P1_3.rOn,  	KC1_STU3_VLV_HMI.IM_N_P1_3.rOff, 	KC1_STU3_VLV_LG.IM_N_P1_3.state, KC1_STU3_VLV_LG.IM_N_P1_3.flt_all,  KC1_STU3_VLV_PRU.IM_N_P1_3.state,  KC1_STU3_VLV_HMI.IM_N_P1_3.state,	KC1_STU3_VLV_PRU.IM_N_P1_3.flt_all,		KC1_STU3_VLV_HMI.IM_N_P1_3.flt_all,  		KC1_STU3_VLV_LG.IM_N_P1_3.RA,  	KC1_STU3_VLV_PRU.IM_N_P1_3.RA,  KC1_STU3_VLV_HMI.IM_N_P1_3.RA,  KC1_STU3_VLV_LG.IM_N_P1_3.rOn,  KC1_STU3_VLV_LG.IM_N_P1_3.rOff);
+ctrl_KC1_STU3_IM_N_P1_4(KC1_STU3_VLV_PRU.IM_N_P1_4.RA_on, 	KC1_STU3_VLV_PRU.IM_N_P1_4.RA_off,    	KC1_STU3_VLV_HMI.IM_N_P1_4.RA_on,  	KC1_STU3_VLV_HMI.IM_N_P1_4.RA_off,  KC1_STU3_VLV_PRU.IM_N_P1_4.rOn,  	KC1_STU3_VLV_PRU.IM_N_P1_4.rOff,  	KC1_STU3_VLV_HMI.IM_N_P1_4.rOn,  	KC1_STU3_VLV_HMI.IM_N_P1_4.rOff, 	KC1_STU3_VLV_LG.IM_N_P1_4.state, KC1_STU3_VLV_LG.IM_N_P1_4.flt_all,  KC1_STU3_VLV_PRU.IM_N_P1_4.state,  KC1_STU3_VLV_HMI.IM_N_P1_4.state,	KC1_STU3_VLV_PRU.IM_N_P1_4.flt_all,		KC1_STU3_VLV_HMI.IM_N_P1_4.flt_all,  		KC1_STU3_VLV_LG.IM_N_P1_4.RA,  	KC1_STU3_VLV_PRU.IM_N_P1_4.RA,  KC1_STU3_VLV_HMI.IM_N_P1_4.RA,  KC1_STU3_VLV_LG.IM_N_P1_4.rOn,  KC1_STU3_VLV_LG.IM_N_P1_4.rOff);
+ctrl_KC1_STU3_IM_N_P1_5(KC1_STU3_VLV_PRU.IM_N_P1_5.RA_on, 	KC1_STU3_VLV_PRU.IM_N_P1_5.RA_off,    	KC1_STU3_VLV_HMI.IM_N_P1_5.RA_on,  	KC1_STU3_VLV_HMI.IM_N_P1_5.RA_off,  KC1_STU3_VLV_PRU.IM_N_P1_5.rOn,  	KC1_STU3_VLV_PRU.IM_N_P1_5.rOff,  	KC1_STU3_VLV_HMI.IM_N_P1_5.rOn,  	KC1_STU3_VLV_HMI.IM_N_P1_5.rOff, 	KC1_STU3_VLV_LG.IM_N_P1_5.state, KC1_STU3_VLV_LG.IM_N_P1_5.flt_all,  KC1_STU3_VLV_PRU.IM_N_P1_5.state,  KC1_STU3_VLV_HMI.IM_N_P1_5.state,	KC1_STU3_VLV_PRU.IM_N_P1_5.flt_all,		KC1_STU3_VLV_HMI.IM_N_P1_5.flt_all,  		KC1_STU3_VLV_LG.IM_N_P1_5.RA,  	KC1_STU3_VLV_PRU.IM_N_P1_5.RA,  KC1_STU3_VLV_HMI.IM_N_P1_5.RA,  KC1_STU3_VLV_LG.IM_N_P1_5.rOn,  KC1_STU3_VLV_LG.IM_N_P1_5.rOff);
+ctrl_KC1_STU3_IM_N_P1_6(KC1_STU3_VLV_PRU.IM_N_P1_6.RA_on, 	KC1_STU3_VLV_PRU.IM_N_P1_6.RA_off,    	KC1_STU3_VLV_HMI.IM_N_P1_6.RA_on,  	KC1_STU3_VLV_HMI.IM_N_P1_6.RA_off,  KC1_STU3_VLV_PRU.IM_N_P1_6.rOn,  	KC1_STU3_VLV_PRU.IM_N_P1_6.rOff,  	KC1_STU3_VLV_HMI.IM_N_P1_6.rOn,  	KC1_STU3_VLV_HMI.IM_N_P1_6.rOff, 	KC1_STU3_VLV_LG.IM_N_P1_6.state, KC1_STU3_VLV_LG.IM_N_P1_6.flt_all,  KC1_STU3_VLV_PRU.IM_N_P1_6.state,  KC1_STU3_VLV_HMI.IM_N_P1_6.state,	KC1_STU3_VLV_PRU.IM_N_P1_6.flt_all,		KC1_STU3_VLV_HMI.IM_N_P1_6.flt_all,  		KC1_STU3_VLV_LG.IM_N_P1_6.RA,  	KC1_STU3_VLV_PRU.IM_N_P1_6.RA,  KC1_STU3_VLV_HMI.IM_N_P1_6.RA,  KC1_STU3_VLV_LG.IM_N_P1_6.rOn,  KC1_STU3_VLV_LG.IM_N_P1_6.rOff);
+ctrl_KC1_STU3_IM_H_GB1_1(KC1_STU3_VLV_PRU.IM_H_GB1_1.RA_on, KC1_STU3_VLV_PRU.IM_H_GB1_1.RA_off,    	KC1_STU3_VLV_HMI.IM_H_GB1_1.RA_on,  KC1_STU3_VLV_HMI.IM_H_GB1_1.RA_off, KC1_STU3_VLV_PRU.IM_H_GB1_1.rOn,  	KC1_STU3_VLV_PRU.IM_H_GB1_1.rOff,  	KC1_STU3_VLV_HMI.IM_H_GB1_1.rOn,  	KC1_STU3_VLV_HMI.IM_H_GB1_1.rOff, 	KC1_STU3_VLV_LG.IM_H_GB1_1.state,KC1_STU3_VLV_LG.IM_H_GB1_1.flt_all, KC1_STU3_VLV_PRU.IM_H_GB1_1.state, KC1_STU3_VLV_HMI.IM_H_GB1_1.state,	KC1_STU3_VLV_PRU.IM_H_GB1_1.flt_all,	KC1_STU3_VLV_HMI.IM_H_GB1_1.flt_all,  		KC1_STU3_VLV_LG.IM_H_GB1_1.RA,  KC1_STU3_VLV_PRU.IM_H_GB1_1.RA, KC1_STU3_VLV_HMI.IM_H_GB1_1.RA, KC1_STU3_VLV_LG.IM_H_GB1_1.rOn, KC1_STU3_VLV_LG.IM_H_GB1_1.rOff);
+ctrl_KC1_STU3_IM_H_GB1_2(KC1_STU3_VLV_PRU.IM_H_GB1_2.RA_on, KC1_STU3_VLV_PRU.IM_H_GB1_2.RA_off,    	KC1_STU3_VLV_HMI.IM_H_GB1_2.RA_on,  KC1_STU3_VLV_HMI.IM_H_GB1_2.RA_off, KC1_STU3_VLV_PRU.IM_H_GB1_2.rOn,  	KC1_STU3_VLV_PRU.IM_H_GB1_2.rOff,  	KC1_STU3_VLV_HMI.IM_H_GB1_2.rOn,  	KC1_STU3_VLV_HMI.IM_H_GB1_2.rOff, 	KC1_STU3_VLV_LG.IM_H_GB1_2.state,KC1_STU3_VLV_LG.IM_H_GB1_2.flt_all, KC1_STU3_VLV_PRU.IM_H_GB1_2.state, KC1_STU3_VLV_HMI.IM_H_GB1_2.state,	KC1_STU3_VLV_PRU.IM_H_GB1_2.flt_all,	KC1_STU3_VLV_HMI.IM_H_GB1_2.flt_all, 		KC1_STU3_VLV_LG.IM_H_GB1_2.RA,  KC1_STU3_VLV_PRU.IM_H_GB1_2.RA, KC1_STU3_VLV_HMI.IM_H_GB1_2.RA, KC1_STU3_VLV_LG.IM_H_GB1_2.rOn, KC1_STU3_VLV_LG.IM_H_GB1_2.rOff);
+
+
+//Формирование входных сигналов и АПС для ИМ	ручн/автомат					включить в ручном				откл в ручном					CMD включить в ручном				CMD вкл в автомате					команда повторить				контроль КЦУ откр				контроль КЦУ закр					состояние открыт						состояние закрыт							КЦУ открытия									КЦУ закрытия
+cfg_KC1_STU3_KR_IN(SEN_KC1_STU3_KR_IN,			KC1_STU3_VLV_LG.KR_IN.RA,		KC1_STU3_VLV_LG.KR_IN.rOn,		KC1_STU3_VLV_LG.KR_IN.rOff,		KC1_STU3_VLV_LG.KR_IN.rOnOff,		KC1_STU3_VLV_LG.KR_IN.aOnOff,		KC1_STU3_VLV_HMI.KR_IN.rep,		KC1_STU3_VLV_LG.KR_IN.cwOn,		KC1_STU3_VLV_LG.KR_IN.cwOff,		KC1_STU3_DI_HMI.A2_7_9_V_IN_ON.PV,		KC1_STU3_DI_HMI.A2_7_10_V_IN_OFF.PV,		KC1_STU3_DI_HMI.A3_5_9_V_IN_ON_KCU.PV,			KC1_STU3_DI_HMI.A3_5_10_V_IN_OFF_KCU.PV,	KC1_STU3_VLV_LG.KR_IN.non,		KC1_STU3_VLV_LG.KR_IN.noff,		KC1_STU3_VLV_LG.KR_IN.nstart,		KC1_STU3_VLV_LG.KR_IN.selfon,		KC1_STU3_VLV_LG.KR_IN.selfoff,		KC1_STU3_VLV_LG.KR_IN.flt,		KC1_STU3_VLV_LG.KR_IN.ncon,		KC1_STU3_VLV_LG.KR_IN.ncoff,		KC1_STU3_VLV_LG.KR_IN.flt_all,		KC1_STU3_VLV_LG.KR_IN.state,		KC1_STU3_VLV_LG.KR_IN.extern);
+cfg_KC1_STU3_KR_CDL(SEN_KC1_STU3_KR_CDL,		KC1_STU3_VLV_LG.KR_CDL.RA,		KC1_STU3_VLV_LG.KR_CDL.rOn,		KC1_STU3_VLV_LG.KR_CDL.rOff,	KC1_STU3_VLV_LG.KR_CDL.rOnOff,		KC1_STU3_VLV_LG.KR_CDL.aOnOff,		KC1_STU3_VLV_HMI.KR_CDL.rep,	KC1_STU3_VLV_LG.KR_CDL.cwOn,	KC1_STU3_VLV_LG.KR_CDL.cwOff,		KC1_STU3_DI_HMI.A2_7_11_V_CDL_ON.PV,	KC1_STU3_DI_HMI.A2_7_12_V_CDL_OFF.PV,		KC1_STU3_DI_HMI.A3_5_11_V_CDL_ON_KCU.PV,		KC1_STU3_DI_HMI.A3_5_12_V_CDL_OFF_KCU.PV,	KC1_STU3_VLV_LG.KR_CDL.non,		KC1_STU3_VLV_LG.KR_CDL.noff,	KC1_STU3_VLV_LG.KR_CDL.nstart,		KC1_STU3_VLV_LG.KR_CDL.selfon,		KC1_STU3_VLV_LG.KR_CDL.selfoff,		KC1_STU3_VLV_LG.KR_CDL.flt,		KC1_STU3_VLV_LG.KR_CDL.ncon,	KC1_STU3_VLV_LG.KR_CDL.ncoff,		KC1_STU3_VLV_LG.KR_CDL.flt_all,		KC1_STU3_VLV_LG.KR_CDL.state,		KC1_STU3_VLV_LG.KR_CDL.extern);
+//cfg_KC1_STU3_KR_XV3_1(SEN_KC1_STU3_KR_XV3_1,	KC1_STU3_VLV_LG.KR_XV3_1.RA,	KC1_STU3_VLV_LG.KR_XV3_1.rOn,	KC1_STU3_VLV_LG.KR_XV3_1.rOff,	KC1_STU3_VLV_LG.KR_XV3_1.rOnOff,	KC1_STU3_VLV_LG.KR_XV3_1.aOnOff,	KC1_STU3_VLV_HMI.KR_XV3_1.rep,	KC1_STU3_VLV_LG.KR_XV3_1.cwOn,	KC1_STU3_VLV_LG.KR_XV3_1.cwOff,		KC1_STU3_DI_HMI.A2_7_2_V_XV3_1_ON.PV,	KC1_STU3_DI_HMI.A2_7_3_V_XV3_1_OFF.PV,		KC1_STU3_DI_HMI.A3_5_15_V_XV3_1_ON_KCU.PV,		KC1_STU3_DI_HMI.A3_5_16_V_XV3_1_OFF_KCU.PV,	KC1_STU3_VLV_LG.KR_XV3_1.non,	KC1_STU3_VLV_LG.KR_XV3_1.noff,	KC1_STU3_VLV_LG.KR_XV3_1.nstart,	KC1_STU3_VLV_LG.KR_XV3_1.selfon,	KC1_STU3_VLV_LG.KR_XV3_1.selfoff,	KC1_STU3_VLV_LG.KR_XV3_1.flt,	KC1_STU3_VLV_LG.KR_XV3_1.ncon,	KC1_STU3_VLV_LG.KR_XV3_1.ncoff,		KC1_STU3_VLV_LG.KR_XV3_1.flt_all,	KC1_STU3_VLV_LG.KR_XV3_1.state,		KC1_STU3_VLV_LG.KR_XV3_1.extern);
+//cfg_KC1_STU3_KR_XV3_2(SEN_KC1_STU3_KR_XV3_2,	KC1_STU3_VLV_LG.KR_XV3_2.RA,	KC1_STU3_VLV_LG.KR_XV3_2.rOn,	KC1_STU3_VLV_LG.KR_XV3_2.rOff,	KC1_STU3_VLV_LG.KR_XV3_2.rOnOff,	KC1_STU3_VLV_LG.KR_XV3_2.aOnOff,	KC1_STU3_VLV_HMI.KR_XV3_2.rep,	KC1_STU3_VLV_LG.KR_XV3_2.cwOn,	KC1_STU3_VLV_LG.KR_XV3_2.cwOff,		KC1_STU3_DI_HMI.A2_7_4_V_XV3_2_ON.PV,	KC1_STU3_DI_HMI.A2_7_5_V_XV3_2_OFF.PV,		KC1_STU3_DI_HMI.A2_9_1_V_XV3_2_ON_KCU.PV,		KC1_STU3_DI_HMI.A2_9_2_V_XV3_2_OFF_KCU.PV,	KC1_STU3_VLV_LG.KR_XV3_2.non,	KC1_STU3_VLV_LG.KR_XV3_2.noff,	KC1_STU3_VLV_LG.KR_XV3_2.nstart,	KC1_STU3_VLV_LG.KR_XV3_2.selfon,	KC1_STU3_VLV_LG.KR_XV3_2.selfoff,	KC1_STU3_VLV_LG.KR_XV3_2.flt,	KC1_STU3_VLV_LG.KR_XV3_2.ncon,	KC1_STU3_VLV_LG.KR_XV3_2.ncoff,		KC1_STU3_VLV_LG.KR_XV3_2.flt_all,	KC1_STU3_VLV_LG.KR_XV3_2.state,		KC1_STU3_VLV_LG.KR_XV3_2.extern);
+cfg_KC1_STU3_KR_SV1_1(SEN_KC1_STU3_KR_SV1_1,    KC1_STU3_VLV_LG.KR_SV1_1.RA,   	KC1_STU3_VLV_LG.KR_SV1_1.rOn,  	KC1_STU3_VLV_LG.KR_SV1_1.rOff, 	KC1_STU3_VLV_LG.KR_SV1_1.rOnOff,	KC1_STU3_VLV_LG.KR_SV1_1.aOnOff,	KC1_STU3_VLV_HMI.KR_SV1_1.rep,	KC1_STU3_VLV_LG.KR_SV1_1.cwOn,	KC1_STU3_VLV_LG.KR_SV1_1.cwOff,		KC1_STU3_DI_HMI.dummy.PV,				KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_DI_HMI.A3_5_13_V_SV1_1_ON_KCU.PV,		KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.KR_SV1_1.non,	KC1_STU3_VLV_LG.KR_SV1_1.noff,	KC1_STU3_VLV_LG.KR_SV1_1.nstart,	KC1_STU3_VLV_LG.KR_SV1_1.selfon,	KC1_STU3_VLV_LG.KR_SV1_1.selfoff,	KC1_STU3_VLV_LG.KR_SV1_1.flt,	KC1_STU3_VLV_LG.KR_SV1_1.ncon,	KC1_STU3_VLV_LG.KR_SV1_1.ncoff,		KC1_STU3_VLV_LG.KR_SV1_1.flt_all,	KC1_STU3_VLV_LG.KR_SV1_1.state,		KC1_STU3_VLV_LG.KR_SV1_1.extern);
+cfg_KC1_STU3_IM_V_TO(SEN_KC1_STU3_IM_V_TO,		KC1_STU3_VLV_LG.IM_V_TO.RA,		KC1_STU3_VLV_LG.IM_V_TO.rOn,	KC1_STU3_VLV_LG.IM_V_TO.rOff,	KC1_STU3_VLV_LG.IM_V_TO.rOnOff,		KC1_STU3_VLV_LG.IM_V_TO.aOnOff,		KC1_STU3_VLV_HMI.IM_V_TO.rep,	KC1_STU3_VLV_LG.IM_V_TO.cwOn,	KC1_STU3_VLV_LG.IM_V_TO.cwOff,		KC1_STU3_DI_HMI.A2_8_4_V_TO_WORK.PV,	not KC1_STU3_DI_HMI.A2_8_4_V_TO_WORK.PV,	KC1_STU3_DI_HMI.A3_5_1_V_TO_ON_KCU.PV,			KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_V_TO.non,	KC1_STU3_VLV_LG.IM_V_TO.noff,	KC1_STU3_VLV_LG.IM_V_TO.nstart,		KC1_STU3_VLV_LG.IM_V_TO.selfon,		KC1_STU3_VLV_LG.IM_V_TO.selfoff,	KC1_STU3_VLV_LG.IM_V_TO.flt,	KC1_STU3_VLV_LG.IM_V_TO.ncon,	KC1_STU3_VLV_LG.IM_V_TO.ncoff,		KC1_STU3_VLV_LG.IM_V_TO.flt_all,	KC1_STU3_VLV_LG.IM_V_TO.state,		KC1_STU3_VLV_LG.IM_V_TO.extern);
+cfg_KC1_STU3_IM_N_P1_1(SEN_KC1_STU3_IM_N_P1_1,	KC1_STU3_VLV_LG.IM_N_P1_1.RA,	KC1_STU3_VLV_LG.IM_N_P1_1.rOn,	KC1_STU3_VLV_LG.IM_N_P1_1.rOff,	KC1_STU3_VLV_LG.IM_N_P1_1.rOnOff,	KC1_STU3_VLV_LG.IM_N_P1_1.aOnOff,	KC1_STU3_VLV_HMI.IM_N_P1_1.rep,	KC1_STU3_VLV_LG.IM_N_P1_1.cwOn,	KC1_STU3_VLV_LG.IM_N_P1_1.cwOff,	KC1_STU3_DI_HMI.A2_8_11_N_P1_1_WORK.PV, not KC1_STU3_DI_HMI.A2_8_11_N_P1_1_WORK.PV,	KC1_STU3_DI_HMI.A3_5_7_N_P1_1_ON_KCU.PV,		KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_N_P1_1.non,	KC1_STU3_VLV_LG.IM_N_P1_1.noff,	KC1_STU3_VLV_LG.IM_N_P1_1.nstart,	KC1_STU3_VLV_LG.IM_N_P1_1.selfon,	KC1_STU3_VLV_LG.IM_N_P1_1.selfoff,	KC1_STU3_VLV_LG.IM_N_P1_1.flt,	KC1_STU3_VLV_LG.IM_N_P1_1.ncon,	KC1_STU3_VLV_LG.IM_N_P1_1.ncoff,	KC1_STU3_VLV_LG.IM_N_P1_1.flt_all,	KC1_STU3_VLV_LG.IM_N_P1_1.state,	KC1_STU3_VLV_LG.IM_N_P1_1.extern);
+cfg_KC1_STU3_IM_N_P1_2(SEN_KC1_STU3_IM_N_P1_2,	KC1_STU3_VLV_LG.IM_N_P1_2.RA,	KC1_STU3_VLV_LG.IM_N_P1_2.rOn,	KC1_STU3_VLV_LG.IM_N_P1_2.rOff,	KC1_STU3_VLV_LG.IM_N_P1_2.rOnOff,	KC1_STU3_VLV_LG.IM_N_P1_2.aOnOff,	KC1_STU3_VLV_HMI.IM_N_P1_2.rep,	KC1_STU3_VLV_LG.IM_N_P1_2.cwOn,	KC1_STU3_VLV_LG.IM_N_P1_2.cwOff,	KC1_STU3_DI_HMI.A2_8_12_N_P1_2_WORK.PV,	not KC1_STU3_DI_HMI.A2_8_12_N_P1_2_WORK.PV,	KC1_STU3_DI_HMI.A3_5_8_N_P1_2_ON_KCU.PV,		KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_N_P1_2.non,	KC1_STU3_VLV_LG.IM_N_P1_2.noff,	KC1_STU3_VLV_LG.IM_N_P1_2.nstart,	KC1_STU3_VLV_LG.IM_N_P1_2.selfon,	KC1_STU3_VLV_LG.IM_N_P1_2.selfoff,	KC1_STU3_VLV_LG.IM_N_P1_2.flt,	KC1_STU3_VLV_LG.IM_N_P1_2.ncon,	KC1_STU3_VLV_LG.IM_N_P1_2.ncoff,	KC1_STU3_VLV_LG.IM_N_P1_2.flt_all,	KC1_STU3_VLV_LG.IM_N_P1_2.state,	KC1_STU3_VLV_LG.IM_N_P1_2.extern);
+cfg_KC1_STU3_IM_N_P1_3(SEN_KC1_STU3_IM_N_P1_3,	KC1_STU3_VLV_LG.IM_N_P1_3.RA,	KC1_STU3_VLV_LG.IM_N_P1_3.rOn,	KC1_STU3_VLV_LG.IM_N_P1_3.rOff,	KC1_STU3_VLV_LG.IM_N_P1_3.rOnOff,	KC1_STU3_VLV_LG.IM_N_P1_3.aOnOff,	KC1_STU3_VLV_HMI.IM_N_P1_3.rep,	KC1_STU3_VLV_LG.IM_N_P1_3.cwOn,	KC1_STU3_VLV_LG.IM_N_P1_3.cwOff,	KC1_STU3_DI_HMI.A2_8_13_N_P1_3_WORK.PV,	not KC1_STU3_DI_HMI.A2_8_13_N_P1_3_WORK.PV,	KC1_STU3_DI_HMI.dummy.PV,						KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_N_P1_3.non,	KC1_STU3_VLV_LG.IM_N_P1_3.noff,	KC1_STU3_VLV_LG.IM_N_P1_3.nstart,	KC1_STU3_VLV_LG.IM_N_P1_3.selfon,	KC1_STU3_VLV_LG.IM_N_P1_3.selfoff,	KC1_STU3_VLV_LG.IM_N_P1_3.flt,	KC1_STU3_VLV_LG.IM_N_P1_3.ncon,	KC1_STU3_VLV_LG.IM_N_P1_3.ncoff,	KC1_STU3_VLV_LG.IM_N_P1_3.flt_all,	KC1_STU3_VLV_LG.IM_N_P1_3.state,	KC1_STU3_VLV_LG.IM_N_P1_3.extern);
+cfg_KC1_STU3_IM_N_P1_4(SEN_KC1_STU3_IM_N_P1_4,	KC1_STU3_VLV_LG.IM_N_P1_4.RA,	KC1_STU3_VLV_LG.IM_N_P1_4.rOn,	KC1_STU3_VLV_LG.IM_N_P1_4.rOff,	KC1_STU3_VLV_LG.IM_N_P1_4.rOnOff,	KC1_STU3_VLV_LG.IM_N_P1_4.aOnOff,	KC1_STU3_VLV_HMI.IM_N_P1_4.rep,	KC1_STU3_VLV_LG.IM_N_P1_4.cwOn,	KC1_STU3_VLV_LG.IM_N_P1_4.cwOff,	KC1_STU3_DI_HMI.A2_8_14_N_P1_4_WORK.PV,	not KC1_STU3_DI_HMI.A2_8_14_N_P1_4_WORK.PV,	KC1_STU3_DI_HMI.dummy.PV,						KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_N_P1_4.non,	KC1_STU3_VLV_LG.IM_N_P1_4.noff,	KC1_STU3_VLV_LG.IM_N_P1_4.nstart,	KC1_STU3_VLV_LG.IM_N_P1_4.selfon,	KC1_STU3_VLV_LG.IM_N_P1_4.selfoff,	KC1_STU3_VLV_LG.IM_N_P1_4.flt,	KC1_STU3_VLV_LG.IM_N_P1_4.ncon,	KC1_STU3_VLV_LG.IM_N_P1_4.ncoff,	KC1_STU3_VLV_LG.IM_N_P1_4.flt_all,	KC1_STU3_VLV_LG.IM_N_P1_4.state,	KC1_STU3_VLV_LG.IM_N_P1_4.extern);
+cfg_KC1_STU3_IM_N_P1_5(SEN_KC1_STU3_IM_N_P1_5,	KC1_STU3_VLV_LG.IM_N_P1_5.RA,	KC1_STU3_VLV_LG.IM_N_P1_5.rOn,	KC1_STU3_VLV_LG.IM_N_P1_5.rOff,	KC1_STU3_VLV_LG.IM_N_P1_5.rOnOff,	KC1_STU3_VLV_LG.IM_N_P1_5.aOnOff,	KC1_STU3_VLV_HMI.IM_N_P1_5.rep,	KC1_STU3_VLV_LG.IM_N_P1_5.cwOn,	KC1_STU3_VLV_LG.IM_N_P1_5.cwOff,	KC1_STU3_DI_HMI.A2_8_15_N_P1_5_WORK.PV,	not KC1_STU3_DI_HMI.A2_8_15_N_P1_5_WORK.PV,	KC1_STU3_DI_HMI.dummy.PV,						KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_N_P1_5.non,	KC1_STU3_VLV_LG.IM_N_P1_5.noff,	KC1_STU3_VLV_LG.IM_N_P1_5.nstart,	KC1_STU3_VLV_LG.IM_N_P1_5.selfon,	KC1_STU3_VLV_LG.IM_N_P1_5.selfoff,	KC1_STU3_VLV_LG.IM_N_P1_5.flt,	KC1_STU3_VLV_LG.IM_N_P1_5.ncon,	KC1_STU3_VLV_LG.IM_N_P1_5.ncoff,	KC1_STU3_VLV_LG.IM_N_P1_5.flt_all,	KC1_STU3_VLV_LG.IM_N_P1_5.state,	KC1_STU3_VLV_LG.IM_N_P1_5.extern);
+cfg_KC1_STU3_IM_N_P1_6(SEN_KC1_STU3_IM_N_P1_6,	KC1_STU3_VLV_LG.IM_N_P1_6.RA,	KC1_STU3_VLV_LG.IM_N_P1_6.rOn,	KC1_STU3_VLV_LG.IM_N_P1_6.rOff,	KC1_STU3_VLV_LG.IM_N_P1_6.rOnOff,	KC1_STU3_VLV_LG.IM_N_P1_6.aOnOff,	KC1_STU3_VLV_HMI.IM_N_P1_6.rep,	KC1_STU3_VLV_LG.IM_N_P1_6.cwOn,	KC1_STU3_VLV_LG.IM_N_P1_6.cwOff,	KC1_STU3_DI_HMI.A2_8_16_N_P1_6_WORK.PV,	not KC1_STU3_DI_HMI.A2_8_16_N_P1_6_WORK.PV,	KC1_STU3_DI_HMI.dummy.PV,						KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_N_P1_6.non,	KC1_STU3_VLV_LG.IM_N_P1_6.noff,	KC1_STU3_VLV_LG.IM_N_P1_6.nstart,	KC1_STU3_VLV_LG.IM_N_P1_6.selfon,	KC1_STU3_VLV_LG.IM_N_P1_6.selfoff,	KC1_STU3_VLV_LG.IM_N_P1_6.flt,	KC1_STU3_VLV_LG.IM_N_P1_6.ncon,	KC1_STU3_VLV_LG.IM_N_P1_6.ncoff,	KC1_STU3_VLV_LG.IM_N_P1_6.flt_all,	KC1_STU3_VLV_LG.IM_N_P1_6.state,	KC1_STU3_VLV_LG.IM_N_P1_6.extern);
+cfg_KC1_STU3_IM_H_GB1_1(SEN_KC1_STU3_IM_H_GB1_1,KC1_STU3_VLV_LG.IM_H_GB1_1.RA,	KC1_STU3_VLV_LG.IM_H_GB1_1.rOn,	KC1_STU3_VLV_LG.IM_H_GB1_1.rOff,KC1_STU3_VLV_LG.IM_H_GB1_1.rOnOff,	KC1_STU3_VLV_LG.IM_H_GB1_1.aOnOff,	KC1_STU3_VLV_HMI.IM_H_GB1_1.rep,KC1_STU3_VLV_LG.IM_H_GB1_1.cwOn,KC1_STU3_VLV_LG.IM_H_GB1_1.cwOff,	KC1_STU3_DI_HMI.A2_6_1_GB1_1_ON.PV,		not KC1_STU3_DI_HMI.A2_6_1_GB1_1_ON.PV,		KC1_STU3_DI_HMI.A3_5_4_WORK_ALLOW_GB1_1_KCU.PV,	KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_H_GB1_1.non,	KC1_STU3_VLV_LG.IM_H_GB1_1.noff,KC1_STU3_VLV_LG.IM_H_GB1_1.nstart,	KC1_STU3_VLV_LG.IM_H_GB1_1.selfon,	KC1_STU3_VLV_LG.IM_H_GB1_1.selfoff,	KC1_STU3_VLV_LG.IM_H_GB1_1.flt,	KC1_STU3_VLV_LG.IM_H_GB1_1.ncon,KC1_STU3_VLV_LG.IM_H_GB1_1.ncoff,	KC1_STU3_VLV_LG.IM_H_GB1_1.flt_all,	KC1_STU3_VLV_LG.IM_H_GB1_1.state,	KC1_STU3_VLV_LG.IM_H_GB1_1.extern);
+cfg_KC1_STU3_IM_H_GB1_2(SEN_KC1_STU3_IM_H_GB1_2,KC1_STU3_VLV_LG.IM_H_GB1_2.RA,	KC1_STU3_VLV_LG.IM_H_GB1_2.rOn,	KC1_STU3_VLV_LG.IM_H_GB1_2.rOff,KC1_STU3_VLV_LG.IM_H_GB1_2.rOnOff,	KC1_STU3_VLV_LG.IM_H_GB1_2.aOnOff,	KC1_STU3_VLV_HMI.IM_H_GB1_2.rep,KC1_STU3_VLV_LG.IM_H_GB1_2.cwOn,KC1_STU3_VLV_LG.IM_H_GB1_2.cwOff,	KC1_STU3_DI_HMI.A2_6_2_GB1_2_ON.PV,		not KC1_STU3_DI_HMI.A2_6_2_GB1_2_ON.PV,		KC1_STU3_DI_HMI.A3_5_5_WORK_ALLOW_GB1_2_KCU.PV,	KC1_STU3_DI_HMI.dummy.PV,					KC1_STU3_VLV_LG.IM_H_GB1_2.non,	KC1_STU3_VLV_LG.IM_H_GB1_2.noff,KC1_STU3_VLV_LG.IM_H_GB1_2.nstart,	KC1_STU3_VLV_LG.IM_H_GB1_2.selfon,	KC1_STU3_VLV_LG.IM_H_GB1_2.selfoff,	KC1_STU3_VLV_LG.IM_H_GB1_2.flt,	KC1_STU3_VLV_LG.IM_H_GB1_2.ncon,KC1_STU3_VLV_LG.IM_H_GB1_2.ncoff,	KC1_STU3_VLV_LG.IM_H_GB1_2.flt_all,	KC1_STU3_VLV_LG.IM_H_GB1_2.state,	KC1_STU3_VLV_LG.IM_H_GB1_2.extern);
+	
+
+//ВЫЗОВ С-блоков
+vlv_KC1_STU3_KR_IN(		SEN_KC1_STU3_KR_IN,		cycleTime);
+vlv_KC1_STU3_KR_CDL(	SEN_KC1_STU3_KR_CDL,	cycleTime);
+//vlv_KC1_STU3_KR_XV3_1(	SEN_KC1_STU3_KR_XV3_1,	cycleTime);
+//vlv_KC1_STU3_KR_XV3_2(	SEN_KC1_STU3_KR_XV3_1,	cycleTime);
+vlv_KC1_STU3_KR_SV1_1(	SEN_KC1_STU3_KR_SV1_1,	cycleTime);
+im_KC1_STU3_IM_V_TO(	SEN_KC1_STU3_IM_V_TO,	cycleTime);
+im_KC1_STU3_IM_N_P1_1(	SEN_KC1_STU3_IM_N_P1_1, cycleTime);
+im_KC1_STU3_IM_N_P1_2(	SEN_KC1_STU3_IM_N_P1_2, cycleTime);
+im_KC1_STU3_IM_N_P1_3(	SEN_KC1_STU3_IM_N_P1_3, cycleTime);
+im_KC1_STU3_IM_N_P1_4(	SEN_KC1_STU3_IM_N_P1_4, cycleTime);
+im_KC1_STU3_IM_N_P1_5(	SEN_KC1_STU3_IM_N_P1_5,	cycleTime);
+im_KC1_STU3_IM_N_P1_6(	SEN_KC1_STU3_IM_N_P1_6,	cycleTime);
+im_KC1_STU3_IM_H_GB1_1(	SEN_KC1_STU3_IM_H_GB1_1,cycleTime);
+im_KC1_STU3_IM_H_GB1_2(	SEN_KC1_STU3_IM_H_GB1_2,cycleTime);
+
+
+
+ 
+//////////////////////////////////////////////////////////////////
+//ВЫХОД
+//////////////////////////////////////////////////////////////////
+KC1_STU3_DO_HMI.A3_6_9_V_IN_ON.PV			:= SEN_KC1_STU3_KR_IN.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_6_11_V_CDL_ON.PV			:= SEN_KC1_STU3_KR_CDL.Outs.outon.0;
+//KC1_STU3_DO_HMI.A3_6_15_V_XV3_1_ON.PV		:= SEN_KC1_STU3_KR_XV3_1.Outs.outon.0;
+//KC1_STU3_DO_HMI.A3_7_1_V_XV3_2_ON.PV		:= SEN_KC1_STU3_KR_XV3_2.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_6_13_V_SV1_1_ON.PV		:= SEN_KC1_STU3_KR_SV1_1.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_6_1_V_TO_ON.PV			:= SEN_KC1_STU3_IM_V_TO.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_6_7_N_P1_1_ON.PV			:= SEN_KC1_STU3_IM_N_P1_1.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_6_8_N_P1_2_ON.PV			:= SEN_KC1_STU3_IM_N_P1_2.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_7_5_N_P1_3_ON.PV			:= SEN_KC1_STU3_IM_N_P1_3.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_7_6_N_P1_4_ON.PV			:= SEN_KC1_STU3_IM_N_P1_4.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_7_7_N_P1_5_ON.PV			:= SEN_KC1_STU3_IM_N_P1_5.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_7_8_N_P1_6_ON.PV			:= SEN_KC1_STU3_IM_N_P1_6.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_6_4_WORK_ALLOW_GB1_1.PV	:= SEN_KC1_STU3_IM_H_GB1_1.Outs.outon.0;
+KC1_STU3_DO_HMI.A3_6_5_WORK_ALLOW_GB1_2.PV	:= SEN_KC1_STU3_IM_H_GB1_2.Outs.outon.0;
+
+KC1_STU3_DO_HMI.A3_6_10_V_IN_OFF.PV			:= SEN_KC1_STU3_KR_IN.Outs.outoff.0;
+KC1_STU3_DO_HMI.A3_6_12_V_CDL_OFF.PV		:= SEN_KC1_STU3_KR_CDL.Outs.outoff.0;
+//KC1_STU3_DO_HMI.A3_6_16_V_XV3_1_OFF.PV		:= SEN_KC1_STU3_KR_XV3_1.Outs.outoff.0;
+//KC1_STU3_DO_HMI.A3_7_2_V_XV3_2_OFF.PV		:= SEN_KC1_STU3_KR_XV3_2.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_KR_SV1_1.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_V_TO.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_N_P1_1.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_N_P1_2.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_N_P1_3.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_N_P1_4.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_N_P1_5.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_N_P1_6.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_H_GB1_1.Outs.outoff.0;
+KC1_STU3_DO_HMI.dummy.PV					:= SEN_KC1_STU3_IM_H_GB1_2.Outs.outoff.0;
+
+
+if IMIT then
+imit_KC1_STU3_KR_IN(		KC1_STU3_DO_HMI.A3_6_9_V_IN_ON.PV, 			KC1_STU3_DO_HMI.A3_6_10_V_IN_OFF.PV, 			KC1_STU3_DI_HMI.A2_7_9_V_IN_ON.PV, 		KC1_STU3_DI_HMI.A2_7_10_V_IN_OFF.PV);
+imit_KC1_STU3_KR_CDL(		KC1_STU3_DO_HMI.A3_6_11_V_CDL_ON.PV, 		KC1_STU3_DO_HMI.A3_6_12_V_CDL_OFF.PV, 			KC1_STU3_DI_HMI.A2_7_11_V_CDL_ON.PV, 	KC1_STU3_DI_HMI.A2_7_12_V_CDL_OFF.PV);
+//imit_KC1_STU3_KR_XV3_1(		KC1_STU3_DO_HMI.A3_6_15_V_XV3_1_ON.PV, 		KC1_STU3_DO_HMI.A3_6_16_V_XV3_1_OFF.PV, 		KC1_STU3_DI_HMI.A2_7_2_V_XV3_1_ON.PV, 	KC1_STU3_DI_HMI.A2_7_3_V_XV3_1_OFF.PV);
+//imit_KC1_STU3_KR_XV3_2(		KC1_STU3_DO_HMI.A3_7_1_V_XV3_2_ON.PV, 		KC1_STU3_DO_HMI.A3_7_2_V_XV3_2_OFF.PV, 			KC1_STU3_DI_HMI.A2_7_4_V_XV3_2_ON.PV, 	KC1_STU3_DI_HMI.A2_7_5_V_XV3_2_OFF.PV);
+imit_KC1_STU3_KR_SV1_1(		KC1_STU3_DO_HMI.A3_6_13_V_SV1_1_ON.PV, 		dummy_SV1_1);
+imit_KC1_STU3_IM_V_TO(		KC1_STU3_DO_HMI.A3_6_1_V_TO_ON.PV, 			not KC1_STU3_DO_HMI.A3_6_1_V_TO_ON.PV,			KC1_STU3_DI_HMI.A2_8_4_V_TO_WORK.PV,	dummy_V_TO);
+imit_KC1_STU3_IM_N_P1_1(	KC1_STU3_DO_HMI.A3_6_7_N_P1_1_ON.PV, 		not KC1_STU3_DO_HMI.A3_6_7_N_P1_1_ON.PV,		KC1_STU3_DI_HMI.A2_8_11_N_P1_1_WORK.PV, dummy_N_P1_1);
+imit_KC1_STU3_IM_N_P1_2(	KC1_STU3_DO_HMI.A3_6_8_N_P1_2_ON.PV, 		not KC1_STU3_DO_HMI.A3_6_8_N_P1_2_ON.PV,		KC1_STU3_DI_HMI.A2_8_12_N_P1_2_WORK.PV, dummy_N_P1_2);
+imit_KC1_STU3_IM_N_P1_3(	KC1_STU3_DO_HMI.A3_7_5_N_P1_3_ON.PV, 		not KC1_STU3_DO_HMI.A3_7_5_N_P1_3_ON.PV,		KC1_STU3_DI_HMI.A2_8_13_N_P1_3_WORK.PV, dummy_N_P1_3);
+imit_KC1_STU3_IM_N_P1_4(	KC1_STU3_DO_HMI.A3_7_6_N_P1_4_ON.PV, 		not KC1_STU3_DO_HMI.A3_7_6_N_P1_4_ON.PV,		KC1_STU3_DI_HMI.A2_8_14_N_P1_4_WORK.PV, dummy_N_P1_4);
+imit_KC1_STU3_IM_N_P1_5(	KC1_STU3_DO_HMI.A3_7_7_N_P1_5_ON.PV, 		not KC1_STU3_DO_HMI.A3_7_7_N_P1_5_ON.PV,		KC1_STU3_DI_HMI.A2_8_15_N_P1_5_WORK.PV, dummy_N_P1_5);
+imit_KC1_STU3_IM_N_P1_6(	KC1_STU3_DO_HMI.A3_7_8_N_P1_6_ON.PV, 		not KC1_STU3_DO_HMI.A3_7_8_N_P1_6_ON.PV,		KC1_STU3_DI_HMI.A2_8_16_N_P1_6_WORK.PV, dummy_N_P1_6);
+imit_KC1_STU3_IM_H_GB1_1(	KC1_STU3_DO_HMI.A3_6_4_WORK_ALLOW_GB1_1.PV, not KC1_STU3_DO_HMI.A3_6_4_WORK_ALLOW_GB1_1.PV,	KC1_STU3_DI_HMI.A2_6_1_GB1_1_ON.PV,		dummy_H_GB1_1);
+imit_KC1_STU3_IM_H_GB1_2(	KC1_STU3_DO_HMI.A3_6_5_WORK_ALLOW_GB1_2.PV, not KC1_STU3_DO_HMI.A3_6_5_WORK_ALLOW_GB1_2.PV,	KC1_STU3_DI_HMI.A2_6_2_GB1_2_ON.PV,		dummy_H_GB1_2);
+
+//Имитация концевиков клапанов TwV1.1, TwV1.2, XV3.1, XV3.2  
+end_if;
+
+
+//Сброс команды "Повтор команды"
+SEN_KC1_STU3_KR_IN.Control.rep.0		:= BOOL#0;
+SEN_KC1_STU3_KR_CDL.Control.rep.0		:= BOOL#0;
+//SEN_KC1_STU3_KR_XV3_1.Control.rep.0		:= BOOL#0;
+//SEN_KC1_STU3_KR_XV3_2.Control.rep.0		:= BOOL#0;
+SEN_KC1_STU3_KR_SV1_1.Control.rep.0		:= BOOL#0;
+SEN_KC1_STU3_IM_V_TO.Control.rep.0		:= BOOL#0;
+SEN_KC1_STU3_IM_N_P1_1.Control.rep.0	:= BOOL#0;
+SEN_KC1_STU3_IM_N_P1_2.Control.rep.0	:= BOOL#0;
+SEN_KC1_STU3_IM_N_P1_3.Control.rep.0	:= BOOL#0;
+SEN_KC1_STU3_IM_N_P1_4.Control.rep.0	:= BOOL#0;
+SEN_KC1_STU3_IM_N_P1_5.Control.rep.0	:= BOOL#0;
+SEN_KC1_STU3_IM_N_P1_6.Control.rep.0	:= BOOL#0;
+SEN_KC1_STU3_IM_H_GB1_1.Control.rep.0	:= BOOL#0;
+SEN_KC1_STU3_IM_H_GB1_2.Control.rep.0	:= BOOL#0;
+
+
+//Инициализация
+if Firstscan then
+KC1_STU3_VLV_LG.KR_IN.aOnOff		:= SEN_KC1_STU3_KR_IN.Control.aOnOff.0;
+KC1_STU3_VLV_LG.KR_CDL.aOnOff		:= SEN_KC1_STU3_KR_CDL.Control.aOnOff.0;
+//KC1_STU3_VLV_LG.KR_XV3_1.aOnOff		:= SEN_KC1_STU3_KR_XV3_1.Control.aOnOff.0;
+//KC1_STU3_VLV_LG.KR_XV3_2.aOnOff		:= SEN_KC1_STU3_KR_XV3_2.Control.aOnOff.0;
+KC1_STU3_VLV_LG.KR_SV1_1.aOnOff		:= SEN_KC1_STU3_KR_SV1_1.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_V_TO.aOnOff		:= SEN_KC1_STU3_IM_V_TO.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_N_P1_1.aOnOff	:= SEN_KC1_STU3_IM_N_P1_1.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_N_P1_2.aOnOff	:= SEN_KC1_STU3_IM_N_P1_2.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_N_P1_3.aOnOff	:= SEN_KC1_STU3_IM_N_P1_3.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_N_P1_4.aOnOff	:= SEN_KC1_STU3_IM_N_P1_4.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_N_P1_5.aOnOff	:= SEN_KC1_STU3_IM_N_P1_5.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_N_P1_6.aOnOff	:= SEN_KC1_STU3_IM_N_P1_6.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_H_GB1_1.aOnOff	:= SEN_KC1_STU3_IM_H_GB1_1.Control.aOnOff.0;
+KC1_STU3_VLV_LG.IM_H_GB1_2.aOnOff	:= SEN_KC1_STU3_IM_H_GB1_2.Control.aOnOff.0;
+end_if;
+*)]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="03FC474C44065334B97FF8985FD8215B" Name="VLV_cfg">
+            <Variables>
+                <Variable UUID="CBAFF6624208F30EC24AD490FD070D72" Name="KR" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="inout" />
+                <Variable UUID="62BC56BC489B61070F81028EF67C4EB9" Name="HMI_KR_DA" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="C6DF5B66484FF21E1B6A8C8BE712C2B0" Name="HMI_KR_rOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="2E3A751642784A20028CF7AD5EB880E0" Name="HMI_KR_rOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="212EEA414D8EB7DBBACCDBB3A58D921E" Name="CMD_KR_rOnOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="7A37791248D118EFBE183E9637A76D87" Name="CMD_KR_aOnOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="EAA254DA4BEC8275B1BC2F9495C6F49F" Name="KR_rep" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="9375CF48441E1F5A5FAD2D8A27657BC5" Name="CMD_KR_cwOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="6FAC80DE4D32CE6B63737A9BD1CD11C6" Name="CMD_KR_cwOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="0C5293414FA461711AFE3BA004986812" Name="DI_KR_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="B33AF57945D8C605452506AE7357F679" Name="DI_KR_OFF" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="6E40558B4D637EAD036FD4AB4CEB98BD" Name="DI_KRkcu_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="E54DF3DE4C88ECABEA071986590A83E8" Name="DI_KRkcu_OFF" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="A285B72F40528503C0A6BC9135A7AFC2" Name="APS_non" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="ED6BD4124307FB547F2D04BFB2E9FE99" Name="APS_noff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="7F14C77D4A242C1CC8E46797FB69E94F" Name="APS_nstart" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="6D122D7F4350A9D672209AB46B3F73BD" Name="APS_selfon" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="D1C0203940767BD7FC4A54A10BA41B68" Name="APS_selfoff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="2CB7153642514A009DB0A784E8F88071" Name="APS_flt" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="5BAD2D2345EE67E29348829CA1149661" Name="APS_ncon" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="B2F0B32346920CED44EACCA891A4822F" Name="APS_ncoff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="2F8C901842268CA512830BA22A0060E5" Name="APS_all" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="F0D106E64BB82DE2CDC7D3AA5A64C7BE" Name="KR_state" Type="WORD" TypeUUID="05CD1AAB4891B30C004C2799CA460884" Usage="inout" />
+                <Variable UUID="3E3D13CA4AD7B407ADF3949EE4374D76" Name="APS_extern" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="A43987B6454F1D7386F50182C9D07289" Name="cmd_ON" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
+                <Variable UUID="9E81B987458CCD3DEFBB0FAD0696C719" Name="cmd_OFF" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
+                <Variable UUID="57F552494731483CEAC41394B178B526" Name="alg_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="internal" />
+                <Variable UUID="A073A32C4CA560DCBAB5A891FEF7A3F7" Name="alg_OFF" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[KR.Control.RA.0 := HMI_KR_DA;
+IF HMI_KR_rOn AND HMI_KR_DA  THEN alg_ON  := BOOL#1; END_IF; HMI_KR_rOn  := BOOL#0;
+IF HMI_KR_rOff AND HMI_KR_DA THEN alg_OFF := BOOL#1; END_IF; HMI_KR_rOff := BOOL#0;
+IF alg_ON AND CMD_KR_rOnOff OR alg_OFF AND NOT CMD_KR_rOnOff THEN
+	KR_rep := BOOL#1;
+ELSE
+	IF alg_ON THEN CMD_KR_rOnOff := BOOL#1; END_IF;
+	IF alg_OFF THEN CMD_KR_rOnOff := BOOL#0; END_IF;
+END_IF;
+alg_ON := BOOL#0;
+alg_OFF := BOOL#0;
+
+KR.Control.rOnOff.0 := CMD_KR_rOnOff;
+KR.Control.aOnOff.0 := CMD_KR_aOnOff;
+KR.Control.rep.0 := KR_rep; KR_rep := BOOL#0;
+KR.Control.cwOn.0 := CMD_KR_cwOn;
+KR.Control.cwOff.0 := CMD_KR_cwOff;
+
+
+KR.Ins.on.0 := DI_KR_ON;
+KR.Ins.off.0 := DI_KR_OFF;
+KR.Ins.con.0 := DI_KRkcu_ON;
+KR.Ins.coff.0 := DI_KRkcu_OFF;
+APS_non := KR.Oper.non.0;
+APS_noff := KR.Oper.noff.0;
+APS_nstart := KR.Oper.nstart.0;
+APS_selfon := KR.Oper.selfon.0;
+APS_selfoff := KR.Oper.selfoff.0;
+APS_flt := KR.Oper.flt.0;
+APS_ncon := KR.Oper.ncon.0;
+APS_ncoff := KR.Oper.ncoff.0;
+KR_state.0 := KR.Ins.off.0;
+KR_state.1 := KR.Ins.on.0;
+
+
+//!!!!!!!!!!!Обобщенный ALARM !!!!!!!!!!!!!!!!!!!
+if IMIT then APS_all := false; 
+else
+	APS_all := APS_non OR APS_noff OR APS_nstart OR APS_selfon OR APS_selfoff OR APS_flt OR APS_ncon OR APS_ncoff OR APS_extern;
+end_if;
+/////////////////////////////////////////////////
+
+
+IF NOT HMI_KR_DA THEN CMD_KR_rOnOff := CMD_KR_aOnOff; ELSE CMD_KR_aOnOff := CMD_KR_rOnOff; END_IF;]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="A09AE2844B73351BF94B378381A47C0F" Name="VLV_imit">
+            <Variables>
+                <Variable UUID="E242F7EE45087E5F059C24B1D68412BD" Name="DO_KR_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="6B2C68904FA05C90BF1AB18751794B74" Name="DO_KR_OFF" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="F61C4CE34333556EDF549AA9B05E6080" Name="DI_KR_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="D999BD054A6D1605D6AE6B91A9A7C3D9" Name="DI_KR_OFF" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="D5390E814159D74B7F86C78309CB30F0" Name="delay_on" Type="TON" TypeUUID="EAA43B6B4DCDCEA72AB748B4554FD2AD" Usage="internal" />
+                <Variable UUID="FD4C71AC4CC3AB663A2CE8AF53DA5E92" Name="delay_off" Type="TON" TypeUUID="EAA43B6B4DCDCEA72AB748B4554FD2AD" Usage="internal" />
+                <Variable UUID="53A159A7404A9A0DBBC6F2B96D78FF12" Name="delay_vlv_bool1" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="internal" />
+                <Variable UUID="BBC283A34FACE69CB89212883D9AE416" Name="delay_vlv_bool2" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="internal" />
+                <Variable UUID="671D2129434643E69A11A19EEBBAB428" Name="delay_vlv_time1" Type="TIME" TypeUUID="3EFD49044E055B696F5570BA288FA8D5" Usage="internal" />
+                <Variable UUID="1F2741F34ADEEAE92D36729DBFD13DA5" Name="delay_vlv_time2" Type="TIME" TypeUUID="3EFD49044E055B696F5570BA288FA8D5" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[delay_on(DO_KR_ON, T#3s, delay_vlv_bool1, delay_vlv_time1);
+IF delay_vlv_bool1  THEN DI_KR_ON := BOOL#1; DI_KR_OFF := BOOL#0; END_IF;
+delay_off(DO_KR_OFF, T#3s, delay_vlv_bool2, delay_vlv_time2);
+IF delay_vlv_bool2 THEN DI_KR_ON := BOOL#0; DI_KR_OFF := BOOL#1; END_IF;]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="F5D50D354EA4F055A7C45FA642B99021" Name="VLV_imit_11">
+            <Variables>
+                <Variable UUID="E242F7EE45087E5F059C24B1D68412BD" Name="DO_KR_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="F61C4CE34333556EDF549AA9B05E6080" Name="DI_KR_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="D5390E814159D74B7F86C78309CB30F0" Name="delay_on" Type="TON" TypeUUID="EAA43B6B4DCDCEA72AB748B4554FD2AD" Usage="internal" />
+                <Variable UUID="FD4C71AC4CC3AB663A2CE8AF53DA5E92" Name="delay_off" Type="TON" TypeUUID="EAA43B6B4DCDCEA72AB748B4554FD2AD" Usage="internal" />
+                <Variable UUID="0BE067CA43DE204CA61943AF22EEDB0E" Name="rtrig" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
+                <Variable UUID="844E2E10406FA1ABC83E3EAFBEB36049" Name="ftrig" Type="F_TRIG" TypeUUID="F64DAE304009E1613B4AB4AF27532AEF" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[rtrig(CLK:= DO_KR_ON);
+delay_on(IN:= rtrig.Q, PT:= T#3s);
+if delay_on.Q then DI_KR_ON := true; end_if;
+
+ftrig(CLK:= DO_KR_ON);
+delay_off(IN:= ftrig.Q, PT:= T#3s);
+if delay_off.Q then DI_KR_ON := false; end_if; ]]></ST>
+        </FunctionBlock>
+        <Function UUID="16FC7ADE4362B2E807A59DA0715A2A75" Name="VLV_init" ResultTypeUUID="E2F512E0418E53D1482E2F9E54A664A9">
+            <Variables>
+                <Variable UUID="4929053F45575667DCDE2888863BDE83" Name="KR" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="input" />
+                <Variable UUID="594219CF45D54B44A4F8B9855BC373B9" Name="tmrCmdSP" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="25C34A724E938D44D6FDDEBC7A4B2771" Name="tmrPressSP" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="input" />
+                <Variable UUID="7384D9B042C08EA9AF4470B22897C89C" Name="cwOn" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Usage="input" />
+                <Variable UUID="477FED834A2CA702EAF08BBAD7FAB2D3" Name="cwOff" Type="BYTE" TypeUUID="C3C10A82401AD741FA0AB89DDE8B5F30" Usage="input" />
+                <Variable UUID="51F6A11743F7F1308523CC85029AA033" Name="RA" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+            </Variables>
+            <ST><![CDATA[KR.Config.tmrCmdSP := tmrCmdSP;
+KR.Config.tmrPressSP := tmrPressSP;
+KR.Control.cwOn := cwOn;
+KR.Control.cwOff := cwOff;
+KR.Control.RA.0 := RA;
+
+VLV_init := KR;]]></ST>
+        </Function>
     </FBLibrary>
 </Program>

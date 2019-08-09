@@ -2,6 +2,20 @@
 <!DOCTYPE Type v. 1.0 >
 <Type Name="KTO_AO_DRV" Kind="Struct" UUID="7811C38640FA9428C2E7C591157859A9">
     <Fields>
-        <Field Name="var" Type="BOOL" UUID="A62313714825010D41C71482EB808E71" />
+        <Field Name="A3_3_1" Type="UINT" UUID="E0FA445442B0F4CE970919A24618FE8B" Comment="Управление отсечным клапаном (CV-0201)" />
+        <Field Name="A3_3_2" Type="UINT" UUID="619449FE47ABE890D3B892BC2152578D" Comment="Установка частоты ПЧ вентилятора подачи воздуха в основную камеру сгорания (SF-0201)" />
+        <Field Name="A3_3_3" Type="UINT" UUID="FF6CC1864603FCF522EBE6ADD3928CB0" Comment="Установка частоты ПЧ вентилятора подачи воздуха во вторичную камеру сгорания (SF-0202)" />
+        <Field Name="A3_3_4" Type="UINT" UUID="65A2FACD4032F5DBB4DDF9AF9EDD9C4C" Comment="Установка частоты ПЧ вентилятора подачи дымовых газов в трубу (SF-0301)" />
+        <Field Name="A3_4_1" Type="UINT" UUID="01C535E64C35B9E235BB508CDA30FB76" Comment="Установка частоты ПЧ вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201)" />
+        <Field Name="A3_4_2" Type="UINT" UUID="A24B3ECC44BCB4DC31A034A2D520252F" Comment="Установка частоты ПЧ дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)" />
+        <Field Name="A3_4_3" Type="UINT" UUID="699CDBC743EDC8563EC168B048377B3E" Comment="Резерв" />
+        <Field Name="A3_4_4" Type="UINT" UUID="205920464493E0D21D279AA9447DA895" Comment="Резерв" />
+        <Field Name="A3_5_1" Type="UINT" UUID="D33447BA460EC658027BE49D035A38D5" Comment="Управление затвором (CV-0101)" />
+        <Field Name="A3_5_2" Type="UINT" UUID="6D7D8AB44A173F28671D518642EA212E" Comment="Резерв" />
+        <Field Name="A3_5_3" Type="UINT" UUID="A1D2B390480A06A88FAC51A2F7DB1BC9" Comment="Резерв" />
+        <Field Name="A3_5_4" Type="UINT" UUID="2E43863148CAB2D3B6794FB9DC70682C" Comment="Резерв" />
+        <Field Name="A3_3_STATUS" Type="BOOL" UUID="62B717BE426E145E3D3067BCB0DFFC1E" />
+        <Field Name="A3_4_STATUS" Type="BOOL" UUID="B23FA3914546C11B5BDF11B3742EF4CB" />
+        <Field Name="A3_5_STATUS" Type="BOOL" UUID="EFBAE1DC4EA6652FA04BC6AF24ECFEB6" />
     </Fields>
 </Type>
