@@ -8,5 +8,6 @@
         <Item Name="FLDR_APS.folder" />
         <Item Name="FLDR_DI.folder" />
         <Item Name="FLDR_DO.folder" />
+        <Item Name="FLDR_IM.folder" />
     </Items>
 </Folder>

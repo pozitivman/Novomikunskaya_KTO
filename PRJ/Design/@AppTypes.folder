@@ -2,7 +2,7 @@
 <!DOCTYPE Folder config v. 1.0 >
 <Folder Name="Типы приложений">
     <Items>
+        <Item Name="FLDR_PLC.folder" />
         <Item Name="FLDR_PRU.folder" />
-        <Item Name="FLDR_KTO.folder" />
     </Items>
 </Folder>

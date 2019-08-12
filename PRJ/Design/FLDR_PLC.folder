@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE Folder config v. 1.0 >
-<Folder Name="KTO">
+<Folder Name="PLC">
     <Items>
         <Item Name="AT_DRV_A1.int" />
         <Item Name="AT_DRV_A2.int" />
         <Item Name="AT_DRV_A3.int" />
-        <Item Name="AT_MAIN_LOGIC_A2.int" />
         <Item Name="AT_MAIN_LOGIC_A1.int" />
+        <Item Name="AT_MAIN_LOGIC_A2.int" />
     </Items>
 </Folder>

@@ -4,9 +4,13 @@
 *.xlsx
 *.old
 *.zip
+*.lck
 
 # ignore all files in the DOC/ directory
 DOC/
 
 # ignore all files in the IMPORT/ directory
 IMPORT/
+
+# ignore all files in the Runtime/ directory
+Runtime/

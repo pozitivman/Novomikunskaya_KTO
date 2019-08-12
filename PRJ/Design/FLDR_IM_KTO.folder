@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Folder config v. 1.0 >
+<Folder Name="IM_KTO">
+    <Items>
+        <Item Name="Type_AP5HW2OQ72QU3HUGLOKJJCAIC4.type" />
+        <Item Name="Type_IM_KTO_HMI.type" />
+        <Item Name="Type_IM_KTO_LG.type" />
+    </Items>
+</Folder>

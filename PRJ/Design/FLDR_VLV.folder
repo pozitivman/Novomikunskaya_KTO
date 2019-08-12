@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Folder config v. 1.0 >
+<Folder Name="IM">
+    <Items>
+        <Item Name="FLDR_KTO.folder" />
+        <Item Name="HMI_IM.type" />
+        <Item Name="LG_IM.type" />
+    </Items>
+</Folder>
