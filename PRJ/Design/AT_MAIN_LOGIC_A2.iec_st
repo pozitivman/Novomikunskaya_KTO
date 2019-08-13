@@ -148,58 +148,6 @@ cycleTime_AI_sys := clock_AI_cur - clock_AI_prev;]]></ST>
         </Struct>
     </DataTypes>
     <FBLibrary>
-        <FunctionBlock UUID="8241A1A94DC7CD2DAF4A08841D436394" Name="Ctrl_crane">
-            <Variables>
-                <Variable UUID="82DB17654652389B8E9026BFE5E0043F" Name="PRU_DA_on" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="630D382B4428667D7CF1B4B25F67FC0D" Name="PRU_DA_off" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="F0AA46C8429DB17DFDCA94A0F1C228E4" Name="HMI_DA_on" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="59DDC0DE43A4921B4FC5049508EB3F21" Name="HMI_DA_off" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="2B8E09F841AC43C75984BB9F4BBB569F" Name="PRU_rOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="62802A5B4E680177727E43AA93133594" Name="PRU_rOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="577F618C49FF544C1823F5A50DB15121" Name="HMI_rOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="8E2AE4714002E8F2AEAC5283280EE478" Name="HMI_rOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="73F1D5D74FC303C22CE3C29F5A8151B9" Name="LG_state" Type="WORD" TypeUUID="05CD1AAB4891B30C004C2799CA460884" Usage="input" />
-                <Variable UUID="B4241ADC46CEED6CB48E978AEACCD611" Name="LG_flt_all" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="7BBEEA7D44FD2737525B40A87A86A8AF" Name="PRU_state" Type="WORD" TypeUUID="05CD1AAB4891B30C004C2799CA460884" Usage="inout" />
-                <Variable UUID="864DE8364A8C9FE134B595B047138C37" Name="HMI_state" Type="WORD" TypeUUID="05CD1AAB4891B30C004C2799CA460884" Usage="inout" />
-                <Variable UUID="BC1E72B44C026D240F32D2818F430749" Name="PRU_flt_all" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
-                <Variable UUID="072059D64441AD36402E2C8C25296063" Name="HMI_flt_all" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
-                <Variable UUID="2B5188684FACDC33646582A4BE7C8058" Name="DA" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
-                <Variable UUID="0240C45844E18D10DA6B64A6E90A10A1" Name="DA_PRU" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
-                <Variable UUID="35ABCCB44FA5E76BE05FF884CB8BCB36" Name="DA_HMI" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
-                <Variable UUID="77225DF145E844B392BAA0ABA49A8202" Name="rOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
-                <Variable UUID="CA50BEC9482710C5792FB98ABD3BBD0C" Name="rOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
-            </Variables>
-            <ST><![CDATA[//перевод ИМ в дистанционный/автоматический режим
-if PRU_DA_on or HMI_DA_on then DA := BOOL#1; end_if;
-if PRU_DA_off or HMI_DA_off then DA := BOOL#0; end_if;
-
-//Передаем руч/дист ИМ из блока в разные приемники
-if DA then
-	DA_PRU := true;
-	DA_HMI := true;
-else
-	DA_PRU := false;
-	DA_HMI := false;
-end_if;
-
-//Передаем обобщенную аварию ИМ из блока в разные приемники
-if LG_flt_all then
-	PRU_flt_all := true;
-	HMI_flt_all := true;
-else
-	PRU_flt_all := false;
-	HMI_flt_all := false;
-end_if;
-
-//Передаем состояние ИМ из блока в разные приемники
-PRU_state := LG_state;
-HMI_state := LG_state;
-	
-//Дистанционное управление ИМ
-if PRU_rOn OR HMI_rOn then rOn := BOOL#1; end_if;
-if PRU_rOff OR HMI_rOff then rOff := BOOL#1; end_if;]]></ST>
-        </FunctionBlock>
         <FunctionBlock UUID="90D0C5D044939603D0BD418B90A10328" Name="DI_Proc">
             <Variables>
                 <Variable UUID="293790C0400AEE8E646241AF54168597" Name="DI_raw" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
@@ -439,7 +387,7 @@ AO_max := lreal#65535;]]></ST>
 	DI_063(KTO_DI_DRV.A2_6_15,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_15_C0201_ON,	'Компрессор включен (C-0201)');
 	DI_064(KTO_DI_DRV.A2_6_16,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_6_16_C0201_RA_ON,	'Дист. управл. компрессором включено (C-0201)');
 	DI_065(KTO_DI_DRV.A2_7_1,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_1_SC0203_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (SC-0203)');
-	DI_066(KTO_DI_DRV.A2_7_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_2_SC0203_RA_CSG_ON,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)');
+	DI_066(KTO_DI_DRV.A2_7_2,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_2_SC0203_CSG_FLT,	'Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)');
 	DI_067(KTO_DI_DRV.A2_7_3,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_3_CF0101A_air_feed_burn_dev_BBR_ON,	'Вентилятор системы подачи воздуха на горелочное устройство основной камеры сгорания включен (СF-0101A)');
 	DI_068(KTO_DI_DRV.A2_7_4,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON,	'Вентилятор системы подачи воздуха на горелочное устройство вторичной камеры сгорания включен (СF-0101B)');
 	DI_069(KTO_DI_DRV.A2_7_5,		INT#3,	BOOL#0,		KTO_DI_HMI.A2_7_5_SC0201_disch_ash_INS_ON,	'Шнек выгрузки золы из инсинератора включен (SС-0201 )');
@@ -990,7 +938,7 @@ imit_KTO_IM_P0201B(KTO_DO_HMI.A3_9_4_P0201B_rez_ON.PV, KTO_DO_HMI.A3_9_5_P0201B_
 imit_KTO_IM_C0201(KTO_DO_HMI.A3_9_6_C0201_ON.PV, KTO_DO_HMI.A3_9_7_C0201_OFF.PV, KTO_DI_HMI.A2_6_15_C0201_ON.PV,  KTO_DI_HMI.dummy.PV);
 imit_KTO_IM_SC0203(KTO_DO_HMI.A3_9_8_SC0203_CSG_ON.PV, KTO_DO_HMI.A3_9_9_SC0203_CSG_OFF.PV, KTO_DI_HMI.A2_7_1_SC0203_CSG_ON.PV,  KTO_DI_HMI.dummy.PV);
 imit_KTO_IM_CF0101A(KTO_DO_HMI.A3_9_10_CF0101A_air_feed_burn_dev_BBR_ON.PV, KTO_DO_HMI.A3_9_11_CF0101A_air_feed_burn_dev_BBR_OFF.PV, KTO_DI_HMI.A2_7_3_CF0101A_air_feed_burn_dev_BBR_ON.PV,  KTO_DI_HMI.dummy.PV);
-//imit_KTO_IM_CF0101B(KTO_DO_HMI.A3_9_12_СF0102B_air_feed_burn_dev_SBR_ON.PV, KTO_DO_HMI.A3_9_13_СF0102B_air_feed_burn_dev_SBR_OFF.PV, KTO_DI_HMI.A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON.PV,  KTO_DI_HMI.dummy.PV);
+imit_KTO_IM_CF0101B(KTO_DO_HMI.A3_9_12_CF0101B_air_feed_burn_dev_SBR_ON.PV, KTO_DO_HMI.A3_9_13_CF0101B_air_feed_burn_dev_SBR_OFF.PV, KTO_DI_HMI.A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON.PV,  KTO_DI_HMI.dummy.PV);
 imit_KTO_IM_SC0201(KTO_DO_HMI.A3_9_14_SC0201_disch_ash_INS_ON.PV, KTO_DO_HMI.A3_9_15_SC0201_disch_ash_INS_OFF.PV, KTO_DI_HMI.A2_7_5_SC0201_disch_ash_INS_ON.PV,  KTO_DI_HMI.dummy.PV);
 imit_KTO_IM_SC0202(KTO_DO_HMI.A3_9_16_SC0202_disch_ash_MC_ON.PV, KTO_DO_HMI.A3_10_1_SC0202_disch_ash_MC_OFF.PV, KTO_DI_HMI.A2_7_6_SC0202_disch_ash_MC_ON.PV,  KTO_DI_HMI.dummy.PV);
 imit_KTO_IM_P0401(KTO_DO_HMI.A3_10_2_P0401_oil_feed_DD_ON.PV, KTO_DO_HMI.A3_10_3_P0401_oil_feed_DD_OFF.PV, KTO_DI_HMI.A2_7_7_P0401_oil_feed_DD_ON.PV,  KTO_DI_HMI.dummy.PV);
@@ -1158,23 +1106,6 @@ IF NOT HMI_KR_DA THEN CMD_KR_rOnOff := CMD_KR_aOnOff; ELSE CMD_KR_aOnOff := CMD_
 IF delay_vlv_bool1  THEN DI_KR_ON := BOOL#1; DI_KR_OFF := BOOL#0; END_IF;
 delay_off(DO_KR_OFF, T#3s, delay_vlv_bool2, delay_vlv_time2);
 IF delay_vlv_bool2 THEN DI_KR_ON := BOOL#0; DI_KR_OFF := BOOL#1; END_IF;]]></ST>
-        </FunctionBlock>
-        <FunctionBlock UUID="F5D50D354EA4F055A7C45FA642B99021" Name="VLV_imit_11">
-            <Variables>
-                <Variable UUID="E242F7EE45087E5F059C24B1D68412BD" Name="DO_KR_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
-                <Variable UUID="F61C4CE34333556EDF549AA9B05E6080" Name="DI_KR_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
-                <Variable UUID="D5390E814159D74B7F86C78309CB30F0" Name="delay_on" Type="TON" TypeUUID="EAA43B6B4DCDCEA72AB748B4554FD2AD" Usage="internal" />
-                <Variable UUID="FD4C71AC4CC3AB663A2CE8AF53DA5E92" Name="delay_off" Type="TON" TypeUUID="EAA43B6B4DCDCEA72AB748B4554FD2AD" Usage="internal" />
-                <Variable UUID="0BE067CA43DE204CA61943AF22EEDB0E" Name="rtrig" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
-                <Variable UUID="844E2E10406FA1ABC83E3EAFBEB36049" Name="ftrig" Type="F_TRIG" TypeUUID="F64DAE304009E1613B4AB4AF27532AEF" Usage="internal" />
-            </Variables>
-            <ST><![CDATA[rtrig(CLK:= DO_KR_ON);
-delay_on(IN:= rtrig.Q, PT:= T#3s);
-if delay_on.Q then DI_KR_ON := true; end_if;
-
-ftrig(CLK:= DO_KR_ON);
-delay_off(IN:= ftrig.Q, PT:= T#3s);
-if delay_off.Q then DI_KR_ON := false; end_if; ]]></ST>
         </FunctionBlock>
         <Function UUID="16FC7ADE4362B2E807A59DA0715A2A75" Name="VLV_init" ResultTypeUUID="E2F512E0418E53D1482E2F9E54A664A9">
             <Variables>

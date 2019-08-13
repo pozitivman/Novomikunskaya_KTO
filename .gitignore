@@ -5,6 +5,7 @@
 *.old
 *.zip
 *.lck
+*.txp
 
 # ignore all files in the DOC/ directory
 DOC/

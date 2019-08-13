@@ -67,7 +67,7 @@
         <Field Name="A2_6_15_C0201_ON" Type="24096E3F4C0C396B81199DA606D417FF" UUID="EB002EA843D2C81BE9167383428F893E" Comment="Компрессор включен (C-0201)" />
         <Field Name="A2_6_16_C0201_RA_ON" Type="24096E3F4C0C396B81199DA606D417FF" UUID="D445CEE948F430243118309615A050A2" Comment="Дист. управл. компрессором включено (C-0201)" />
         <Field Name="A2_7_1_SC0203_CSG_ON" Type="24096E3F4C0C396B81199DA606D417FF" UUID="A3479B774A80575F0DC3A69AFBF04E58" Comment="Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (SC-0203)" />
-        <Field Name="A2_7_2_SC0203_RA_CSG_ON" Type="24096E3F4C0C396B81199DA606D417FF" UUID="D4117281435031F0CE9E03BDA1C34414" Comment="Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)" />
+        <Field Name="A2_7_2_SC0203_CSG_FLT" Type="24096E3F4C0C396B81199DA606D417FF" UUID="D4117281435031F0CE9E03BDA1C34414" Comment="Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)" />
         <Field Name="A2_7_3_CF0101A_air_feed_burn_dev_BBR_ON" Type="24096E3F4C0C396B81199DA606D417FF" UUID="9CC5412645CACF94DA9FA2B9BC5DCD7B" Comment="Вентилятор системы подачи воздуха на горелочное устройство основной камеры сгорания включен (СF-0101A)" />
         <Field Name="A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON" Type="24096E3F4C0C396B81199DA606D417FF" UUID="8D21FDA24ADE65EA73506ABCD30A180D" Comment="Вентилятор системы подачи воздуха на горелочное устройство вторичной камеры сгорания включен (СF-0101B)" />
         <Field Name="A2_7_5_SC0201_disch_ash_INS_ON" Type="24096E3F4C0C396B81199DA606D417FF" UUID="BE3A7AF14CC5F0782F420D88EF3E9908" Comment="Шнек выгрузки золы из инсинератора включен (SС-0201 )" />
