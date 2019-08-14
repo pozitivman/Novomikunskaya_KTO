@@ -9,6 +9,7 @@
         <Variable UUID="3EA9581941B8E40ABDDB4596CF40E859" Name="DTC_start" Type="calc_dt" TypeUUID="E1A64949466CCCA81E37988A136D23C2" Usage="internal" />
         <Variable UUID="2AB06E3C4DF7D8940FE3ECBB850C1581" Name="DTC_duration" Type="calc_dt" TypeUUID="E1A64949466CCCA81E37988A136D23C2" Usage="internal" />
         <Variable UUID="38E1BA704B0883787EE4328C90326365" Name="proc_DO" Type="FB_DO" TypeUUID="BBCB778D49A7D5C4203B66B139CF5C01" Usage="internal" />
+        <Variable UUID="E41074794A7EC41957C866BA5800EA09" Name="proc_AO" Type="FB_AO" TypeUUID="C051E2DF429786EC5FA4C39A9C27CC61" Usage="internal" />
     </Variables>
     <ST><![CDATA[//Использование C-библиотеки (время цикла и таймер 1с)
 clock_AI_cur := CLOCK();
@@ -33,7 +34,7 @@ proc_DI();
 //proc_VLV();
 
 proc_DO();
-//proc_AO();
+proc_AO();
 //proc_APS();
 
 if DO_sound_PS then

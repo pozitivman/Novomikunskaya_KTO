@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE SubAppType v. 1.3 >
+<SubAppType Name="PRU_A2" Kind="DRIVER.MODBUS" Args="" Comment="" UUID="0C58FDE04BE4E262156700BC347E97E9">
+    <InterfaceList>
+        <Signal Name="KTO_AO_HMI" UUID="4D34A84A424BBCA64906658883518319" Type="591E5E474CD17211AC6B85A08AAF7A46" Usage="" Global="TRUE" Comment="Аналоговые выходы. Логика" />
+        <Signal Name="KTO_DI_HMI" UUID="CC055E5E4FBD18715494DDAD80F3C25A" Type="3D9354EF4F58D8D30A7C508A1429A0D1" Usage="" Global="TRUE" Comment="Дискретные входы. Логика" />
+        <Signal Name="KTO_DO_HMI" UUID="6BB8886144EA4B796E170AAEF9087015" Type="C59E9B4E412222AEB12F7E9E698DC22C" Usage="" Global="TRUE" Comment="Дискретные выходы. Логика" />
+    </InterfaceList>
+</SubAppType>

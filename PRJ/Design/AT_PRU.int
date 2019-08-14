@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE SubAppType v. 1.3 >
-<SubAppType Name="PRU" Kind="DRIVER.MODBUS" Args="" Comment="" UUID="2B168D9F474EB4325D4D0EAA9A3703CA">
-    <InterfaceList>
-
-    </InterfaceList>
-</SubAppType>
