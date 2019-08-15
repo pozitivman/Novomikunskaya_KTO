@@ -13,5 +13,6 @@
         <Signal Name="@RESERVE" UUID="CDE5C2514501A8052E7DA9AF41701589" Type="BOOL" />
         <Signal Name="@LICENSE" UUID="B604D1A849DB8D37FAE43BA7D8A1D9E8" Type="STRING" Usage="output" />
         <Signal Name="@NODE_RUN" UUID="11CFC95F39784D0797BFCEAB0F98BF6A" Type="BOOL" />
+        <Signal Name="KTO_DI_DRV" UUID="8DDA0FCD4A48F2D125E7C891B7EF5893" Type="D32C33364CE8C5E11D92228B89B4AAA0" Usage="" Global="TRUE" Comment="Дискретные входы. Драйвер" />
     </InterfaceList>
 </SubAppType>

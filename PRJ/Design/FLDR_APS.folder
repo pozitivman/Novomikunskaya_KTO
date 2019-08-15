@@ -3,6 +3,7 @@
 <Folder Name="APS">
     <Items>
         <Item Name="Crane_EVENTS.type" />
-        <Item Name="Type_APS_KTO.type" />
+        <Item Name="Type_APS_KTO_A1.type" />
+        <Item Name="Type_APS_KTO_A2.type" />
     </Items>
 </Folder>

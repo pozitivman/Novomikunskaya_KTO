@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE Project v. 1.0 >
-<Project Name="Novomikunskaya_KTO" Comment="" Port="10000" EndPort="30000" UUID="6A36653548D7206A12D40F9DBFE059B9" SignProject="FALSE" UsersUpdateMode="REPLACE">
+<Project Name="Novomikunskaya_KTO" Comment="" Port="10000" EndPort="30000" UUID="2CF3A2334ADE3F539DD204A8C46D90C4" SignProject="FALSE" UsersUpdateMode="REPLACE">
     <Globals>
         <Signal Name="Deblock" UUID="6BAECAA040B090C458A0259509A3725D" Type="BOOL" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot;" />
         <Signal Name="Deblock_PRU" UUID="F2F84E504F643C72489365BDED794987" Type="BOOL" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot; с панели ПРУ" />
@@ -22,6 +22,8 @@
         <Signal Name="KTO_DO_DRV" UUID="C42BC1D84BE117E5355CD6B9A636784C" Type="0F6D678243CE8828D7655F9553C3A52B" Global="TRUE" Comment="Дискретные выходы. Драйвер" />
         <Signal Name="KTO_DO_HMI" UUID="6BB8886144EA4B796E170AAEF9087015" Type="C59E9B4E412222AEB12F7E9E698DC22C" Global="TRUE" Comment="Дискретные выходы. Логика" />
         <Signal Name="KTO_IM_HMI" UUID="8846678A4F43B7C968ED0F9765BE5929" Type="D149FD6C451CF5D2A83D2C802A8C3481" Global="TRUE" />
+        <Signal Name="APS_KTO_A1" UUID="179EC99D499712188D4C9C9BE8E957A4" Type="DE51DA9C4A2BA83B04F40A81D9A2D3EC" Global="TRUE" Comment="Массив АПС" />
+        <Signal Name="APS_KTO_A2" UUID="C03737284EE5CE5DDEC81390B2731B3B" Type="242FB05340FD133F9DE840AD4C2C50FD" Global="TRUE" Comment="Массив АПС" />
     </Globals>
     <Connections />
 </Project>

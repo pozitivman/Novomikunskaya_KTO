@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Type v. 1.0 >
+<Type Name="APS_KTO_A1" Kind="Struct" UUID="DE51DA9C4A2BA83B04F40A81D9A2D3EC">
+    <Fields>
+        <Field Name="A1_3_1_Uop_kz" Type="BOOL" UUID="495DCBA946F35074628B2EAB9BAC1928" Comment="КЗ канал - Напряжение основного питания САУ " />
+        <Field Name="A1_3_2_NC_kz" Type="BOOL" UUID="18F654AF4FABA8C5D05E61B8AC0BCBE0" Comment="КЗ канал - Не подключен" />
+        <Field Name="A1_3_3_Lzag_CH4_kz" Type="BOOL" UUID="1F7E8A564D1BC661DC76D9B0948C44E0" Comment="КЗ канал - Уровень загазованности по метану (QT1)" />
+        <Field Name="A1_3_4_rez_kz" Type="BOOL" UUID="7A2D80A340E1BE94AD73879A553C4971" Comment="КЗ канал - Резерв" />
+        <Field Name="A1_4_1_T_Burn_room_kz" Type="BOOL" UUID="56E906AE446AD10D262C7781E1FECFCD" Comment="КЗ канал - Температура в камере сжигания TI0201 (TT1)" />
+        <Field Name="A1_4_2_T_Ign_room_kz" Type="BOOL" UUID="F172930140D2FBDCCBC245ABCDE6CEC1" Comment="КЗ канал - Температура в камере поджига TI0202 (TT2)" />
+        <Field Name="A1_4_3_T_tank_TK0201_kz" Type="BOOL" UUID="2FE7718242682E733354DD856C0A051F" Comment="КЗ канал - Температура в емкости TK-0201 (TT3)" />
+        <Field Name="A1_4_4_T1_dust_col_kz" Type="BOOL" UUID="F572F7CA4F6491D9DCF698A987055632" Comment="КЗ канал - Температура перед пылеуловителем TI0203 (TT4)" />
+        <Field Name="A1_5_1_T2_dust_col_kz" Type="BOOL" UUID="66A6CF0D4FA0D14B05137FAA6166FBFC" Comment="КЗ канал - Температура после пылеуловителя TI0204 (TT5)" />
+        <Field Name="A1_5_2_T1_block_kz" Type="BOOL" UUID="C776BAB94041EA589B19C7B3ED1FBAB9" Comment="КЗ канал - Температура в блоке (в помещении) (TT6)" />
+        <Field Name="A1_5_3_P_prim_Burn_room_kz" Type="BOOL" UUID="0789708B48C93DF66D69A39687B3D6E7" Comment="КЗ канал - Давление в основной камере сжигания PI0201(PT5)" />
+        <Field Name="A1_5_4_dP1_filt_V0208A_kz" Type="BOOL" UUID="420AC4C84F678D3599ADFAA9EA495507" Comment="КЗ канал - Перепад давления на фильтре V-0208A (PdT1.2)" />
+        <Field Name="A1_6_1_dP1_filt_V0208A_kz" Type="BOOL" UUID="131B3A6A4DAA5DB99F80A6A3B96D5736" Comment="КЗ канал - Перепад давления на фильтре V-0208B (PdT1.3)" />
+        <Field Name="A1_6_2_Pgaz1_burner_G1_kz" Type="BOOL" UUID="359F44BD4714E43D838EC980A157D93E" Comment="КЗ канал - Давление газа на горелку Г1 (PT1)" />
+        <Field Name="A1_6_3_Pgaz1_burner_G2_kz" Type="BOOL" UUID="3430D34040CF6CDBD393B4826A2AC4A1" Comment="КЗ канал - Давление газа на горелку Г2 (PT2)" />
+        <Field Name="A1_6_4_P2_pump_P0201A_kz" Type="BOOL" UUID="173D3D8E4EDD22C3C2F6CBBBA84E95E9" Comment="КЗ канал - Давление после насоса P-0201A (PT3)" />
+        <Field Name="A1_7_1_P2_pump_P0201B_kz" Type="BOOL" UUID="FD08C3CA458AFD8B0C913886C41B58E5" Comment="КЗ канал - Давление после насоса P-0201B (PT4)" />
+        <Field Name="A1_7_2_P2_regul_C0201_kz" Type="BOOL" UUID="E03B8CE74D0C321AF85E5DAF37374A0A" Comment="КЗ канал - Давление после регулятора C-0201 (PT6)" />
+        <Field Name="A1_7_3_Sen_flame_dtc_GU_main_BR_kz" Type="BOOL" UUID="53A411844E3922F8045987A41D174DBA" Comment="КЗ канал - Датчик обнаружения пламени ГУ основной камеры сгорания (BI-0101A)" />
+        <Field Name="A1_7_4_Sen_flame_dtc_GU_secon_BR_kz" Type="BOOL" UUID="600DE2DD45AABC3657B0D5A7143BF528" Comment="КЗ канал - Датчик обнаружения пламени ГУ вторичной камеры сгорания (BI-0101B)" />
+        <Field Name="A1_8_1_GRPSH_dP1_F1_kz" Type="BOOL" UUID="493F24CC4A04599D2596AB90D742B045" Comment="КЗ канал - ГРПШ.Перепад давления на Ф1 (PdT1.1)" />
+        <Field Name="A1_8_2_GRPSH_Q_GC1_1_kz" Type="BOOL" UUID="2DFFD849433D9E26BB35CDBC9A91965B" Comment="КЗ канал - ГРПШ.Расход на входе газа ГС1.1 (FE1.1)" />
+        <Field Name="A1_8_3_GRPSH_P_GC1_1_kz" Type="BOOL" UUID="FCDBCD104AEE90BFFEEC888548433BE7" Comment="КЗ канал - ГРПШ.Давление на входе газа ГС1.1 (PT1.1)" />
+        <Field Name="A1_8_4_SV_pos_kz" Type="BOOL" UUID="D2C0663740F871DA04DF94861B9E0DC6" Comment="КЗ канал - Положение отсечного клапана (CV-0201)" />
+        <Field Name="A1_9_1_rez_kz" Type="BOOL" UUID="EC97D2CB4477B0B0E1E3668B4DDE30A3" Comment="КЗ канал - Резерв" />
+        <Field Name="A1_9_2_rez_kz" Type="BOOL" UUID="843B921F49D01749F0F4D9A0147C6BDB" Comment="КЗ канал - Резерв" />
+        <Field Name="A1_9_3_rez_kz" Type="BOOL" UUID="9E4F74B842D2611CD70E4B843CD7BCA6" Comment="КЗ канал - Резерв" />
+        <Field Name="A1_9_4_SH_pos_kz" Type="BOOL" UUID="0CA839AC4B704B8F88A1C187CA253F1D" Comment="КЗ канал - Положение затвора (CV-0101)" />
+        <Field Name="A1_10_1_L_hi_LT1_kz" Type="BOOL" UUID="389ED85D49B508537B14B989A717BC6C" Comment="КЗ канал - Верхний уровень в емкости TK-0201 (LT1)" />
+        <Field Name="A1_10_2_L_hi_LT2_kz" Type="BOOL" UUID="F369B311455AE2E214EAB8BB763EAB0B" Comment="КЗ канал - Верхний уровень в емкости TK-0201 (LT2)" />
+        <Field Name="A1_10_3_rez_kz" Type="BOOL" UUID="366FB2B544882E615D9264B48714550F" Comment="КЗ канал - Резерв" />
+        <Field Name="A1_10_4_rez_kz" Type="BOOL" UUID="FE62CBB24B0D68F94DBE35A9A2D1D51E" Comment="КЗ канал - Резерв" />
+        <Field Name="A1_3_1_Uop_obriv" Type="BOOL" UUID="EEAA2ACC44543AD78A70F7ADDB101D9B" Comment="Обрыв канал - Напряжение основного питания САУ " />
+        <Field Name="A1_3_2_NC_obriv" Type="BOOL" UUID="D8B6D76247A1EED14FA571820950F2B9" Comment="Обрыв канал - Не подключен" />
+        <Field Name="A1_3_3_Lzag_CH4_obriv" Type="BOOL" UUID="F8F4823E46FA3141B176A58D1D4F5FAD" Comment="Обрыв канал - Уровень загазованности по метану (QT1)" />
+        <Field Name="A1_3_4_rez_obriv" Type="BOOL" UUID="7404DC594BDE82E9E2B4C4A477782A8E" Comment="Обрыв канал - Резерв" />
+        <Field Name="A1_4_1_T_Burn_room_obriv" Type="BOOL" UUID="F5325D0144C49F84651D95B4CCAA101C" Comment="Обрыв канал - Температура в камере сжигания TI0201 (TT1)" />
+        <Field Name="A1_4_2_T_Ign_room_obriv" Type="BOOL" UUID="EC3573FC47AE5E36D4184EB194670C36" Comment="Обрыв канал - Температура в камере поджига TI0202 (TT2)" />
+        <Field Name="A1_4_3_T_tank_TK0201_obriv" Type="BOOL" UUID="6564CFA4411FB503DFA234812E100E3B" Comment="Обрыв канал - Температура в емкости TK-0201 (TT3)" />
+        <Field Name="A1_4_4_T1_dust_col_obriv" Type="BOOL" UUID="6CD3FC574A3AF99B11770DBBC1CA63ED" Comment="Обрыв канал - Температура перед пылеуловителем TI0203 (TT4)" />
+        <Field Name="A1_5_1_T2_dust_col_obriv" Type="BOOL" UUID="9461B30C4DA3CD327FE2A3896C25ED93" Comment="Обрыв канал - Температура после пылеуловителя TI0204 (TT5)" />
+        <Field Name="A1_5_2_T1_block_obriv" Type="BOOL" UUID="D2BFC571422EAD20EFF68DB4FA57830E" Comment="Обрыв канал - Температура в блоке (в помещении) (TT6)" />
+        <Field Name="A1_5_3_P_prim_Burn_room_obriv" Type="BOOL" UUID="CD8F28C34B0AA396215B4BA421CFBE61" Comment="Обрыв канал - Давление в основной камере сжигания PI0201(PT5)" />
+        <Field Name="A1_5_4_dP1_filt_V0208A_obriv" Type="BOOL" UUID="AEB6EDB14C3266359594FD81FCC59D1A" Comment="Обрыв канал - Перепад давления на фильтре V-0208A (PdT1.2)" />
+        <Field Name="A1_6_1_dP1_filt_V0208A_obriv" Type="BOOL" UUID="3D5EE15641FF949108101092073E5388" Comment="Обрыв канал - Перепад давления на фильтре V-0208B (PdT1.3)" />
+        <Field Name="A1_6_2_Pgaz1_burner_G1_obriv" Type="BOOL" UUID="454B6E2843666E9B1DA84F915CE1E9B0" Comment="Обрыв канал - Давление газа на горелку Г1 (PT1)" />
+        <Field Name="A1_6_3_Pgaz1_burner_G2_obriv" Type="BOOL" UUID="AA190BED4B59C09042C05391E4158ED8" Comment="Обрыв канал - Давление газа на горелку Г2 (PT2)" />
+        <Field Name="A1_6_4_P2_pump_P0201A_obriv" Type="BOOL" UUID="82E620A741A6787CA8C6B0BA2EA52A25" Comment="Обрыв канал - Давление после насоса P-0201A (PT3)" />
+        <Field Name="A1_7_1_P2_pump_P0201B_obriv" Type="BOOL" UUID="EB7F4B6A49472E413C6988B6995FBA25" Comment="Обрыв канал - Давление после насоса P-0201B (PT4)" />
+        <Field Name="A1_7_2_P2_regul_C0201_obriv" Type="BOOL" UUID="E8E3BA9F4D02E13A87ACA0860965EEB1" Comment="Обрыв канал - Давление после регулятора C-0201 (PT6)" />
+        <Field Name="A1_7_3_Sen_flame_dtc_GU_main_BR_obriv" Type="BOOL" UUID="5EB359244E1DC510A16B6BA42ACA6109" Comment="Обрыв канал - Датчик обнаружения пламени ГУ основной камеры сгорания (BI-0101A)" />
+        <Field Name="A1_7_4_Sen_flame_dtc_GU_secon_BR_obriv" Type="BOOL" UUID="BEF9AE1C42DD1EC4300227BA31E9B2DC" Comment="Обрыв канал - Датчик обнаружения пламени ГУ вторичной камеры сгорания (BI-0101B)" />
+        <Field Name="A1_8_1_GRPSH_dP1_F1_obriv" Type="BOOL" UUID="9780E83C42A5EB10FCF27C875442EEBF" Comment="Обрыв канал - ГРПШ.Перепад давления на Ф1 (PdT1.1)" />
+        <Field Name="A1_8_2_GRPSH_Q_GC1_1_obriv" Type="BOOL" UUID="60524F22494C0CC456121883ECF23CC7" Comment="Обрыв канал - ГРПШ.Расход на входе газа ГС1.1 (FE1.1)" />
+        <Field Name="A1_8_3_GRPSH_P_GC1_1_obriv" Type="BOOL" UUID="F1CB02344685B9B14BFB14A98B358499" Comment="Обрыв канал - ГРПШ.Давление на входе газа ГС1.1 (PT1.1)" />
+        <Field Name="A1_8_4_SV_pos_obriv" Type="BOOL" UUID="5A68027D4DD0DDC28D33D1AEAA9ED36D" Comment="Обрыв канал - Положение отсечного клапана (CV-0201)" />
+        <Field Name="A1_9_1_rez_obriv" Type="BOOL" UUID="EEBCA86B4C3B455F9FF7DAAE381AA11E" Comment="Обрыв канал - Резерв" />
+        <Field Name="A1_9_2_rez_obriv" Type="BOOL" UUID="960A76774019C480D9B32BB3DF35B589" Comment="Обрыв канал - Резерв" />
+        <Field Name="A1_9_3_rez_obriv" Type="BOOL" UUID="89B77F6147D2560108DB05AA47DE27EF" Comment="Обрыв канал - Резерв" />
+        <Field Name="A1_9_4_SH_pos_obriv" Type="BOOL" UUID="C4A3C16B4727FB03FF32789B1A4E3FBB" Comment="Обрыв канал - Положение затвора (CV-0101)" />
+        <Field Name="A1_10_1_L_hi_LT1_obriv" Type="BOOL" UUID="99EC50CB45324559C9E0BB97A8F751E1" Comment="Обрыв канал - Верхний уровень в емкости TK-0201 (LT1)" />
+        <Field Name="A1_10_2_L_hi_LT2_obriv" Type="BOOL" UUID="3CB05840406F687130B9ECA264430DB9" Comment="Обрыв канал - Верхний уровень в емкости TK-0201 (LT2)" />
+        <Field Name="A1_10_3_rez_obriv" Type="BOOL" UUID="9E4AE21E414CF65BB84D13A407B5F5D2" Comment="Обрыв канал - Резерв" />
+        <Field Name="A1_10_4_rez_obriv" Type="BOOL" UUID="58E5B7944352F9DEBD7E80A750B07E31" Comment="Обрыв канал - Резерв" />
+        <Field Name="sonet_A1_3_flt" Type="BOOL" UUID="729D7F674D05EF1EFF024E88DFC66065" Comment="Ошибка модуля Сонет: A1_3" />
+        <Field Name="sonet_A1_4_flt" Type="BOOL" UUID="92BC07C34D517E87C8860E9BA24208B6" Comment="Ошибка модуля Сонет: A1_4" />
+        <Field Name="sonet_A1_5_flt" Type="BOOL" UUID="EFBB023E4EAFB98F4CE13E98969C9DC5" Comment="Ошибка модуля Сонет: A1_5" />
+        <Field Name="sonet_A1_6_flt" Type="BOOL" UUID="DC432DD54513D7DFEA385983E639D1FE" Comment="Ошибка модуля Сонет: A1_6" />
+        <Field Name="sonet_A1_7_flt" Type="BOOL" UUID="9406B96846C51E3BB1A9EDAD88B87E7B" Comment="Ошибка модуля Сонет: A1_7" />
+        <Field Name="sonet_A1_8_flt" Type="BOOL" UUID="13EBC3CA488BE5607BDEC68EA0D6C1F4" Comment="Ошибка модуля Сонет: A1_8" />
+        <Field Name="sonet_A1_9_flt" Type="BOOL" UUID="A9D34F974DC44BB9A932B782FC50B21D" Comment="Ошибка модуля Сонет: A1_9" />
+        <Field Name="sonet_A1_10_flt" Type="BOOL" UUID="EC4F7A8A41A43F8A3E7218A125805407" Comment="Ошибка модуля Сонет: A1_10" />
+    </Fields>
+</Type>

@@ -2,6 +2,6 @@
 <!DOCTYPE SubAppType v. 1.3 >
 <SubAppType Name="DRV_A1" Kind="DRIVER.SONET.LOCALBUS" Args="" Comment="" UUID="DC867C2F47BA800F00B402B7EE8D9ABF">
     <InterfaceList>
-
+        <Signal Name="KTO_AI_DRV" UUID="1992475442BA350E9C24CBA4A2887CA0" Type="37FF3ECA42D479BD2302648F8F459118" Usage="" Global="TRUE" Comment="Аналоговые входы. Драйвер" />
     </InterfaceList>
 </SubAppType>

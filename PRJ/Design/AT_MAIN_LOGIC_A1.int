@@ -27,5 +27,6 @@
         <Signal Name="cycleTime_AI_sys" UUID="AF40336346FC23FE3C418C97F93619D1" Type="LREAL" Usage="" />
         <Signal Name="KTO_AI_DRV" UUID="1992475442BA350E9C24CBA4A2887CA0" Type="37FF3ECA42D479BD2302648F8F459118" Usage="" Global="TRUE" Comment="Аналоговые входы. Драйвер" />
         <Signal Name="KTO_AI_HMI" UUID="C1A047ED4E867233E37F5182C6033A08" Type="650D476341710DD510E73DBF0399D983" Usage="" Global="TRUE" Comment="Аналоговые входы. Логика" />
+        <Signal Name="APS_KTO_A1" UUID="179EC99D499712188D4C9C9BE8E957A4" Type="DE51DA9C4A2BA83B04F40A81D9A2D3EC" Usage="" Global="TRUE" Comment="Массив АПС" />
     </InterfaceList>
 </SubAppType>
