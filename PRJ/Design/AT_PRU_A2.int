@@ -5,5 +5,6 @@
         <Signal Name="KTO_AO_HMI" UUID="4D34A84A424BBCA64906658883518319" Type="591E5E474CD17211AC6B85A08AAF7A46" Usage="" Global="TRUE" Comment="Аналоговые выходы. Логика" />
         <Signal Name="KTO_DI_HMI" UUID="CC055E5E4FBD18715494DDAD80F3C25A" Type="3D9354EF4F58D8D30A7C508A1429A0D1" Usage="" Global="TRUE" Comment="Дискретные входы. Логика" />
         <Signal Name="KTO_DO_HMI" UUID="6BB8886144EA4B796E170AAEF9087015" Type="C59E9B4E412222AEB12F7E9E698DC22C" Usage="" Global="TRUE" Comment="Дискретные выходы. Логика" />
+        <Signal Name="APS_KTO_A2" UUID="C03737284EE5CE5DDEC81390B2731B3B" Type="242FB05340FD133F9DE840AD4C2C50FD" Usage="" Global="TRUE" Comment="Массив АПС" />
     </InterfaceList>
 </SubAppType>

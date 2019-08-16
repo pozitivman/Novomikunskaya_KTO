@@ -832,156 +832,434 @@ DO_raw := DO_in.PV;]]></ST>
 
 
 //Отказ модулей Сонет
-APS_073(KTO_DI_HMI.A2_3_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_3_flt); //Ошибка модуля Сонет: A2_3
-APS_074(KTO_DI_HMI.A2_4_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_4_flt); //Ошибка модуля Сонет: A2_4
-APS_075(KTO_DI_HMI.A2_5_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_5_flt); //Ошибка модуля Сонет: A2_5
-APS_076(KTO_DI_HMI.A2_6_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_6_flt); //Ошибка модуля Сонет: A2_6
-APS_077(KTO_DI_HMI.A2_7_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_7_flt); //Ошибка модуля Сонет: A2_7
-APS_078(KTO_DI_HMI.A2_8_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_8_flt); //Ошибка модуля Сонет: A2_8
-APS_079(KTO_DI_HMI.A2_9_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_9_flt); //Ошибка модуля Сонет: A2_9
-APS_080(KTO_DI_HMI.A2_10_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_10_flt); //Ошибка модуля Сонет: A2_10
-APS_081(KTO_AO_HMI.A3_3_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_3_flt); //Ошибка модуля Сонет: A3_3
-APS_082(KTO_AO_HMI.A3_4_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_4_flt); //Ошибка модуля Сонет: A3_4
-APS_083(KTO_AO_HMI.A3_5_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_5_flt); //Ошибка модуля Сонет: A3_5
-APS_084(KTO_DO_HMI.A3_6_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_6_flt); //Ошибка модуля Сонет: A3_6
-APS_085(KTO_DO_HMI.A3_7_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_7_flt); //Ошибка модуля Сонет: A3_7
-APS_086(KTO_DO_HMI.A3_8_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_8_flt); //Ошибка модуля Сонет: A3_8
-APS_087(KTO_DO_HMI.A3_9_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_9_flt); //Ошибка модуля Сонет: A3_9
-APS_088(KTO_DO_HMI.A3_10_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_10_flt); //Ошибка модуля Сонет: A3_10
+APS_001(KTO_DI_HMI.A2_3_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_3_flt); //Ошибка модуля Сонет: A2_3
+APS_002(KTO_DI_HMI.A2_4_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_4_flt); //Ошибка модуля Сонет: A2_4
+APS_003(KTO_DI_HMI.A2_5_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_5_flt); //Ошибка модуля Сонет: A2_5
+APS_004(KTO_DI_HMI.A2_6_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_6_flt); //Ошибка модуля Сонет: A2_6
+APS_005(KTO_DI_HMI.A2_7_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_7_flt); //Ошибка модуля Сонет: A2_7
+APS_006(KTO_DI_HMI.A2_8_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_8_flt); //Ошибка модуля Сонет: A2_8
+APS_007(KTO_DI_HMI.A2_9_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_9_flt); //Ошибка модуля Сонет: A2_9
+APS_008(KTO_DI_HMI.A2_10_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A2_10_flt); //Ошибка модуля Сонет: A2_10
+APS_009(KTO_AO_HMI.A3_3_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_3_flt); //Ошибка модуля Сонет: A3_3
+APS_010(KTO_AO_HMI.A3_4_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_4_flt); //Ошибка модуля Сонет: A3_4
+APS_011(KTO_AO_HMI.A3_5_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_5_flt); //Ошибка модуля Сонет: A3_5
+APS_012(KTO_DO_HMI.A3_6_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_6_flt); //Ошибка модуля Сонет: A3_6
+APS_013(KTO_DO_HMI.A3_7_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_7_flt); //Ошибка модуля Сонет: A3_7
+APS_014(KTO_DO_HMI.A3_8_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_8_flt); //Ошибка модуля Сонет: A3_8
+APS_015(KTO_DO_HMI.A3_9_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_9_flt); //Ошибка модуля Сонет: A3_9
+APS_016(KTO_DO_HMI.A3_10_STATUS, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.sonet_A3_10_flt); //Ошибка модуля Сонет: A3_10
 
 
 //АПС по дискретным входам ПЛК
-APS_089(KTO_DI_HMI.A2_3_1_SEN_QT1_CH4_zagaz_flt.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_1_SEN_QT1_CH4_zagaz_flt);   // Датчик загазованности по метану - Авария (QT1)
-APS_090(KTO_DI_HMI.A2_3_2_SEN_QT1_CH4_zagaz_1p.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_2_SEN_QT1_CH4_zagaz_1p);   // Датчик загазованности по метану - Порог 1 (QT1)
-APS_091(KTO_DI_HMI.A2_3_3_SEN_QT1_CH4_zagaz_2p.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_3_SEN_QT1_CH4_zagaz_2p);   // Датчик загазованности по метану - Порог 2 (QT1)
-APS_092(KTO_DI_HMI.A2_3_4_SEN_QT2_CO2_warn_ala.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_4_SEN_QT2_CO2_warn_ala);   // Предупредительная сигнализация оксида углерода (QT2)
-APS_093(KTO_DI_HMI.A2_3_5_SEN_QT2_CO2_emerg_ala.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_5_SEN_QT2_CO2_emerg_ala);   // Аварийная сигнализация оксида углерода (QT2)
-APS_094(KTO_DI_HMI.A2_3_6_SB1_Check_signal.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_6_SB1_Check_signal);   // Опробование сигнализации (SB1)
-APS_095(KTO_DI_HMI.A2_3_7_CV0201_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_7_CV0201_ON);   // Клапан отсечной в положении "Открыто" (CV-0201)
-APS_096(KTO_DI_HMI.A2_3_8_CV0201_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_8_CV0201_OFF);   // Клапан отсечной в положении "Закрыто" (CV-0201)
-APS_097(KTO_DI_HMI.A2_3_9_CV0201_RDY.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_9_CV0201_RDY);   // Клапан отсечной в положении "Готовность" (CV-0201)
-APS_098(KTO_DI_HMI.A2_3_10_CV0201_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_10_CV0201_FLT);   // Клапан отсечной в положении "Неисправность" (CV-0201)
-APS_099(KTO_DI_HMI.A2_3_11_CV0201_EMG.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_11_CV0201_EMG);   // Клапан отсечной в положении "Авария" (CV-0201)
-APS_100(KTO_DI_HMI.A2_3_12_R1_P_lo_gaz_GU_BBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_12_R1_P_lo_gaz_GU_BBR);   // Реле низкого давления системы подачи газа на ГУ основной камеры сгорания (PS-0101A)
-APS_101(KTO_DI_HMI.A2_3_13_R2_P_hi_gaz_GU_BBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_13_R2_P_hi_gaz_GU_BBR);   // Реле высокого давления системы подачи газа на ГУ основной камеры сгорания (PS-0102A)
-APS_102(KTO_DI_HMI.A2_3_14_R3_P_lo_gaz_GU_SBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_14_R3_P_lo_gaz_GU_SBR);   // Реле низкого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0101B)
-APS_103(KTO_DI_HMI.A2_3_15_R4_P_hi_gaz_GU_SBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_15_R4_P_hi_gaz_GU_SBR);   // Реле высокого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0102B)
-APS_104(KTO_DI_HMI.A2_3_16_R5_P_air_GU_BBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_16_R5_P_air_GU_BBR);   // Реле давления в системе подачи воздуха на ГУ первичной камеры сгорания (PS-0103A) 
-APS_105(KTO_DI_HMI.A2_4_1_R6_P_air_GU_SBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_1_R6_P_air_GU_SBR);   // Реле давления в системе подачи воздуха на ГУ вторичной камеры сгорания (PS-0103B) 
-APS_106(KTO_DI_HMI.A2_4_2_AG1_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_2_AG1_OFF);   // Ворошитель инсинератора в крайнем закрытом положении (ZSC-0204)
-APS_107(KTO_DI_HMI.A2_4_3_AG1_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_3_AG1_ON);   // Ворошитель инсинератора в крайнем открытом положении (ZSO-0204)
-APS_108(KTO_DI_HMI.A2_4_4_SEN_door_extr_ash_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_4_SEN_door_extr_ash_OFF);   // Датчик двери выема золы из инсинератора в сост. "закрыто" (ZSC-0207)
-APS_109(KTO_DI_HMI.A2_4_5_SEN_door_serv_ins_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_5_SEN_door_serv_ins_OFF);   // Датчик двери обслуживания инсинератора в сост. "закрыто" (ZSC-0206)
-APS_110(KTO_DI_HMI.A2_4_6_Lmin_tank_RD_CSSG.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_6_Lmin_tank_RD_CSSG);   // Минимальный уровень в баке дозатора реагентов в систему охлаждения дым. газов (LSL-0201)
-APS_111(KTO_DI_HMI.A2_4_7_SEN_FP_door_ins_ld_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_7_SEN_FP_door_ins_ld_OFF);   // Датчик огнестойкой двери загрузки инсинератора в состоянии "закрыто" (ZSC-0201)
-APS_112(KTO_DI_HMI.A2_4_8_SEN_FP_door_ins_ld_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_8_SEN_FP_door_ins_ld_ON);   // Датчик огнестойкой двери загрузки инсинератора в состоянии "открыто" (ZSO-0201)
-APS_113(KTO_DI_HMI.A2_4_9_SEN_damp_ld_dev_feed_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_9_SEN_damp_ld_dev_feed_OFF);   // Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "закрыто" (ZSC-0202)
-APS_114(KTO_DI_HMI.A2_4_10_SEN_damp_ld_dev_feed_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_10_SEN_damp_ld_dev_feed_ON);   // Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "открыто" (ZSO-0202)
-APS_115(KTO_DI_HMI.A2_4_11_SEN_push_ld_dev_feed_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_11_SEN_push_ld_dev_feed_OFF);   // Датчик толкателя устройства подачи в инсинератор в состоянии "закрыт" (ZSC-0203)
-APS_116(KTO_DI_HMI.A2_4_12_SEN_push_ld_dev_feed_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_12_SEN_push_ld_dev_feed_ON);   // Датчик толкателя устройства подачи в инсинератор в состоянии "открыт" (ZSO-0203)
-APS_117(KTO_DI_HMI.A2_4_13_SEN_push_ld_dev_feed_IMT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_13_SEN_push_ld_dev_feed_IMT);   // Датчик толкателя устройства подачи в инсинератор в состоянии "промежуточное" (ZSO-0205)
-APS_118(KTO_DI_HMI.A2_4_14_SW_T_oil_tank.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_14_SW_T_oil_tank);   // Переключатель температуры масляного бака (TS-0202)
-APS_119(KTO_DI_HMI.A2_4_15_Lmin_oil_GSDD.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_15_Lmin_oil_GSDD);   // Минимальный уровень масла в баке гидравлической системы привода заслонок (LS-0102)
-APS_120(KTO_DI_HMI.A2_4_16_V1_emg_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_16_V1_emg_ON);   // Вентилятор аварийный включен (B1)
-APS_121(KTO_DI_HMI.A2_5_1_CF0201_air_feed_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_1_CF0201_air_feed_BBR_ON);   // Вентилятор подачи воздуха в основную камеру сгорания включен (CF-0201)
-APS_122(KTO_DI_HMI.A2_5_2_CF0201_air_feed_BBR_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_2_CF0201_air_feed_BBR_FLT);   // Вентилятор подачи воздуха в основную камеру сгорания в аварии (CF-0201)
-APS_123(KTO_DI_HMI.A2_5_3_CF0202_air_feed_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_3_CF0202_air_feed_SBR_ON);   // Вентилятор подачи воздуха во вторичную камеру сгорания включен (CF-0202)
-APS_124(KTO_DI_HMI.A2_5_4_CF0202_air_feed_SBR_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_4_CF0202_air_feed_SBR_FLT);   // Вентилятор подачи воздуха во вторичную камеру сгорания в аварии (CF-0202)
-APS_125(KTO_DI_HMI.A2_5_5_CF0301_ash_gaz_feed_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_5_CF0301_ash_gaz_feed_ON);   // Вентилятор подачи дымовых газов в трубу включен (CF-0301) 
-APS_126(KTO_DI_HMI.A2_5_6_CF0301_ash_gaz_feed_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_6_CF0301_ash_gaz_feed_FLT);   // Вентилятор подачи дымовых газов в трубу в аварии (CF-0301) 
-APS_127(KTO_DI_HMI.A2_5_7_AF0201_air_feed_CSG_ins_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_7_AF0201_air_feed_CSG_ins_ON);   // Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)
-APS_128(KTO_DI_HMI.A2_5_8_AF0201_air_feed_CSG_ins_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_8_AF0201_air_feed_CSG_ins_FLT);   // Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора в аварии (AF-0201)
-APS_129(KTO_DI_HMI.A2_5_9_RAL0201_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_9_RAL0201_CSG_ON);   // Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (RAL-0201)
-APS_130(KTO_DI_HMI.A2_5_10_RAL0201_RA_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_10_RAL0201_RA_CSG_ON);   // Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (RAL-0201)
-APS_131(KTO_DI_HMI.A2_5_11_CH0201_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_11_CH0201_CSG_ON);   // Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (CH-0201 )
-APS_132(KTO_DI_HMI.A2_5_12_CH0201_RA_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_12_CH0201_RA_CSG_ON);   // Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (CH-0201 )
-APS_133(KTO_DI_HMI.A2_5_13_P0201A_work_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_13_P0201A_work_ON);   // Насос (рабочий) включен (P-0201A)
-APS_134(KTO_DI_HMI.A2_5_14_P0201A_work_RA_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_14_P0201A_work_RA_ON);   // Дист. управл. насосом (рабочим) включено (P-0201A)
-APS_135(KTO_DI_HMI.A2_5_15_TR0101A_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_15_TR0101A_burn_dev_BBR_ON);   // Свеча зажигания устройства горелочного основной камеры сгорания включена (TR-0101A)
-APS_136(KTO_DI_HMI.A2_5_16_TR0101A_RA_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_16_TR0101A_RA_burn_dev_BBR_ON);   // Дист. управл. свечой зажигания устройства горелочного основной камеры сгорания включено (TR-0101A)
-APS_137(KTO_DI_HMI.A2_6_1_TR0101B_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_1_TR0101B_burn_dev_SBR_ON);   // Свеча зажигания устройства горелочного вторичной камеры сгорания включена (TR-0101B)
-APS_138(KTO_DI_HMI.A2_6_2_TR0101B_RA_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_2_TR0101B_RA_burn_dev_SBR_ON);   // Дист. управл. свечой зажигания устройства горелочного вторичной камеры сгорания включено (TR-0101B)
-APS_139(KTO_DI_HMI.A2_6_3_SV0101B_air_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_3_SV0101B_air_feed_burn_dev_SBR_ON);   // Клапан системы подачи воздуха на горелочное устройство вторичной камеры сгорания открыт (SV-0101b)
-APS_140(KTO_DI_HMI.A2_6_4_SV0101B_RA_air_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_4_SV0101B_RA_air_feed_burn_dev_SBR_ON);   // Дист. управл. клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания включено (SV-0101B)
-APS_141(KTO_DI_HMI.A2_6_5_TV0101A_gaz_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_5_TV0101A_gaz_feed_burn_dev_BBR_ON);   // Клапан системы подачи газа на горелочное устройство основной камеры сгорания открыт (TV-0101A)
-APS_142(KTO_DI_HMI.A2_6_6_TV0101A_RA_air_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_6_TV0101A_RA_air_feed_burn_dev_BBR_ON);   // Дист. управл. клапана системы подачи газа на горелочное устройство основной камеры сгорания включено (TV-0101A)
-APS_143(KTO_DI_HMI.A2_6_7_TV0101B_gaz_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_7_TV0101B_gaz_feed_burn_dev_SBR_ON);   // Клапан системы подачи газа на горелочное устройство вторичной камеры сгорания открыт (TV-0101В)
-APS_144(KTO_DI_HMI.A2_6_8_TV0101B_RA_air_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_8_TV0101B_RA_air_feed_burn_dev_SBR_ON);   // Дист. управл. клапана системы подачи газа на горелочное устройство вторичной камеры сгорания включено (TV-0101В)
-APS_145(KTO_DI_HMI.A2_6_9_CV0201_KMO3_FROM_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_9_CV0201_KMO3_FROM_VRU_ON);   // Клапан отсечной КМО-3 включен (CV-0201) сигнал от ВРУ
-APS_146(KTO_DI_HMI.A2_6_10_CV0201_RA_KMO3_FROM_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_10_CV0201_RA_KMO3_FROM_VRU_ON);   // Дист. управл. клапаном отсечным КМО-3 включено (CV-0201) сигнал от ВРУ
-APS_147(KTO_DI_HMI.A2_6_11_TV0102A_air_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_11_TV0102A_air_feed_burn_dev_BBR_ON);   // Клапан системы подачи воздуха на горелочное устройство основной камеры сгорания открыт (TV-0102A)
-APS_148(KTO_DI_HMI.A2_6_12_TV0102A_RA_air_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_12_TV0102A_RA_air_feed_burn_dev_BBR_ON);   // Дист. управл. клапаном системы подачи воздуха на горелочное устройство основной камеры сгорания включено (TV-0102A)
-APS_149(KTO_DI_HMI.A2_6_13_P0201B_rez_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_13_P0201B_rez_ON);   // Насос (резервный) включен (P-0201B)
-APS_150(KTO_DI_HMI.A2_6_14_P0201B_rez_RA_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_14_P0201B_rez_RA_ON);   // Дист. управл. насосом (резервным) включено (P-0201B)
-APS_151(KTO_DI_HMI.A2_6_15_C0201_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_15_C0201_ON);   // Компрессор включен (C-0201)
-APS_152(KTO_DI_HMI.A2_6_16_C0201_RA_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_16_C0201_RA_ON);   // Дист. управл. компрессором включено (C-0201)
-APS_153(KTO_DI_HMI.A2_7_1_SC0203_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_1_SC0203_CSG_ON);   // Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (SC-0203)
-APS_154(KTO_DI_HMI.A2_7_2_SC0203_CSG_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_2_SC0203_CSG_FLT);   // Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)
-APS_155(KTO_DI_HMI.A2_7_3_CF0101A_air_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_3_CF0101A_air_feed_burn_dev_BBR_ON);   // Вентилятор системы подачи воздуха на горелочное устройство основной камеры сгорания включен (СF-0101A)
-APS_156(KTO_DI_HMI.A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON);   // Вентилятор системы подачи воздуха на горелочное устройство вторичной камеры сгорания включен (СF-0101B)
-APS_157(KTO_DI_HMI.A2_7_5_SC0201_disch_ash_INS_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_5_SC0201_disch_ash_INS_ON);   // Шнек выгрузки золы из инсинератора включен (SС-0201 )
-APS_158(KTO_DI_HMI.A2_7_6_SC0202_disch_ash_MC_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_6_SC0202_disch_ash_MC_ON);   // Шнек выгрузки золы из мультициклона включен (SС-0202) 
-APS_159(KTO_DI_HMI.A2_7_7_P0401_oil_feed_DD_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_7_P0401_oil_feed_DD_ON);   // Насос подачи масла гидравлической системы привода заслонок включен (P-0401)
-APS_160(KTO_DI_HMI.A2_7_8_EH0401_oil_feed_DD_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_8_EH0401_oil_feed_DD_ON);   // Подогреватель масла гидравлической системы привода заслонок включен (EH-0401)
-APS_161(KTO_DI_HMI.A2_7_9_C1_FROM_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_9_C1_FROM_VRU_ON);   // Срабатывание расцепителя (от ВРУ1)
-APS_162(KTO_DI_HMI.A2_7_10_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_10_Rez);   // Резерв
-APS_163(KTO_DI_HMI.A2_7_11_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_11_Rez);   // Резерв
-APS_164(KTO_DI_HMI.A2_7_12_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_12_Rez);   // Резерв
-APS_165(KTO_DI_HMI.A2_7_13_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_13_Rez);   // Резерв
-APS_166(KTO_DI_HMI.A2_7_14_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_14_Rez);   // Резерв
-APS_167(KTO_DI_HMI.A2_7_15_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_15_Rez);   // Резерв
-APS_168(KTO_DI_HMI.A2_7_16_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_16_Rez);   // Резерв
-APS_169(KTO_DI_HMI.A2_8_1_PRES_AC380_INC1_VRU.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_1_PRES_AC380_INC1_VRU);   // Наличие напряжения ~380 В ввода 1 ВРУ КТО1,2
-APS_170(KTO_DI_HMI.A2_8_2_PRES_AC380_INC2_VRU.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_2_PRES_AC380_INC2_VRU);   // Наличие напряжения ~380 В ввода 2 ВРУ КТО1,2
-APS_171(KTO_DI_HMI.A2_8_3_QF_INC1_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_3_QF_INC1_VRU_ON);   // Автоматический выключатель на вводе 1 включен ВРУ КТО1,2
-APS_172(KTO_DI_HMI.A2_8_4_QF_INC2_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_4_QF_INC2_VRU_ON);   // Автоматический выключатель на вводе 2 включен ВРУ КТО1,2
-APS_173(KTO_DI_HMI.A2_8_5_TRIG_AVR_VRU.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_5_TRIG_AVR_VRU);   // Срабатывание АВР ВРУ КТО1,2
-APS_174(KTO_DI_HMI.A2_8_6_Fire_from_SHPS.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_6_Fire_from_SHPS);   // Пожар сигнал от ШПС
-APS_175(KTO_DI_HMI.A2_8_7_Flt_from_SHPS.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_7_Flt_from_SHPS);   // Неисправность сигнал от ШПС
-APS_176(KTO_DI_HMI.A2_8_8_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_8_Rez);   // Резерв
-APS_177(KTO_DI_HMI.A2_8_9_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_9_Rez);   // Резерв
-APS_178(KTO_DI_HMI.A2_8_10_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_10_Rez);   // Резерв
-APS_179(KTO_DI_HMI.A2_8_11_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_11_Rez);   // Резерв
-APS_180(KTO_DI_HMI.A2_8_12_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_12_Rez);   // Резерв
-APS_181(KTO_DI_HMI.A2_8_13_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_13_Rez);   // Резерв
-APS_182(KTO_DI_HMI.A2_8_14_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_14_Rez);   // Резерв
-APS_183(KTO_DI_HMI.A2_8_15_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_15_Rez);   // Резерв
-APS_184(KTO_DI_HMI.A2_8_16_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_16_Rez);   // Резерв
-APS_185(KTO_DI_HMI.A2_9_1_BT_ES.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_1_BT_ES);   // Аварийный останов
-APS_186(KTO_DI_HMI.A2_9_2_BT_Start.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_2_BT_Start);   // Запуск
-APS_187(KTO_DI_HMI.A2_9_3_BT_door_feed_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_3_BT_door_feed_ON);   // Открыть подающую дверь
-APS_188(KTO_DI_HMI.A2_9_4_BT_door_feed_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_4_BT_door_feed_OFF);   // Закрыть подающую дверь
-APS_189(KTO_DI_HMI.A2_9_5_BT_door_ash_unload_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_5_BT_door_ash_unload_ON);   // Открыть дверь выгрузки золы
-APS_190(KTO_DI_HMI.A2_9_6_BT_door_ash_unload_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_6_BT_door_ash_unload_OFF);   // Открыть дверь выгрузки золы
-APS_191(KTO_DI_HMI.A2_9_7_BT_feed_waste_auto.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_7_BT_feed_waste_auto);   // Подача отходов в автоматическом режиме
-APS_192(KTO_DI_HMI.A2_9_8_BT_feed_waste_man.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_8_BT_feed_waste_man);   // Подача отходов в ручном режиме
-APS_193(KTO_DI_HMI.A2_9_9_BT_feed_waste_start.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_9_BT_feed_waste_start);   // Подача отходов - пуск
-APS_194(KTO_DI_HMI.A2_9_10_BT_feed_waste_stop.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_10_BT_feed_waste_stop);   // Подача отходов - стоп
-APS_195(KTO_DI_HMI.A2_9_11_BT_load_cycle.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_11_BT_load_cycle);   // Цикл загрузки
-APS_196(KTO_DI_HMI.A2_9_12_BT_cool_start.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_12_BT_cool_start);   // Запуск охлаждения
-APS_197(KTO_DI_HMI.A2_9_13_BT_Kvitir.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_13_BT_Kvitir);   // Квитирование
-APS_198(KTO_DI_HMI.A2_9_14_BT_Check_alarm.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_14_BT_Check_alarm);   // Опробование сигнализации
-APS_199(KTO_DI_HMI.A2_9_15_NC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_15_NC);   // Не подключен
-APS_200(KTO_DI_HMI.A2_9_16_NC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_16_NC);   // Не подключен
-APS_201(KTO_DI_HMI.A2_10_1_CTRL_OP_AC220.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_1_CTRL_OP_AC220);   // Контроль основного питания  ~220 В
-APS_202(KTO_DI_HMI.A2_10_2_CTRL_P_UPS_AC220.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_2_CTRL_P_UPS_AC220);   // Контроль питания от ИБП ~220 В
-APS_203(KTO_DI_HMI.A2_10_3_QF_P_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_3_QF_P_ON);   // Автоматы питания включены
-APS_204(KTO_DI_HMI.A2_10_4_CTRL_ISP_DISCH.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_4_CTRL_ISP_DISCH);   // Контроль исправности разрядников
-APS_205(KTO_DI_HMI.A2_10_5_ISP_OSN_IP_DC24_IC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_5_ISP_OSN_IP_DC24_IC);   // Исправность осн. ИП =24В внутренних цепей
-APS_206(KTO_DI_HMI.A2_10_6_ISP_REZ_IP_DC24_IC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_6_ISP_REZ_IP_DC24_IC);   // Исправность рез. ИП =24В внутренних цепей
-APS_207(KTO_DI_HMI.A2_10_7_ISP_OSN_IP_DC24_AI_AO.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_7_ISP_OSN_IP_DC24_AI_AO);   // Исправность осн. ИП =24В AI, AO
-APS_208(KTO_DI_HMI.A2_10_8_ISP_REZ_IP_DC24_AI_AO.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_8_ISP_REZ_IP_DC24_AI_AO);   // Исправность рез. ИП =24В AI, AO
-APS_209(KTO_DI_HMI.A2_10_9_ISP_OSN_IP_DC24_DI_EXT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_9_ISP_OSN_IP_DC24_DI_EXT);   // Исправность осн. ИП =24В DI (внеш.)
-APS_210(KTO_DI_HMI.A2_10_10_ISP_REZ_IP_DC24_DI_EXT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_10_ISP_REZ_IP_DC24_DI_EXT);   // Исправность рез. ИП =24В DI (внеш.)
-APS_211(KTO_DI_HMI.A2_10_11_ISP_OSN_IP_DC24_DO_EXT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_11_ISP_OSN_IP_DC24_DO_EXT);   // Исправность осн. ИП =24В DO (внеш.)
-APS_212(KTO_DI_HMI.A2_10_12_ISP_REZ_IP_DC24_DO_EXT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_12_ISP_REZ_IP_DC24_DO_EXT);   // Исправность рез. ИП =24В DO (внеш.)
-APS_213(KTO_DI_HMI.A2_10_13_ISP_OSN_IP_DC24_EXT_DEV.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_13_ISP_OSN_IP_DC24_EXT_DEV);   // Исправность осн. ИП =24В внешн. Устройств
-APS_214(KTO_DI_HMI.A2_10_14_ISP_REZ_IP_DC24_EXT_DEV.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_14_ISP_REZ_IP_DC24_EXT_DEV);   // Исправность рез. ИП =24В внешн. Устройств
-APS_215(KTO_DI_HMI.A2_10_15_NC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_15_NC);   // Не подключен
-APS_216(KTO_DI_HMI.A2_10_16_NC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_16_NC);   // Не подключен
+APS_017(KTO_DI_HMI.A2_3_1_SEN_QT1_CH4_zagaz_flt.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_1_SEN_QT1_CH4_zagaz_flt);   // Датчик загазованности по метану - Авария (QT1)
+APS_018(KTO_DI_HMI.A2_3_2_SEN_QT1_CH4_zagaz_1p.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_2_SEN_QT1_CH4_zagaz_1p);   // Датчик загазованности по метану - Порог 1 (QT1)
+APS_019(KTO_DI_HMI.A2_3_3_SEN_QT1_CH4_zagaz_2p.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_3_SEN_QT1_CH4_zagaz_2p);   // Датчик загазованности по метану - Порог 2 (QT1)
+APS_020(KTO_DI_HMI.A2_3_4_SEN_QT2_CO2_warn_ala.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_4_SEN_QT2_CO2_warn_ala);   // Предупредительная сигнализация оксида углерода (QT2)
+APS_021(KTO_DI_HMI.A2_3_5_SEN_QT2_CO2_emerg_ala.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_5_SEN_QT2_CO2_emerg_ala);   // Аварийная сигнализация оксида углерода (QT2)
+APS_022(KTO_DI_HMI.A2_3_6_SB1_Check_signal.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_6_SB1_Check_signal);   // Опробование сигнализации (SB1)
+APS_023(KTO_DI_HMI.A2_3_7_CV0201_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_7_CV0201_ON);   // Клапан отсечной в положении "Открыто" (CV-0201)
+APS_024(KTO_DI_HMI.A2_3_8_CV0201_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_8_CV0201_OFF);   // Клапан отсечной в положении "Закрыто" (CV-0201)
+APS_025(KTO_DI_HMI.A2_3_9_CV0201_RDY.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_9_CV0201_RDY);   // Клапан отсечной в положении "Готовность" (CV-0201)
+APS_026(KTO_DI_HMI.A2_3_10_CV0201_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_10_CV0201_FLT);   // Клапан отсечной в положении "Неисправность" (CV-0201)
+APS_027(KTO_DI_HMI.A2_3_11_CV0201_EMG.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_11_CV0201_EMG);   // Клапан отсечной в положении "Авария" (CV-0201)
+APS_028(KTO_DI_HMI.A2_3_12_R1_P_lo_gaz_GU_BBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_12_R1_P_lo_gaz_GU_BBR);   // Реле низкого давления системы подачи газа на ГУ основной камеры сгорания (PS-0101A)
+APS_029(KTO_DI_HMI.A2_3_13_R2_P_hi_gaz_GU_BBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_13_R2_P_hi_gaz_GU_BBR);   // Реле высокого давления системы подачи газа на ГУ основной камеры сгорания (PS-0102A)
+APS_030(KTO_DI_HMI.A2_3_14_R3_P_lo_gaz_GU_SBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_14_R3_P_lo_gaz_GU_SBR);   // Реле низкого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0101B)
+APS_031(KTO_DI_HMI.A2_3_15_R4_P_hi_gaz_GU_SBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_15_R4_P_hi_gaz_GU_SBR);   // Реле высокого давления системы подачи газа на ГУ вторичной камеры сгорания (PS-0102B)
+APS_032(KTO_DI_HMI.A2_3_16_R5_P_air_GU_BBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_3_16_R5_P_air_GU_BBR);   // Реле давления в системе подачи воздуха на ГУ первичной камеры сгорания (PS-0103A) 
+APS_033(KTO_DI_HMI.A2_4_1_R6_P_air_GU_SBR.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_1_R6_P_air_GU_SBR);   // Реле давления в системе подачи воздуха на ГУ вторичной камеры сгорания (PS-0103B) 
+APS_034(KTO_DI_HMI.A2_4_2_AG1_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_2_AG1_OFF);   // Ворошитель инсинератора в крайнем закрытом положении (ZSC-0204)
+APS_035(KTO_DI_HMI.A2_4_3_AG1_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_3_AG1_ON);   // Ворошитель инсинератора в крайнем открытом положении (ZSO-0204)
+APS_036(KTO_DI_HMI.A2_4_4_SEN_door_extr_ash_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_4_SEN_door_extr_ash_OFF);   // Датчик двери выема золы из инсинератора в сост. "закрыто" (ZSC-0207)
+APS_037(KTO_DI_HMI.A2_4_5_SEN_door_serv_ins_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_5_SEN_door_serv_ins_OFF);   // Датчик двери обслуживания инсинератора в сост. "закрыто" (ZSC-0206)
+APS_038(KTO_DI_HMI.A2_4_6_Lmin_tank_RD_CSSG.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_6_Lmin_tank_RD_CSSG);   // Минимальный уровень в баке дозатора реагентов в систему охлаждения дым. газов (LSL-0201)
+APS_039(KTO_DI_HMI.A2_4_7_SEN_FP_door_ins_ld_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_7_SEN_FP_door_ins_ld_OFF);   // Датчик огнестойкой двери загрузки инсинератора в состоянии "закрыто" (ZSC-0201)
+APS_040(KTO_DI_HMI.A2_4_8_SEN_FP_door_ins_ld_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_8_SEN_FP_door_ins_ld_ON);   // Датчик огнестойкой двери загрузки инсинератора в состоянии "открыто" (ZSO-0201)
+APS_041(KTO_DI_HMI.A2_4_9_SEN_damp_ld_dev_feed_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_9_SEN_damp_ld_dev_feed_OFF);   // Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "закрыто" (ZSC-0202)
+APS_042(KTO_DI_HMI.A2_4_10_SEN_damp_ld_dev_feed_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_10_SEN_damp_ld_dev_feed_ON);   // Датчик заслонки загрузки устройства подачи в инсинератор в состоянии "открыто" (ZSO-0202)
+APS_043(KTO_DI_HMI.A2_4_11_SEN_push_ld_dev_feed_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_11_SEN_push_ld_dev_feed_OFF);   // Датчик толкателя устройства подачи в инсинератор в состоянии "закрыт" (ZSC-0203)
+APS_044(KTO_DI_HMI.A2_4_12_SEN_push_ld_dev_feed_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_12_SEN_push_ld_dev_feed_ON);   // Датчик толкателя устройства подачи в инсинератор в состоянии "открыт" (ZSO-0203)
+APS_045(KTO_DI_HMI.A2_4_13_SEN_push_ld_dev_feed_IMT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_13_SEN_push_ld_dev_feed_IMT);   // Датчик толкателя устройства подачи в инсинератор в состоянии "промежуточное" (ZSO-0205)
+APS_046(KTO_DI_HMI.A2_4_14_SW_T_oil_tank.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_14_SW_T_oil_tank);   // Переключатель температуры масляного бака (TS-0202)
+APS_047(KTO_DI_HMI.A2_4_15_Lmin_oil_GSDD.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_15_Lmin_oil_GSDD);   // Минимальный уровень масла в баке гидравлической системы привода заслонок (LS-0102)
+APS_048(KTO_DI_HMI.A2_4_16_V1_emg_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_4_16_V1_emg_ON);   // Вентилятор аварийный включен (B1)
+APS_049(KTO_DI_HMI.A2_5_1_CF0201_air_feed_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_1_CF0201_air_feed_BBR_ON);   // Вентилятор подачи воздуха в основную камеру сгорания включен (CF-0201)
+APS_050(KTO_DI_HMI.A2_5_2_CF0201_air_feed_BBR_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_2_CF0201_air_feed_BBR_FLT);   // Вентилятор подачи воздуха в основную камеру сгорания в аварии (CF-0201)
+APS_051(KTO_DI_HMI.A2_5_3_CF0202_air_feed_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_3_CF0202_air_feed_SBR_ON);   // Вентилятор подачи воздуха во вторичную камеру сгорания включен (CF-0202)
+APS_052(KTO_DI_HMI.A2_5_4_CF0202_air_feed_SBR_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_4_CF0202_air_feed_SBR_FLT);   // Вентилятор подачи воздуха во вторичную камеру сгорания в аварии (CF-0202)
+APS_053(KTO_DI_HMI.A2_5_5_CF0301_ash_gaz_feed_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_5_CF0301_ash_gaz_feed_ON);   // Вентилятор подачи дымовых газов в трубу включен (CF-0301) 
+APS_054(KTO_DI_HMI.A2_5_6_CF0301_ash_gaz_feed_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_6_CF0301_ash_gaz_feed_FLT);   // Вентилятор подачи дымовых газов в трубу в аварии (CF-0301) 
+APS_055(KTO_DI_HMI.A2_5_7_AF0201_air_feed_CSG_ins_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_7_AF0201_air_feed_CSG_ins_ON);   // Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора включен (AF-0201)
+APS_056(KTO_DI_HMI.A2_5_8_AF0201_air_feed_CSG_ins_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_8_AF0201_air_feed_CSG_ins_FLT);   // Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора в аварии (AF-0201)
+APS_057(KTO_DI_HMI.A2_5_9_RAL0201_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_9_RAL0201_CSG_ON);   // Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (RAL-0201)
+APS_058(KTO_DI_HMI.A2_5_10_RAL0201_RA_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_10_RAL0201_RA_CSG_ON);   // Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (RAL-0201)
+APS_059(KTO_DI_HMI.A2_5_11_CH0201_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_11_CH0201_CSG_ON);   // Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (CH-0201 )
+APS_060(KTO_DI_HMI.A2_5_12_CH0201_RA_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_12_CH0201_RA_CSG_ON);   // Дист. управл. дозатором реагентов в систему охлаждения дымовых газов инсинератора включено (CH-0201 )
+APS_061(KTO_DI_HMI.A2_5_13_P0201A_work_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_13_P0201A_work_ON);   // Насос (рабочий) включен (P-0201A)
+APS_062(KTO_DI_HMI.A2_5_14_P0201A_work_RA_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_14_P0201A_work_RA_ON);   // Дист. управл. насосом (рабочим) включено (P-0201A)
+APS_063(KTO_DI_HMI.A2_5_15_TR0101A_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_15_TR0101A_burn_dev_BBR_ON);   // Свеча зажигания устройства горелочного основной камеры сгорания включена (TR-0101A)
+APS_064(KTO_DI_HMI.A2_5_16_TR0101A_RA_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_5_16_TR0101A_RA_burn_dev_BBR_ON);   // Дист. управл. свечой зажигания устройства горелочного основной камеры сгорания включено (TR-0101A)
+APS_065(KTO_DI_HMI.A2_6_1_TR0101B_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_1_TR0101B_burn_dev_SBR_ON);   // Свеча зажигания устройства горелочного вторичной камеры сгорания включена (TR-0101B)
+APS_066(KTO_DI_HMI.A2_6_2_TR0101B_RA_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_2_TR0101B_RA_burn_dev_SBR_ON);   // Дист. управл. свечой зажигания устройства горелочного вторичной камеры сгорания включено (TR-0101B)
+APS_067(KTO_DI_HMI.A2_6_3_SV0101B_air_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_3_SV0101B_air_feed_burn_dev_SBR_ON);   // Клапан системы подачи воздуха на горелочное устройство вторичной камеры сгорания открыт (SV-0101b)
+APS_068(KTO_DI_HMI.A2_6_4_SV0101B_RA_air_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_4_SV0101B_RA_air_feed_burn_dev_SBR_ON);   // Дист. управл. клапана системы подачи воздуха на горелочное устройство вторичной камеры сгорания включено (SV-0101B)
+APS_069(KTO_DI_HMI.A2_6_5_TV0101A_gaz_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_5_TV0101A_gaz_feed_burn_dev_BBR_ON);   // Клапан системы подачи газа на горелочное устройство основной камеры сгорания открыт (TV-0101A)
+APS_070(KTO_DI_HMI.A2_6_6_TV0101A_RA_air_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_6_TV0101A_RA_air_feed_burn_dev_BBR_ON);   // Дист. управл. клапана системы подачи газа на горелочное устройство основной камеры сгорания включено (TV-0101A)
+APS_071(KTO_DI_HMI.A2_6_7_TV0101B_gaz_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_7_TV0101B_gaz_feed_burn_dev_SBR_ON);   // Клапан системы подачи газа на горелочное устройство вторичной камеры сгорания открыт (TV-0101В)
+APS_072(KTO_DI_HMI.A2_6_8_TV0101B_RA_air_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_8_TV0101B_RA_air_feed_burn_dev_SBR_ON);   // Дист. управл. клапана системы подачи газа на горелочное устройство вторичной камеры сгорания включено (TV-0101В)
+APS_073(KTO_DI_HMI.A2_6_9_CV0201_KMO3_FROM_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_9_CV0201_KMO3_FROM_VRU_ON);   // Клапан отсечной КМО-3 включен (CV-0201) сигнал от ВРУ
+APS_074(KTO_DI_HMI.A2_6_10_CV0201_RA_KMO3_FROM_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_10_CV0201_RA_KMO3_FROM_VRU_ON);   // Дист. управл. клапаном отсечным КМО-3 включено (CV-0201) сигнал от ВРУ
+APS_075(KTO_DI_HMI.A2_6_11_TV0102A_air_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_11_TV0102A_air_feed_burn_dev_BBR_ON);   // Клапан системы подачи воздуха на горелочное устройство основной камеры сгорания открыт (TV-0102A)
+APS_076(KTO_DI_HMI.A2_6_12_TV0102A_RA_air_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_12_TV0102A_RA_air_feed_burn_dev_BBR_ON);   // Дист. управл. клапаном системы подачи воздуха на горелочное устройство основной камеры сгорания включено (TV-0102A)
+APS_077(KTO_DI_HMI.A2_6_13_P0201B_rez_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_13_P0201B_rez_ON);   // Насос (резервный) включен (P-0201B)
+APS_078(KTO_DI_HMI.A2_6_14_P0201B_rez_RA_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_14_P0201B_rez_RA_ON);   // Дист. управл. насосом (резервным) включено (P-0201B)
+APS_079(KTO_DI_HMI.A2_6_15_C0201_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_15_C0201_ON);   // Компрессор включен (C-0201)
+APS_080(KTO_DI_HMI.A2_6_16_C0201_RA_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_6_16_C0201_RA_ON);   // Дист. управл. компрессором включено (C-0201)
+APS_081(KTO_DI_HMI.A2_7_1_SC0203_CSG_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_1_SC0203_CSG_ON);   // Дозатор реагентов в систему охлаждения дымовых газов инсинератора включен (SC-0203)
+APS_082(KTO_DI_HMI.A2_7_2_SC0203_CSG_FLT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_2_SC0203_CSG_FLT);   // Дозатор реагентов в систему охлаждения дымовых газов инсинератора в аварии (SC-0203)
+APS_083(KTO_DI_HMI.A2_7_3_CF0101A_air_feed_burn_dev_BBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_3_CF0101A_air_feed_burn_dev_BBR_ON);   // Вентилятор системы подачи воздуха на горелочное устройство основной камеры сгорания включен (СF-0101A)
+APS_084(KTO_DI_HMI.A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_4_CF0101B_air_feed_burn_dev_SBR_ON);   // Вентилятор системы подачи воздуха на горелочное устройство вторичной камеры сгорания включен (СF-0101B)
+APS_085(KTO_DI_HMI.A2_7_5_SC0201_disch_ash_INS_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_5_SC0201_disch_ash_INS_ON);   // Шнек выгрузки золы из инсинератора включен (SС-0201 )
+APS_086(KTO_DI_HMI.A2_7_6_SC0202_disch_ash_MC_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_6_SC0202_disch_ash_MC_ON);   // Шнек выгрузки золы из мультициклона включен (SС-0202) 
+APS_087(KTO_DI_HMI.A2_7_7_P0401_oil_feed_DD_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_7_P0401_oil_feed_DD_ON);   // Насос подачи масла гидравлической системы привода заслонок включен (P-0401)
+APS_088(KTO_DI_HMI.A2_7_8_EH0401_oil_feed_DD_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_8_EH0401_oil_feed_DD_ON);   // Подогреватель масла гидравлической системы привода заслонок включен (EH-0401)
+APS_089(KTO_DI_HMI.A2_7_9_C1_FROM_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_9_C1_FROM_VRU_ON);   // Срабатывание расцепителя (от ВРУ1)
+APS_090(KTO_DI_HMI.A2_7_10_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_10_Rez);   // Резерв
+APS_091(KTO_DI_HMI.A2_7_11_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_11_Rez);   // Резерв
+APS_092(KTO_DI_HMI.A2_7_12_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_12_Rez);   // Резерв
+APS_093(KTO_DI_HMI.A2_7_13_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_13_Rez);   // Резерв
+APS_094(KTO_DI_HMI.A2_7_14_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_14_Rez);   // Резерв
+APS_095(KTO_DI_HMI.A2_7_15_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_15_Rez);   // Резерв
+APS_096(KTO_DI_HMI.A2_7_16_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_7_16_Rez);   // Резерв
+APS_097(KTO_DI_HMI.A2_8_1_PRES_AC380_INC1_VRU.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_1_PRES_AC380_INC1_VRU);   // Наличие напряжения ~380 В ввода 1 ВРУ КТО1,2
+APS_098(KTO_DI_HMI.A2_8_2_PRES_AC380_INC2_VRU.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_2_PRES_AC380_INC2_VRU);   // Наличие напряжения ~380 В ввода 2 ВРУ КТО1,2
+APS_099(KTO_DI_HMI.A2_8_3_QF_INC1_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_3_QF_INC1_VRU_ON);   // Автоматический выключатель на вводе 1 включен ВРУ КТО1,2
+APS_100(KTO_DI_HMI.A2_8_4_QF_INC2_VRU_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_4_QF_INC2_VRU_ON);   // Автоматический выключатель на вводе 2 включен ВРУ КТО1,2
+APS_101(KTO_DI_HMI.A2_8_5_TRIG_AVR_VRU.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_5_TRIG_AVR_VRU);   // Срабатывание АВР ВРУ КТО1,2
+APS_102(KTO_DI_HMI.A2_8_6_Fire_from_SHPS.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_6_Fire_from_SHPS);   // Пожар сигнал от ШПС
+APS_103(KTO_DI_HMI.A2_8_7_Flt_from_SHPS.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_7_Flt_from_SHPS);   // Неисправность сигнал от ШПС
+APS_104(KTO_DI_HMI.A2_8_8_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_8_Rez);   // Резерв
+APS_105(KTO_DI_HMI.A2_8_9_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_9_Rez);   // Резерв
+APS_106(KTO_DI_HMI.A2_8_10_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_10_Rez);   // Резерв
+APS_107(KTO_DI_HMI.A2_8_11_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_11_Rez);   // Резерв
+APS_108(KTO_DI_HMI.A2_8_12_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_12_Rez);   // Резерв
+APS_109(KTO_DI_HMI.A2_8_13_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_13_Rez);   // Резерв
+APS_110(KTO_DI_HMI.A2_8_14_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_14_Rez);   // Резерв
+APS_111(KTO_DI_HMI.A2_8_15_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_15_Rez);   // Резерв
+APS_112(KTO_DI_HMI.A2_8_16_Rez.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_8_16_Rez);   // Резерв
+APS_113(KTO_DI_HMI.A2_9_1_BT_ES.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_1_BT_ES);   // Аварийный останов
+APS_114(KTO_DI_HMI.A2_9_2_BT_Start.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_2_BT_Start);   // Запуск
+APS_115(KTO_DI_HMI.A2_9_3_BT_door_feed_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_3_BT_door_feed_ON);   // Открыть подающую дверь
+APS_116(KTO_DI_HMI.A2_9_4_BT_door_feed_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_4_BT_door_feed_OFF);   // Закрыть подающую дверь
+APS_117(KTO_DI_HMI.A2_9_5_BT_door_ash_unload_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_5_BT_door_ash_unload_ON);   // Открыть дверь выгрузки золы
+APS_118(KTO_DI_HMI.A2_9_6_BT_door_ash_unload_OFF.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_6_BT_door_ash_unload_OFF);   // Открыть дверь выгрузки золы
+APS_119(KTO_DI_HMI.A2_9_7_BT_feed_waste_auto.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_7_BT_feed_waste_auto);   // Подача отходов в автоматическом режиме
+APS_120(KTO_DI_HMI.A2_9_8_BT_feed_waste_man.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_8_BT_feed_waste_man);   // Подача отходов в ручном режиме
+APS_121(KTO_DI_HMI.A2_9_9_BT_feed_waste_start.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_9_BT_feed_waste_start);   // Подача отходов - пуск
+APS_122(KTO_DI_HMI.A2_9_10_BT_feed_waste_stop.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_10_BT_feed_waste_stop);   // Подача отходов - стоп
+APS_123(KTO_DI_HMI.A2_9_11_BT_load_cycle.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_11_BT_load_cycle);   // Цикл загрузки
+APS_124(KTO_DI_HMI.A2_9_12_BT_cool_start.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_12_BT_cool_start);   // Запуск охлаждения
+APS_125(KTO_DI_HMI.A2_9_13_BT_Kvitir.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_13_BT_Kvitir);   // Квитирование
+APS_126(KTO_DI_HMI.A2_9_14_BT_Check_alarm.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_14_BT_Check_alarm);   // Опробование сигнализации
+APS_127(KTO_DI_HMI.A2_9_15_NC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_15_NC);   // Не подключен
+APS_128(KTO_DI_HMI.A2_9_16_NC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_9_16_NC);   // Не подключен
+APS_129(KTO_DI_HMI.A2_10_1_CTRL_OP_AC220.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_1_CTRL_OP_AC220);   // Контроль основного питания  ~220 В
+APS_130(KTO_DI_HMI.A2_10_2_CTRL_P_UPS_AC220.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_2_CTRL_P_UPS_AC220);   // Контроль питания от ИБП ~220 В
+APS_131(KTO_DI_HMI.A2_10_3_QF_P_ON.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_3_QF_P_ON);   // Автоматы питания включены
+APS_132(KTO_DI_HMI.A2_10_4_CTRL_ISP_DISCH.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_4_CTRL_ISP_DISCH);   // Контроль исправности разрядников
+APS_133(KTO_DI_HMI.A2_10_5_ISP_OSN_IP_DC24_IC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_5_ISP_OSN_IP_DC24_IC);   // Исправность осн. ИП =24В внутренних цепей
+APS_134(KTO_DI_HMI.A2_10_6_ISP_REZ_IP_DC24_IC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_6_ISP_REZ_IP_DC24_IC);   // Исправность рез. ИП =24В внутренних цепей
+APS_135(KTO_DI_HMI.A2_10_7_ISP_OSN_IP_DC24_AI_AO.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_7_ISP_OSN_IP_DC24_AI_AO);   // Исправность осн. ИП =24В AI, AO
+APS_136(KTO_DI_HMI.A2_10_8_ISP_REZ_IP_DC24_AI_AO.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_8_ISP_REZ_IP_DC24_AI_AO);   // Исправность рез. ИП =24В AI, AO
+APS_137(KTO_DI_HMI.A2_10_9_ISP_OSN_IP_DC24_DI_EXT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_9_ISP_OSN_IP_DC24_DI_EXT);   // Исправность осн. ИП =24В DI (внеш.)
+APS_138(KTO_DI_HMI.A2_10_10_ISP_REZ_IP_DC24_DI_EXT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_10_ISP_REZ_IP_DC24_DI_EXT);   // Исправность рез. ИП =24В DI (внеш.)
+APS_139(KTO_DI_HMI.A2_10_11_ISP_OSN_IP_DC24_DO_EXT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_11_ISP_OSN_IP_DC24_DO_EXT);   // Исправность осн. ИП =24В DO (внеш.)
+APS_140(KTO_DI_HMI.A2_10_12_ISP_REZ_IP_DC24_DO_EXT.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_12_ISP_REZ_IP_DC24_DO_EXT);   // Исправность рез. ИП =24В DO (внеш.)
+APS_141(KTO_DI_HMI.A2_10_13_ISP_OSN_IP_DC24_EXT_DEV.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_13_ISP_OSN_IP_DC24_EXT_DEV);   // Исправность осн. ИП =24В внешн. Устройств
+APS_142(KTO_DI_HMI.A2_10_14_ISP_REZ_IP_DC24_EXT_DEV.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_14_ISP_REZ_IP_DC24_EXT_DEV);   // Исправность рез. ИП =24В внешн. Устройств
+APS_143(KTO_DI_HMI.A2_10_15_NC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_15_NC);   // Не подключен
+APS_144(KTO_DI_HMI.A2_10_16_NC.PV, T#100ms, Deblock, Kvitir, DO_sound_PS,  APS_KTO_A2.A2_10_16_NC);   // Не подключен
 
 
 //АПС по кранам и другим ИМ
+APS_145(KTO_IM_LG.CV0201.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.non);   // отсечной клапан не открыт
+APS_146(KTO_IM_LG.EV0103.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.non);   // входной ЭМ клапан не открыт
+APS_147(KTO_IM_LG.AG1.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.non);   // ворошитель не открыт
+APS_148(KTO_IM_LG.FP1.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.non);   // огнестойкая дверь не открыт
+APS_149(KTO_IM_LG.DAMP1.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.non);   // заслонка загрузки не открыт
+APS_150(KTO_IM_LG.PUSH1.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.non);   // толкатель не открыт
+APS_151(KTO_IM_LG.V_KE1.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.non);   // клапан (КЭ1) не открыт
+APS_152(KTO_IM_LG.V1.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.non);   // аварийный вентилятор не открыт
+APS_153(KTO_IM_LG.CF0201.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.non);   // вент осн камеры сгорания не открыт
+APS_154(KTO_IM_LG.CF0202.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.non);   // вент вторич камеры сгорания не открыт
+APS_155(KTO_IM_LG.CF0301.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.non);   // вент дымовых газов не открыт
+APS_156(KTO_IM_LG.AF0201.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.non);   // вент охлаж дымовых газов не открыт
+APS_157(KTO_IM_LG.RAL0201.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.non);   // дозатор реагентов не открыт
+APS_158(KTO_IM_LG.CH0201.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.non);   // дозатор реагентов не открыт
+APS_159(KTO_IM_LG.P0201A.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.non);   // насос рабочий не открыт
+APS_160(KTO_IM_LG.TR0101A.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.non);   // свеча горелки осн камеры не открыт
+APS_161(KTO_IM_LG.TR0101B.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.non);   // свеча горелки вторич камеры не открыт
+APS_162(KTO_IM_LG.TV0102A.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.non);   // клапан воздуха на осн горелку не открыт
+APS_163(KTO_IM_LG.SV0101B.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.non);   // клапан воздуха на вторич горелку не открыт
+APS_164(KTO_IM_LG.TV0101A.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.non);   // клапан газа на осн горелку не открыт
+APS_165(KTO_IM_LG.TV0101B.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.non);   // клапан газа на вторич горелку не открыт
+APS_166(KTO_IM_LG.P0201B.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.non);   // насос резервный не открыт
+APS_167(KTO_IM_LG.C0201.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.non);   // компрессор не открыт
+APS_168(KTO_IM_LG.SC0203.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.non);   // дозатор реагентов не открыт
+APS_169(KTO_IM_LG.CF0101A.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.non);   // вент воздуха на горелку осн камеры не открыт
+APS_170(KTO_IM_LG.CF0101B.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.non);   // вент воздуха на горелку вторич камеры не открыт
+APS_171(KTO_IM_LG.SC0201.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.non);   // шнек золы из инсениратора не открыт
+APS_172(KTO_IM_LG.SC0202.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.non);   // шнек золы из мультициклона не открыт
+APS_173(KTO_IM_LG.P0401.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.non);   // насос масла не открыт
+APS_174(KTO_IM_LG.EH0401.non, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.non);   // подогреватель масла не открыт
+
+APS_175(KTO_IM_LG.CV0201.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.noff);   // отсечной клапан не закрыт
+APS_176(KTO_IM_LG.EV0103.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.noff);   // входной ЭМ клапан не закрыт
+APS_177(KTO_IM_LG.AG1.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.noff);   // ворошитель не закрыт
+APS_178(KTO_IM_LG.FP1.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.noff);   // огнестойкая дверь не закрыт
+APS_179(KTO_IM_LG.DAMP1.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.noff);   // заслонка загрузки не закрыт
+APS_180(KTO_IM_LG.PUSH1.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.noff);   // толкатель не закрыт
+APS_181(KTO_IM_LG.V_KE1.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.noff);   // клапан (КЭ1) не закрыт
+APS_182(KTO_IM_LG.V1.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.noff);   // аварийный вентилятор не закрыт
+APS_183(KTO_IM_LG.CF0201.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.noff);   // вент осн камеры сгорания не закрыт
+APS_184(KTO_IM_LG.CF0202.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.noff);   // вент вторич камеры сгорания не закрыт
+APS_185(KTO_IM_LG.CF0301.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.noff);   // вент дымовых газов не закрыт
+APS_186(KTO_IM_LG.AF0201.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.noff);   // вент охлаж дымовых газов не закрыт
+APS_187(KTO_IM_LG.RAL0201.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.noff);   // дозатор реагентов не закрыт
+APS_188(KTO_IM_LG.CH0201.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.noff);   // дозатор реагентов не закрыт
+APS_189(KTO_IM_LG.P0201A.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.noff);   // насос рабочий не закрыт
+APS_190(KTO_IM_LG.TR0101A.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.noff);   // свеча горелки осн камеры не закрыт
+APS_191(KTO_IM_LG.TR0101B.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.noff);   // свеча горелки вторич камеры не закрыт
+APS_192(KTO_IM_LG.TV0102A.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.noff);   // клапан воздуха на осн горелку не закрыт
+APS_193(KTO_IM_LG.SV0101B.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.noff);   // клапан воздуха на вторич горелку не закрыт
+APS_194(KTO_IM_LG.TV0101A.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.noff);   // клапан газа на осн горелку не закрыт
+APS_195(KTO_IM_LG.TV0101B.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.noff);   // клапан газа на вторич горелку не закрыт
+APS_196(KTO_IM_LG.P0201B.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.noff);   // насос резервный не закрыт
+APS_197(KTO_IM_LG.C0201.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.noff);   // компрессор не закрыт
+APS_198(KTO_IM_LG.SC0203.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.noff);   // дозатор реагентов не закрыт
+APS_199(KTO_IM_LG.CF0101A.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.noff);   // вент воздуха на горелку осн камеры не закрыт
+APS_200(KTO_IM_LG.CF0101B.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.noff);   // вент воздуха на горелку вторич камеры не закрыт
+APS_201(KTO_IM_LG.SC0201.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.noff);   // шнек золы из инсениратора не закрыт
+APS_202(KTO_IM_LG.SC0202.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.noff);   // шнек золы из мультициклона не закрыт
+APS_203(KTO_IM_LG.P0401.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.noff);   // насос масла не закрыт
+APS_204(KTO_IM_LG.EH0401.noff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.noff);   // подогреватель масла не закрыт
+
+APS_205(KTO_IM_LG.CV0201.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.nstart);   // отсечной клапан не стронулся
+APS_206(KTO_IM_LG.EV0103.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.nstart);   // входной ЭМ клапан не стронулся
+APS_207(KTO_IM_LG.AG1.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.nstart);   // ворошитель не стронулся
+APS_208(KTO_IM_LG.FP1.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.nstart);   // огнестойкая дверь не стронулся
+APS_209(KTO_IM_LG.DAMP1.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.nstart);   // заслонка загрузки не стронулся
+APS_210(KTO_IM_LG.PUSH1.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.nstart);   // толкатель не стронулся
+APS_211(KTO_IM_LG.V_KE1.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.nstart);   // клапан (КЭ1) не стронулся
+APS_212(KTO_IM_LG.V1.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.nstart);   // аварийный вентилятор не стронулся
+APS_213(KTO_IM_LG.CF0201.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.nstart);   // вент осн камеры сгорания не стронулся
+APS_214(KTO_IM_LG.CF0202.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.nstart);   // вент вторич камеры сгорания не стронулся
+APS_215(KTO_IM_LG.CF0301.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.nstart);   // вент дымовых газов не стронулся
+APS_216(KTO_IM_LG.AF0201.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.nstart);   // вент охлаж дымовых газов не стронулся
+APS_217(KTO_IM_LG.RAL0201.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.nstart);   // дозатор реагентов не стронулся
+APS_218(KTO_IM_LG.CH0201.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.nstart);   // дозатор реагентов не стронулся
+APS_219(KTO_IM_LG.P0201A.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.nstart);   // насос рабочий не стронулся
+APS_220(KTO_IM_LG.TR0101A.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.nstart);   // свеча горелки осн камеры не стронулся
+APS_221(KTO_IM_LG.TR0101B.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.nstart);   // свеча горелки вторич камеры не стронулся
+APS_222(KTO_IM_LG.TV0102A.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.nstart);   // клапан воздуха на осн горелку не стронулся
+APS_223(KTO_IM_LG.SV0101B.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.nstart);   // клапан воздуха на вторич горелку не стронулся
+APS_224(KTO_IM_LG.TV0101A.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.nstart);   // клапан газа на осн горелку не стронулся
+APS_225(KTO_IM_LG.TV0101B.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.nstart);   // клапан газа на вторич горелку не стронулся
+APS_226(KTO_IM_LG.P0201B.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.nstart);   // насос резервный не стронулся
+APS_227(KTO_IM_LG.C0201.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.nstart);   // компрессор не стронулся
+APS_228(KTO_IM_LG.SC0203.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.nstart);   // дозатор реагентов не стронулся
+APS_229(KTO_IM_LG.CF0101A.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.nstart);   // вент воздуха на горелку осн камеры не стронулся
+APS_230(KTO_IM_LG.CF0101B.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.nstart);   // вент воздуха на горелку вторич камеры не стронулся
+APS_231(KTO_IM_LG.SC0201.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.nstart);   // шнек золы из инсениратора не стронулся
+APS_232(KTO_IM_LG.SC0202.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.nstart);   // шнек золы из мультициклона не стронулся
+APS_233(KTO_IM_LG.P0401.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.nstart);   // насос масла не стронулся
+APS_234(KTO_IM_LG.EH0401.nstart, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.nstart);   // подогреватель масла не стронулся
+
+APS_235(KTO_IM_LG.CV0201.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.selfon);   // отсечной клапан самопроизвольное открытие
+APS_236(KTO_IM_LG.EV0103.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.selfon);   // входной ЭМ клапан самопроизвольное открытие
+APS_237(KTO_IM_LG.AG1.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.selfon);   // ворошитель самопроизвольное открытие
+APS_238(KTO_IM_LG.FP1.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.selfon);   // огнестойкая дверь самопроизвольное открытие
+APS_239(KTO_IM_LG.DAMP1.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.selfon);   // заслонка загрузки самопроизвольное открытие
+APS_240(KTO_IM_LG.PUSH1.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.selfon);   // толкатель самопроизвольное открытие
+APS_241(KTO_IM_LG.V_KE1.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.selfon);   // клапан (КЭ1) самопроизвольное открытие
+APS_242(KTO_IM_LG.V1.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.selfon);   // аварийный вентилятор самопроизвольное открытие
+APS_243(KTO_IM_LG.CF0201.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.selfon);   // вент осн камеры сгорания самопроизвольное открытие
+APS_244(KTO_IM_LG.CF0202.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.selfon);   // вент вторич камеры сгорания самопроизвольное открытие
+APS_245(KTO_IM_LG.CF0301.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.selfon);   // вент дымовых газов самопроизвольное открытие
+APS_246(KTO_IM_LG.AF0201.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.selfon);   // вент охлаж дымовых газов самопроизвольное открытие
+APS_247(KTO_IM_LG.RAL0201.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.selfon);   // дозатор реагентов самопроизвольное открытие
+APS_248(KTO_IM_LG.CH0201.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.selfon);   // дозатор реагентов самопроизвольное открытие
+APS_249(KTO_IM_LG.P0201A.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.selfon);   // насос рабочий самопроизвольное открытие
+APS_250(KTO_IM_LG.TR0101A.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.selfon);   // свеча горелки осн камеры самопроизвольное открытие
+APS_251(KTO_IM_LG.TR0101B.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.selfon);   // свеча горелки вторич камеры самопроизвольное открытие
+APS_252(KTO_IM_LG.TV0102A.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.selfon);   // клапан воздуха на осн горелку самопроизвольное открытие
+APS_253(KTO_IM_LG.SV0101B.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.selfon);   // клапан воздуха на вторич горелку самопроизвольное открытие
+APS_254(KTO_IM_LG.TV0101A.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.selfon);   // клапан газа на осн горелку самопроизвольное открытие
+APS_255(KTO_IM_LG.TV0101B.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.selfon);   // клапан газа на вторич горелку самопроизвольное открытие
+APS_256(KTO_IM_LG.P0201B.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.selfon);   // насос резервный самопроизвольное открытие
+APS_257(KTO_IM_LG.C0201.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.selfon);   // компрессор самопроизвольное открытие
+APS_258(KTO_IM_LG.SC0203.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.selfon);   // дозатор реагентов самопроизвольное открытие
+APS_259(KTO_IM_LG.CF0101A.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.selfon);   // вент воздуха на горелку осн камеры самопроизвольное открытие
+APS_260(KTO_IM_LG.CF0101B.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.selfon);   // вент воздуха на горелку вторич камеры самопроизвольное открытие
+APS_261(KTO_IM_LG.SC0201.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.selfon);   // шнек золы из инсениратора самопроизвольное открытие
+APS_262(KTO_IM_LG.SC0202.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.selfon);   // шнек золы из мультициклона самопроизвольное открытие
+APS_263(KTO_IM_LG.P0401.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.selfon);   // насос масла самопроизвольное открытие
+APS_264(KTO_IM_LG.EH0401.selfon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.selfon);   // подогреватель масла самопроизвольное открытие
+
+APS_265(KTO_IM_LG.CV0201.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.selfoff);   // отсечной клапан самопроизвольное закрытие
+APS_266(KTO_IM_LG.EV0103.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.selfoff);   // входной ЭМ клапан самопроизвольное закрытие
+APS_267(KTO_IM_LG.AG1.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.selfoff);   // ворошитель самопроизвольное закрытие
+APS_268(KTO_IM_LG.FP1.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.selfoff);   // огнестойкая дверь самопроизвольное закрытие
+APS_269(KTO_IM_LG.DAMP1.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.selfoff);   // заслонка загрузки самопроизвольное закрытие
+APS_270(KTO_IM_LG.PUSH1.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.selfoff);   // толкатель самопроизвольное закрытие
+APS_271(KTO_IM_LG.V_KE1.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.selfoff);   // клапан (КЭ1) самопроизвольное закрытие
+APS_272(KTO_IM_LG.V1.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.selfoff);   // аварийный вентилятор самопроизвольное закрытие
+APS_273(KTO_IM_LG.CF0201.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.selfoff);   // вент осн камеры сгорания самопроизвольное закрытие
+APS_274(KTO_IM_LG.CF0202.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.selfoff);   // вент вторич камеры сгорания самопроизвольное закрытие
+APS_275(KTO_IM_LG.CF0301.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.selfoff);   // вент дымовых газов самопроизвольное закрытие
+APS_276(KTO_IM_LG.AF0201.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.selfoff);   // вент охлаж дымовых газов самопроизвольное закрытие
+APS_277(KTO_IM_LG.RAL0201.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.selfoff);   // дозатор реагентов самопроизвольное закрытие
+APS_278(KTO_IM_LG.CH0201.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.selfoff);   // дозатор реагентов самопроизвольное закрытие
+APS_279(KTO_IM_LG.P0201A.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.selfoff);   // насос рабочий самопроизвольное закрытие
+APS_280(KTO_IM_LG.TR0101A.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.selfoff);   // свеча горелки осн камеры самопроизвольное закрытие
+APS_281(KTO_IM_LG.TR0101B.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.selfoff);   // свеча горелки вторич камеры самопроизвольное закрытие
+APS_282(KTO_IM_LG.TV0102A.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.selfoff);   // клапан воздуха на осн горелку самопроизвольное закрытие
+APS_283(KTO_IM_LG.SV0101B.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.selfoff);   // клапан воздуха на вторич горелку самопроизвольное закрытие
+APS_284(KTO_IM_LG.TV0101A.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.selfoff);   // клапан газа на осн горелку самопроизвольное закрытие
+APS_285(KTO_IM_LG.TV0101B.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.selfoff);   // клапан газа на вторич горелку самопроизвольное закрытие
+APS_286(KTO_IM_LG.P0201B.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.selfoff);   // насос резервный самопроизвольное закрытие
+APS_287(KTO_IM_LG.C0201.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.selfoff);   // компрессор самопроизвольное закрытие
+APS_288(KTO_IM_LG.SC0203.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.selfoff);   // дозатор реагентов самопроизвольное закрытие
+APS_289(KTO_IM_LG.CF0101A.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.selfoff);   // вент воздуха на горелку осн камеры самопроизвольное закрытие
+APS_290(KTO_IM_LG.CF0101B.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.selfoff);   // вент воздуха на горелку вторич камеры самопроизвольное закрытие
+APS_291(KTO_IM_LG.SC0201.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.selfoff);   // шнек золы из инсениратора самопроизвольное закрытие
+APS_292(KTO_IM_LG.SC0202.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.selfoff);   // шнек золы из мультициклона самопроизвольное закрытие
+APS_293(KTO_IM_LG.P0401.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.selfoff);   // насос масла самопроизвольное закрытие
+APS_294(KTO_IM_LG.EH0401.selfoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.selfoff);   // подогреватель масла самопроизвольное закрытие
+
+APS_295(KTO_IM_LG.CV0201.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.flt);   // отсечной клапан ошибка концевиков
+APS_296(KTO_IM_LG.EV0103.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.flt);   // входной ЭМ клапан ошибка концевиков
+APS_297(KTO_IM_LG.AG1.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.flt);   // ворошитель ошибка концевиков
+APS_298(KTO_IM_LG.FP1.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.flt);   // огнестойкая дверь ошибка концевиков
+APS_299(KTO_IM_LG.DAMP1.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.flt);   // заслонка загрузки ошибка концевиков
+APS_300(KTO_IM_LG.PUSH1.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.flt);   // толкатель ошибка концевиков
+APS_301(KTO_IM_LG.V_KE1.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.flt);   // клапан (КЭ1) ошибка концевиков
+APS_302(KTO_IM_LG.V1.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.flt);   // аварийный вентилятор ошибка концевиков
+APS_303(KTO_IM_LG.CF0201.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.flt);   // вент осн камеры сгорания ошибка концевиков
+APS_304(KTO_IM_LG.CF0202.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.flt);   // вент вторич камеры сгорания ошибка концевиков
+APS_305(KTO_IM_LG.CF0301.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.flt);   // вент дымовых газов ошибка концевиков
+APS_306(KTO_IM_LG.AF0201.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.flt);   // вент охлаж дымовых газов ошибка концевиков
+APS_307(KTO_IM_LG.RAL0201.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.flt);   // дозатор реагентов ошибка концевиков
+APS_308(KTO_IM_LG.CH0201.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.flt);   // дозатор реагентов ошибка концевиков
+APS_309(KTO_IM_LG.P0201A.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.flt);   // насос рабочий ошибка концевиков
+APS_310(KTO_IM_LG.TR0101A.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.flt);   // свеча горелки осн камеры ошибка концевиков
+APS_311(KTO_IM_LG.TR0101B.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.flt);   // свеча горелки вторич камеры ошибка концевиков
+APS_312(KTO_IM_LG.TV0102A.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.flt);   // клапан воздуха на осн горелку ошибка концевиков
+APS_313(KTO_IM_LG.SV0101B.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.flt);   // клапан воздуха на вторич горелку ошибка концевиков
+APS_314(KTO_IM_LG.TV0101A.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.flt);   // клапан газа на осн горелку ошибка концевиков
+APS_315(KTO_IM_LG.TV0101B.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.flt);   // клапан газа на вторич горелку ошибка концевиков
+APS_316(KTO_IM_LG.P0201B.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.flt);   // насос резервный ошибка концевиков
+APS_317(KTO_IM_LG.C0201.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.flt);   // компрессор ошибка концевиков
+APS_318(KTO_IM_LG.SC0203.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.flt);   // дозатор реагентов ошибка концевиков
+APS_319(KTO_IM_LG.CF0101A.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.flt);   // вент воздуха на горелку осн камеры ошибка концевиков
+APS_320(KTO_IM_LG.CF0101B.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.flt);   // вент воздуха на горелку вторич камеры ошибка концевиков
+APS_321(KTO_IM_LG.SC0201.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.flt);   // шнек золы из инсениратора ошибка концевиков
+APS_322(KTO_IM_LG.SC0202.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.flt);   // шнек золы из мультициклона ошибка концевиков
+APS_323(KTO_IM_LG.P0401.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.flt);   // насос масла ошибка концевиков
+APS_324(KTO_IM_LG.EH0401.flt, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.flt);   // подогреватель масла ошибка концевиков
+
+APS_325(KTO_IM_LG.CV0201.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.ncon);   // отсечной клапан КЦУ открытия
+APS_326(KTO_IM_LG.EV0103.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.ncon);   // входной ЭМ клапан КЦУ открытия
+APS_327(KTO_IM_LG.AG1.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.ncon);   // ворошитель КЦУ открытия
+APS_328(KTO_IM_LG.FP1.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.ncon);   // огнестойкая дверь КЦУ открытия
+APS_329(KTO_IM_LG.DAMP1.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.ncon);   // заслонка загрузки КЦУ открытия
+APS_330(KTO_IM_LG.PUSH1.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.ncon);   // толкатель КЦУ открытия
+APS_331(KTO_IM_LG.V_KE1.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.ncon);   // клапан (КЭ1) КЦУ открытия
+APS_332(KTO_IM_LG.V1.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.ncon);   // аварийный вентилятор КЦУ открытия
+APS_333(KTO_IM_LG.CF0201.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.ncon);   // вент осн камеры сгорания КЦУ открытия
+APS_334(KTO_IM_LG.CF0202.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.ncon);   // вент вторич камеры сгорания КЦУ открытия
+APS_335(KTO_IM_LG.CF0301.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.ncon);   // вент дымовых газов КЦУ открытия
+APS_336(KTO_IM_LG.AF0201.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.ncon);   // вент охлаж дымовых газов КЦУ открытия
+APS_337(KTO_IM_LG.RAL0201.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.ncon);   // дозатор реагентов КЦУ открытия
+APS_338(KTO_IM_LG.CH0201.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.ncon);   // дозатор реагентов КЦУ открытия
+APS_339(KTO_IM_LG.P0201A.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.ncon);   // насос рабочий КЦУ открытия
+APS_340(KTO_IM_LG.TR0101A.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.ncon);   // свеча горелки осн камеры КЦУ открытия
+APS_341(KTO_IM_LG.TR0101B.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.ncon);   // свеча горелки вторич камеры КЦУ открытия
+APS_342(KTO_IM_LG.TV0102A.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.ncon);   // клапан воздуха на осн горелку КЦУ открытия
+APS_343(KTO_IM_LG.SV0101B.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.ncon);   // клапан воздуха на вторич горелку КЦУ открытия
+APS_344(KTO_IM_LG.TV0101A.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.ncon);   // клапан газа на осн горелку КЦУ открытия
+APS_345(KTO_IM_LG.TV0101B.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.ncon);   // клапан газа на вторич горелку КЦУ открытия
+APS_346(KTO_IM_LG.P0201B.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.ncon);   // насос резервный КЦУ открытия
+APS_347(KTO_IM_LG.C0201.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.ncon);   // компрессор КЦУ открытия
+APS_348(KTO_IM_LG.SC0203.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.ncon);   // дозатор реагентов КЦУ открытия
+APS_349(KTO_IM_LG.CF0101A.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.ncon);   // вент воздуха на горелку осн камеры КЦУ открытия
+APS_350(KTO_IM_LG.CF0101B.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.ncon);   // вент воздуха на горелку вторич камеры КЦУ открытия
+APS_351(KTO_IM_LG.SC0201.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.ncon);   // шнек золы из инсениратора КЦУ открытия
+APS_352(KTO_IM_LG.SC0202.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.ncon);   // шнек золы из мультициклона КЦУ открытия
+APS_353(KTO_IM_LG.P0401.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.ncon);   // насос масла КЦУ открытия
+APS_354(KTO_IM_LG.EH0401.ncon, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.ncon);   // подогреватель масла КЦУ открытия
+
+APS_355(KTO_IM_LG.CV0201.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.ncoff);   // отсечной клапан КЦУ закрытия
+APS_356(KTO_IM_LG.EV0103.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.ncoff);   // входной ЭМ клапан КЦУ закрытия
+APS_357(KTO_IM_LG.AG1.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.ncoff);   // ворошитель КЦУ закрытия
+APS_358(KTO_IM_LG.FP1.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.ncoff);   // огнестойкая дверь КЦУ закрытия
+APS_359(KTO_IM_LG.DAMP1.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.ncoff);   // заслонка загрузки КЦУ закрытия
+APS_360(KTO_IM_LG.PUSH1.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.ncoff);   // толкатель КЦУ закрытия
+APS_361(KTO_IM_LG.V_KE1.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.ncoff);   // клапан (КЭ1) КЦУ закрытия
+APS_362(KTO_IM_LG.V1.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.ncoff);   // аварийный вентилятор КЦУ закрытия
+APS_363(KTO_IM_LG.CF0201.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.ncoff);   // вент осн камеры сгорания КЦУ закрытия
+APS_364(KTO_IM_LG.CF0202.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.ncoff);   // вент вторич камеры сгорания КЦУ закрытия
+APS_365(KTO_IM_LG.CF0301.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.ncoff);   // вент дымовых газов КЦУ закрытия
+APS_366(KTO_IM_LG.AF0201.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.ncoff);   // вент охлаж дымовых газов КЦУ закрытия
+APS_367(KTO_IM_LG.RAL0201.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.ncoff);   // дозатор реагентов КЦУ закрытия
+APS_368(KTO_IM_LG.CH0201.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.ncoff);   // дозатор реагентов КЦУ закрытия
+APS_369(KTO_IM_LG.P0201A.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.ncoff);   // насос рабочий КЦУ закрытия
+APS_370(KTO_IM_LG.TR0101A.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.ncoff);   // свеча горелки осн камеры КЦУ закрытия
+APS_371(KTO_IM_LG.TR0101B.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.ncoff);   // свеча горелки вторич камеры КЦУ закрытия
+APS_372(KTO_IM_LG.TV0102A.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.ncoff);   // клапан воздуха на осн горелку КЦУ закрытия
+APS_373(KTO_IM_LG.SV0101B.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.ncoff);   // клапан воздуха на вторич горелку КЦУ закрытия
+APS_374(KTO_IM_LG.TV0101A.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.ncoff);   // клапан газа на осн горелку КЦУ закрытия
+APS_375(KTO_IM_LG.TV0101B.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.ncoff);   // клапан газа на вторич горелку КЦУ закрытия
+APS_376(KTO_IM_LG.P0201B.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.ncoff);   // насос резервный КЦУ закрытия
+APS_377(KTO_IM_LG.C0201.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.ncoff);   // компрессор КЦУ закрытия
+APS_378(KTO_IM_LG.SC0203.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.ncoff);   // дозатор реагентов КЦУ закрытия
+APS_379(KTO_IM_LG.CF0101A.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.ncoff);   // вент воздуха на горелку осн камеры КЦУ закрытия
+APS_380(KTO_IM_LG.CF0101B.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.ncoff);   // вент воздуха на горелку вторич камеры КЦУ закрытия
+APS_381(KTO_IM_LG.SC0201.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.ncoff);   // шнек золы из инсениратора КЦУ закрытия
+APS_382(KTO_IM_LG.SC0202.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.ncoff);   // шнек золы из мультициклона КЦУ закрытия
+APS_383(KTO_IM_LG.P0401.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.ncoff);   // насос масла КЦУ закрытия
+APS_384(KTO_IM_LG.EH0401.ncoff, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.ncoff);   // подогреватель масла КЦУ закрытия
+
+APS_385(KTO_IM_LG.CV0201.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CV0201.all);   // отсечной клапан общая неисправность
+APS_386(KTO_IM_LG.EV0103.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EV0103.all);   // входной ЭМ клапан общая неисправность
+APS_387(KTO_IM_LG.AG1.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AG1.all);   // ворошитель общая неисправность
+APS_388(KTO_IM_LG.FP1.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.FP1.all);   // огнестойкая дверь общая неисправность
+APS_389(KTO_IM_LG.DAMP1.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.DAMP1.all);   // заслонка загрузки общая неисправность
+APS_390(KTO_IM_LG.PUSH1.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.PUSH1.all);   // толкатель общая неисправность
+APS_391(KTO_IM_LG.V_KE1.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V_KE1.all);   // клапан (КЭ1) общая неисправность
+APS_392(KTO_IM_LG.V1.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.V1.all);   // аварийный вентилятор общая неисправность
+APS_393(KTO_IM_LG.CF0201.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0201.all);   // вент осн камеры сгорания общая неисправность
+APS_394(KTO_IM_LG.CF0202.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0202.all);   // вент вторич камеры сгорания общая неисправность
+APS_395(KTO_IM_LG.CF0301.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0301.all);   // вент дымовых газов общая неисправность
+APS_396(KTO_IM_LG.AF0201.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.AF0201.all);   // вент охлаж дымовых газов общая неисправность
+APS_397(KTO_IM_LG.RAL0201.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.RAL0201.all);   // дозатор реагентов общая неисправность
+APS_398(KTO_IM_LG.CH0201.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CH0201.all);   // дозатор реагентов общая неисправность
+APS_399(KTO_IM_LG.P0201A.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201A.all);   // насос рабочий общая неисправность
+APS_400(KTO_IM_LG.TR0101A.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101A.all);   // свеча горелки осн камеры общая неисправность
+APS_401(KTO_IM_LG.TR0101B.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TR0101B.all);   // свеча горелки вторич камеры общая неисправность
+APS_402(KTO_IM_LG.TV0102A.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0102A.all);   // клапан воздуха на осн горелку общая неисправность
+APS_403(KTO_IM_LG.SV0101B.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SV0101B.all);   // клапан воздуха на вторич горелку общая неисправность
+APS_404(KTO_IM_LG.TV0101A.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101A.all);   // клапан газа на осн горелку общая неисправность
+APS_405(KTO_IM_LG.TV0101B.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.TV0101B.all);   // клапан газа на вторич горелку общая неисправность
+APS_406(KTO_IM_LG.P0201B.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0201B.all);   // насос резервный общая неисправность
+APS_407(KTO_IM_LG.C0201.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.C0201.all);   // компрессор общая неисправность
+APS_408(KTO_IM_LG.SC0203.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0203.all);   // дозатор реагентов общая неисправность
+APS_409(KTO_IM_LG.CF0101A.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101A.all);   // вент воздуха на горелку осн камеры общая неисправность
+APS_410(KTO_IM_LG.CF0101B.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.CF0101B.all);   // вент воздуха на горелку вторич камеры общая неисправность
+APS_411(KTO_IM_LG.SC0201.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0201.all);   // шнек золы из инсениратора общая неисправность
+APS_412(KTO_IM_LG.SC0202.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.SC0202.all);   // шнек золы из мультициклона общая неисправность
+APS_413(KTO_IM_LG.P0401.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.P0401.all);   // насос масла общая неисправность
+APS_414(KTO_IM_LG.EH0401.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A2.EH0401.all);   // подогреватель масла общая неисправность
 
 
 
@@ -1409,8 +1687,8 @@ end_if;]]></ST>
 	DO_057(KTO_DO_HMI.A3_9_9_SC0203_CSG_OFF,	KTO_DO_DRV.A3_9_9,	'Стоп дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)');
 	DO_058(KTO_DO_HMI.A3_9_10_CF0101A_air_feed_burn_dev_BBR_ON,	KTO_DO_DRV.A3_9_10,'Пуск вентилятора системы подачи воздуха на горелочное устройство основной камеры сгорания (СF-0101A)');
 	DO_059(KTO_DO_HMI.A3_9_11_CF0101A_air_feed_burn_dev_BBR_OFF,	KTO_DO_DRV.A3_9_11,	'Стоп вентилятора системы подачи воздуха на горелочное устройство основной камеры сгорания (СF-0101A)');
-	DO_060(KTO_DO_HMI.A3_9_12_CF0102B_air_feed_burn_dev_SBR_ON,	KTO_DO_DRV.A3_9_12,	'Пуск вентилятора системы подачи воздуха на горелочное устройство вторичной камеры сгорания (СF-0101B)');
-	DO_061(KTO_DO_HMI.A3_9_13_CF0102B_air_feed_burn_dev_SBR_OFF,	KTO_DO_DRV.A3_9_13,	'Стоп вентилятора системы подачи воздуха на горелочное устройство вторичной камеры сгорания (СF-0101B)');
+	DO_060(KTO_DO_HMI.A3_9_12_CF0101B_air_feed_burn_dev_SBR_ON,	KTO_DO_DRV.A3_9_12,	'Пуск вентилятора системы подачи воздуха на горелочное устройство вторичной камеры сгорания (СF-0101B)');
+	DO_061(KTO_DO_HMI.A3_9_13_CF0101B_air_feed_burn_dev_SBR_OFF,	KTO_DO_DRV.A3_9_13,	'Стоп вентилятора системы подачи воздуха на горелочное устройство вторичной камеры сгорания (СF-0101B)');
 	DO_062(KTO_DO_HMI.A3_9_14_SC0201_disch_ash_INS_ON,	KTO_DO_DRV.A3_9_14,	'Пуск шнека выгрузки золы из инсинератора (SС-0201 )');
 	DO_063(KTO_DO_HMI.A3_9_15_SC0201_disch_ash_INS_OFF,	KTO_DO_DRV.A3_9_15,	'Стоп шнека выгрузки золы из инсинератора (SС-0201 )');
 	DO_064(KTO_DO_HMI.A3_9_16_SC0202_disch_ash_MC_ON,	KTO_DO_DRV.A3_9_16,	'Пуск шнека выгрузки золы из мультициклона (SС-0202) ');

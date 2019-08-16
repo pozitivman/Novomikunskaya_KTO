@@ -976,38 +976,38 @@ APS_032(KTO_AI_HMI.A1_10_4_rez.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KT
 
 
 //Обрыв аналоговых каналов
-APS_033(KTO_AI_HMI.A1_3_1_Uop.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_3_1_Uop_obriv); //Обрыв канал - Напряжение основного питания САУ 
-APS_034(KTO_AI_HMI.A1_3_2_NC.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_3_2_NC_obriv); //Обрыв канал - Не подключен
-APS_035(KTO_AI_HMI.A1_3_3_Lzag_CH4.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_3_3_Lzag_CH4_obriv); //Обрыв канал - Уровень загазованности по метану (QT1)
-APS_036(KTO_AI_HMI.A1_3_4_rez.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_3_4_rez_obriv); //Обрыв канал - Резерв
-APS_037(KTO_AI_HMI.A1_4_1_T_Burn_room.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_4_1_T_Burn_room_obriv); //Обрыв канал - Температура в камере сжигания TI0201 (TT1)
-APS_038(KTO_AI_HMI.A1_4_2_T_Ign_room.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_4_2_T_Ign_room_obriv); //Обрыв канал - Температура в камере поджига TI0202 (TT2)
-APS_039(KTO_AI_HMI.A1_4_3_T_tank_TK0201.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_4_3_T_tank_TK0201_obriv); //Обрыв канал - Температура в емкости TK-0201 (TT3)
-APS_040(KTO_AI_HMI.A1_4_4_T1_dust_col.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_4_4_T1_dust_col_obriv); //Обрыв канал - Температура перед пылеуловителем TI0203 (TT4)
-APS_041(KTO_AI_HMI.A1_5_1_T2_dust_col.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_5_1_T2_dust_col_obriv); //Обрыв канал - Температура после пылеуловителя TI0204 (TT5)
-APS_042(KTO_AI_HMI.A1_5_2_T1_block.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_5_2_T1_block_obriv); //Обрыв канал - Температура в блоке (в помещении) (TT6)
-APS_043(KTO_AI_HMI.A1_5_3_P_prim_Burn_room.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_5_3_P_prim_Burn_room_obriv); //Обрыв канал - Давление в основной камере сжигания PI0201(PT5)
-APS_044(KTO_AI_HMI.A1_5_4_dP1_filt_V0208A.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_5_4_dP1_filt_V0208A_obriv); //Обрыв канал - Перепад давления на фильтре V-0208A (PdT1.2)
-APS_045(KTO_AI_HMI.A1_6_1_dP1_filt_V0208A.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_6_1_dP1_filt_V0208A_obriv); //Обрыв канал - Перепад давления на фильтре V-0208B (PdT1.3)
-APS_046(KTO_AI_HMI.A1_6_2_Pgaz1_burner_G1.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_6_2_Pgaz1_burner_G1_obriv); //Обрыв канал - Давление газа на горелку Г1 (PT1)
-APS_047(KTO_AI_HMI.A1_6_3_Pgaz1_burner_G2.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_6_3_Pgaz1_burner_G2_obriv); //Обрыв канал - Давление газа на горелку Г2 (PT2)
-APS_048(KTO_AI_HMI.A1_6_4_P2_pump_P0201A.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_6_4_P2_pump_P0201A_obriv); //Обрыв канал - Давление после насоса P-0201A (PT3)
-APS_049(KTO_AI_HMI.A1_7_1_P2_pump_P0201B.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_7_1_P2_pump_P0201B_obriv); //Обрыв канал - Давление после насоса P-0201B (PT4)
-APS_050(KTO_AI_HMI.A1_7_2_P2_regul_C0201.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_7_2_P2_regul_C0201_obriv); //Обрыв канал - Давление после регулятора C-0201 (PT6)
-APS_051(KTO_AI_HMI.A1_7_3_Sen_flame_dtc_GU_main_BR.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_7_3_Sen_flame_dtc_GU_main_BR_obriv); //Обрыв канал - Датчик обнаружения пламени ГУ основной камеры сгорания (BI-0101A)
-APS_052(KTO_AI_HMI.A1_7_4_Sen_flame_dtc_GU_secon_BR.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_7_4_Sen_flame_dtc_GU_secon_BR_obriv); //Обрыв канал - Датчик обнаружения пламени ГУ вторичной камеры сгорания (BI-0101B)
-APS_053(KTO_AI_HMI.A1_8_1_GRPSH_dP1_F1.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_8_1_GRPSH_dP1_F1_obriv); //Обрыв канал - ГРПШ.Перепад давления на Ф1 (PdT1.1)
-APS_054(KTO_AI_HMI.A1_8_2_GRPSH_Q_GC1_1.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_8_2_GRPSH_Q_GC1_1_obriv); //Обрыв канал - ГРПШ.Расход на входе газа ГС1.1 (FE1.1)
-APS_055(KTO_AI_HMI.A1_8_3_GRPSH_P_GC1_1.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_8_3_GRPSH_P_GC1_1_obriv); //Обрыв канал - ГРПШ.Давление на входе газа ГС1.1 (PT1.1)
-APS_056(KTO_AI_HMI.A1_8_4_SV_pos.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_8_4_SV_pos_obriv); //Обрыв канал - Положение отсечного клапана (CV-0201)
-APS_057(KTO_AI_HMI.A1_9_1_rez.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_9_1_rez_obriv); //Обрыв канал - Резерв
-APS_058(KTO_AI_HMI.A1_9_2_rez.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_9_2_rez_obriv); //Обрыв канал - Резерв
-APS_059(KTO_AI_HMI.A1_9_3_rez.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_9_3_rez_obriv); //Обрыв канал - Резерв
-APS_060(KTO_AI_HMI.A1_9_4_SH_pos.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_9_4_SH_pos_obriv); //Обрыв канал - Положение затвора (CV-0101)
-APS_061(KTO_AI_HMI.A1_10_1_L_hi_LT1.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_10_1_L_hi_LT1_obriv); //Обрыв канал - Верхний уровень в емкости TK-0201 (LT1)
-APS_062(KTO_AI_HMI.A1_10_2_L_hi_LT2.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_10_2_L_hi_LT2_obriv); //Обрыв канал - Верхний уровень в емкости TK-0201 (LT2)
-APS_063(KTO_AI_HMI.A1_10_3_rez.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_10_3_rez_obriv); //Обрыв канал - Резерв
-APS_064(KTO_AI_HMI.A1_10_4_rez.KZ, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_10_4_rez_obriv); //Обрыв канал - Резерв
+APS_033(KTO_AI_HMI.A1_3_1_Uop.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_3_1_Uop_obriv); //Обрыв канал - Напряжение основного питания САУ 
+APS_034(KTO_AI_HMI.A1_3_2_NC.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_3_2_NC_obriv); //Обрыв канал - Не подключен
+APS_035(KTO_AI_HMI.A1_3_3_Lzag_CH4.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_3_3_Lzag_CH4_obriv); //Обрыв канал - Уровень загазованности по метану (QT1)
+APS_036(KTO_AI_HMI.A1_3_4_rez.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_3_4_rez_obriv); //Обрыв канал - Резерв
+APS_037(KTO_AI_HMI.A1_4_1_T_Burn_room.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_4_1_T_Burn_room_obriv); //Обрыв канал - Температура в камере сжигания TI0201 (TT1)
+APS_038(KTO_AI_HMI.A1_4_2_T_Ign_room.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_4_2_T_Ign_room_obriv); //Обрыв канал - Температура в камере поджига TI0202 (TT2)
+APS_039(KTO_AI_HMI.A1_4_3_T_tank_TK0201.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_4_3_T_tank_TK0201_obriv); //Обрыв канал - Температура в емкости TK-0201 (TT3)
+APS_040(KTO_AI_HMI.A1_4_4_T1_dust_col.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_4_4_T1_dust_col_obriv); //Обрыв канал - Температура перед пылеуловителем TI0203 (TT4)
+APS_041(KTO_AI_HMI.A1_5_1_T2_dust_col.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_5_1_T2_dust_col_obriv); //Обрыв канал - Температура после пылеуловителя TI0204 (TT5)
+APS_042(KTO_AI_HMI.A1_5_2_T1_block.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_5_2_T1_block_obriv); //Обрыв канал - Температура в блоке (в помещении) (TT6)
+APS_043(KTO_AI_HMI.A1_5_3_P_prim_Burn_room.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_5_3_P_prim_Burn_room_obriv); //Обрыв канал - Давление в основной камере сжигания PI0201(PT5)
+APS_044(KTO_AI_HMI.A1_5_4_dP1_filt_V0208A.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_5_4_dP1_filt_V0208A_obriv); //Обрыв канал - Перепад давления на фильтре V-0208A (PdT1.2)
+APS_045(KTO_AI_HMI.A1_6_1_dP1_filt_V0208A.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_6_1_dP1_filt_V0208A_obriv); //Обрыв канал - Перепад давления на фильтре V-0208B (PdT1.3)
+APS_046(KTO_AI_HMI.A1_6_2_Pgaz1_burner_G1.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_6_2_Pgaz1_burner_G1_obriv); //Обрыв канал - Давление газа на горелку Г1 (PT1)
+APS_047(KTO_AI_HMI.A1_6_3_Pgaz1_burner_G2.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_6_3_Pgaz1_burner_G2_obriv); //Обрыв канал - Давление газа на горелку Г2 (PT2)
+APS_048(KTO_AI_HMI.A1_6_4_P2_pump_P0201A.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_6_4_P2_pump_P0201A_obriv); //Обрыв канал - Давление после насоса P-0201A (PT3)
+APS_049(KTO_AI_HMI.A1_7_1_P2_pump_P0201B.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_7_1_P2_pump_P0201B_obriv); //Обрыв канал - Давление после насоса P-0201B (PT4)
+APS_050(KTO_AI_HMI.A1_7_2_P2_regul_C0201.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_7_2_P2_regul_C0201_obriv); //Обрыв канал - Давление после регулятора C-0201 (PT6)
+APS_051(KTO_AI_HMI.A1_7_3_Sen_flame_dtc_GU_main_BR.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_7_3_Sen_flame_dtc_GU_main_BR_obriv); //Обрыв канал - Датчик обнаружения пламени ГУ основной камеры сгорания (BI-0101A)
+APS_052(KTO_AI_HMI.A1_7_4_Sen_flame_dtc_GU_secon_BR.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_7_4_Sen_flame_dtc_GU_secon_BR_obriv); //Обрыв канал - Датчик обнаружения пламени ГУ вторичной камеры сгорания (BI-0101B)
+APS_053(KTO_AI_HMI.A1_8_1_GRPSH_dP1_F1.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_8_1_GRPSH_dP1_F1_obriv); //Обрыв канал - ГРПШ.Перепад давления на Ф1 (PdT1.1)
+APS_054(KTO_AI_HMI.A1_8_2_GRPSH_Q_GC1_1.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_8_2_GRPSH_Q_GC1_1_obriv); //Обрыв канал - ГРПШ.Расход на входе газа ГС1.1 (FE1.1)
+APS_055(KTO_AI_HMI.A1_8_3_GRPSH_P_GC1_1.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_8_3_GRPSH_P_GC1_1_obriv); //Обрыв канал - ГРПШ.Давление на входе газа ГС1.1 (PT1.1)
+APS_056(KTO_AI_HMI.A1_8_4_SV_pos.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_8_4_SV_pos_obriv); //Обрыв канал - Положение отсечного клапана (CV-0201)
+APS_057(KTO_AI_HMI.A1_9_1_rez.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_9_1_rez_obriv); //Обрыв канал - Резерв
+APS_058(KTO_AI_HMI.A1_9_2_rez.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_9_2_rez_obriv); //Обрыв канал - Резерв
+APS_059(KTO_AI_HMI.A1_9_3_rez.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_9_3_rez_obriv); //Обрыв канал - Резерв
+APS_060(KTO_AI_HMI.A1_9_4_SH_pos.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_9_4_SH_pos_obriv); //Обрыв канал - Положение затвора (CV-0101)
+APS_061(KTO_AI_HMI.A1_10_1_L_hi_LT1.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_10_1_L_hi_LT1_obriv); //Обрыв канал - Верхний уровень в емкости TK-0201 (LT1)
+APS_062(KTO_AI_HMI.A1_10_2_L_hi_LT2.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_10_2_L_hi_LT2_obriv); //Обрыв канал - Верхний уровень в емкости TK-0201 (LT2)
+APS_063(KTO_AI_HMI.A1_10_3_rez.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_10_3_rez_obriv); //Обрыв канал - Резерв
+APS_064(KTO_AI_HMI.A1_10_4_rez.Obriv, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO_A1.A1_10_4_rez_obriv); //Обрыв канал - Резерв
 
 
 //Отказ модулей Сонет
