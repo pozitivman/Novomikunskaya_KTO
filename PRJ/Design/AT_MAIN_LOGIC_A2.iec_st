@@ -12,6 +12,7 @@
         <Variable UUID="E41074794A7EC41957C866BA5800EA09" Name="proc_AO" Type="FB_AO" TypeUUID="C051E2DF429786EC5FA4C39A9C27CC61" Usage="internal" />
         <Variable UUID="FEAE931F421E8B08BD83818DB6A747EB" Name="proc_APS" Type="FB_AE" TypeUUID="2AC87D1E411C792FE83D9E9B74FC1D0A" Usage="internal" />
         <Variable UUID="FAED113247E8E3C866B74CB6CE12470D" Name="proc_VLV" Type="FB_VLV" TypeUUID="6365F2774F4DD22539CE50A3F08609D4" Usage="internal" />
+        <Variable UUID="66B53E5242E527321C65738C63147497" Name="rtrig_Deblock" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
     </Variables>
     <ST><![CDATA[//Использование C-библиотеки (время цикла и таймер 1с)
 clock_AI_cur := CLOCK();
@@ -27,7 +28,7 @@ clock_AI_prev := clock_AI_cur;
 //rtrig_Kvitir(CLK:= KC1_STU3_DI_HMI.A2_9_6_RST_AO.PV, Q => Reset_AO);
 
 //Фиксируем нажатие кнопки Деблокировка из разных источников
-//rtrig_Deblock(CLK:= Deblock_PRU or Deblock_HMI, Q => Deblock);
+rtrig_Deblock(CLK:= Deblock_PRU or Deblock_HMI, Q => Deblock);
 
 //proc_AI();
 proc_DI();

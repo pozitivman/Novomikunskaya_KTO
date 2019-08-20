@@ -6,6 +6,8 @@
             <Group Name="Group_Read_AI" Function="READ_HOLDING_REGISTERS" UpdatePeriod="0" />
             <Group Name="Group_Read_AI_flt" Function="READ_HOLDING_REGISTERS" UpdatePeriod="0" />
             <Group Name="Group_Read_APS_SP_aps" Function="READ_HOLDING_REGISTERS" UpdatePeriod="0" />
+            <Group Name="Group_Read_System_tags" Function="READ_HOLDING_REGISTERS" UpdatePeriod="0" />
+            <Group Name="Group_Write_System_tags" Function="PRESET_SINGLE_REGISTER" UpdatePeriod="0" />
         </Device>
     </Devices>
     <Crossconnect>
@@ -145,5 +147,7 @@
         <Connection ItemName="APS_KTO_A1.sonet_A1_8_flt" Device="1" Channel="5004.5:BIT" Group="Group_Read_APS_SP_aps" UUID="179EC99D499712188D4C9C9BE8E957A4.13EBC3CA488BE5607BDEC68EA0D6C1F4" />
         <Connection ItemName="APS_KTO_A1.sonet_A1_9_flt" Device="1" Channel="5004.6:BIT" Group="Group_Read_APS_SP_aps" UUID="179EC99D499712188D4C9C9BE8E957A4.A9D34F974DC44BB9A932B782FC50B21D" />
         <Connection ItemName="APS_KTO_A1.sonet_A1_10_flt" Device="1" Channel="5004.7:BIT" Group="Group_Read_APS_SP_aps" UUID="179EC99D499712188D4C9C9BE8E957A4.EC4F7A8A41A43F8A3E7218A125805407" />
+        <Connection ItemName="Deblock_PRU" Device="1" Channel="3000:BIT" Group="Group_Read_System_tags" UUID="F2F84E504F643C72489365BDED794987" />
+        <Connection ItemName="Deblock_PRU" Device="1" Channel="3000:BIT" Group="Group_Write_System_tags" UUID="F2F84E504F643C72489365BDED794987" />
     </Crossconnect>
 </Configuration>
