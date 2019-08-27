@@ -9,5 +9,7 @@
         <Item Name="FLDR_DI.folder" />
         <Item Name="FLDR_DO.folder" />
         <Item Name="FLDR_IM.folder" />
+        <Item Name="FLDR_UST.folder" />
+        <Item Name="Type_KWASNC5XHYZUJDIHZFGQJW4FTY.type" />
     </Items>
 </Folder>

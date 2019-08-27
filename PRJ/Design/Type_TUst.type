@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Type v. 1.0 >
+<Type Name="TUst" Kind="Struct" UUID="77E7367B41EA30AF64E2B5AB627D0D1E">
+    <Fields>
+        <Field Name="warpStartingToIgnition" Type="REAL" UUID="F63ACB954A9720724EEAB3B97122D8D2" Comment="Переход от запуска к воспламенению (TT-0202)" />
+        <Field Name="warpIngnitionToCombustion" Type="REAL" UUID="E7C4D31841F70BB5EDBC4B9FFBFE2DCA" Comment="Переход от воспламенения к горению (TT-0201)" />
+        <Field Name="warpCombustionToFinalCombustion" Type="REAL" UUID="E20C3CB0495E2F692C34348D0D653DF5" Comment="Переход от горения к сгоранию" />
+        <Field Name="warpFinalCombustionToCooling" Type="REAL" UUID="A7CC893B4261147E916B4CA830CE19D8" Comment="Переход от сгорания к охлаждению" />
+        <Field Name="durRemovingAsh" Type="REAL" UUID="1D55C93D49A18454068191AC14202EF1" Comment="Длительность удаления золы" />
+        <Field Name="warpCoolingToStandby" Type="REAL" UUID="BD3115F943EA88599BC63FAC65438359" Comment="Переход от охлаждения к дежурному режиму (TT-0201)" />
+        <Field Name="startAshRemoving" Type="REAL" UUID="272EC7D84E8CAD7D1A55B481D4311277" Comment="Запуск удаления золы PCC (TT-0201)" />
+        <Field Name="tempWorkingPCC" Type="REAL" UUID="C3CBB13B4A21059F21F09CBB1873847B" Comment="Рабочая температура PCC (TT-0201)" />
+        <Field Name="presureWorkingPCC" Type="REAL" UUID="C70E0DC34AEBF9DC490416A977C9EA53" Comment="Рабочее давление PCC (PT-0201)" />
+        <Field Name="spValueWarpTT0201" Type="REAL" UUID="E24646AD4A7D349ED8804DA993B3F187" Comment="Заданное значение перехода (TT-0201)" />
+        <Field Name="spVentForBurnerOnTT0201" Type="REAL" UUID="345F9E394D690231AF056F88948D78CA" Comment="Уставка вентилятора при включенной горелке (TT-0201)" />
+        <Field Name="maxSafetyTempPCC_TT0201" Type="REAL" UUID="A4BE43934BA8DF55FB087687A4DC3B3C" Comment="Максимальная безопасная температура PCC (TT-0201)" />
+        <Field Name="LiquidIngectOn" Type="REAL" UUID="6B3490DC4EC80CC3950E2FB791300812" Comment="Впрыск жидкости вкл. (LOI-0201)" />
+        <Field Name="LiquidIngectOffByTempLow" Type="REAL" UUID="524346714AFD44E65E0E088D84F3BA57" Comment="Впрыск жидкости выкл. (Низкая температура) (LOI-0201)" />
+        <Field Name="LiquidIngectOffByTempHi" Type="REAL" UUID="8DD3FA75410CE0B944FA61A22E0E47AD" Comment="Впрыск жидкости выкл. (Высокая температура) (LOI-0201)" />
+        <Field Name="tempWorkingSCC" Type="REAL" UUID="A6C540CF48F9EC490E66BF96376EB7F8" Comment="Рабочая температура SCC (TT-0202)" />
+        <Field Name="spValueWarpTT0202" Type="REAL" UUID="645F832646BCCF54D1F7B49B507A9B02" Comment="Заданное значение перехода (TT-0202)" />
+        <Field Name="spVentForBurnerOnTT0202" Type="REAL" UUID="675754214D3BDA65B3D54EB8F87D4C75" Comment="Уставка вентилятора при включенной горелке (TT-0202)" />
+        <Field Name="maxSafetyTempSCC_TT0202" Type="REAL" UUID="7ADD15D849A66527CDA110A945D9C0CE" Comment="Максимальная безопасная температура PCC (TT-0201)" />
+        <Field Name="tempNominalFGC_TT0203" Type="REAL" UUID="4DFB35CD47090AD300EB5E8F26BB0F7A" Comment="Номинальная температура FGC (TT-0203)" />
+        <Field Name="maxSafetyTempFGC_TT0203" Type="REAL" UUID="4FF4AB4D4E52F05479CF7CB0708F0957" Comment="Максимальная безопасная температура FGC (TT-0203)" />
+        <Field Name="tempNominalExhaustSys" Type="REAL" UUID="1F9606AF4DDD8D6A87C169BD8848BD39" Comment="Номинальная температура вытяжной системы (TT-0204)" />
+        <Field Name="tempSafetyMaxExhaustSys" Type="REAL" UUID="271D5202487311D876CF9E903DF65598" Comment="Номинальная температура вытяжной системы (TT-0204)" />
+    </Fields>
+</Type>

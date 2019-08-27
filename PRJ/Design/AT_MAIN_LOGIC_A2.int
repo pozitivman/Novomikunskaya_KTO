@@ -35,5 +35,8 @@
         <Signal Name="KTO_IM_LG" UUID="1A62EB22413231A8DFA84A9CC48E5652" Type="C407207F4A058D7ABF9BF79E2845A6E6" Usage="" />
         <Signal Name="APS_KTO_A2" UUID="C03737284EE5CE5DDEC81390B2731B3B" Type="242FB05340FD133F9DE840AD4C2C50FD" Usage="" Global="TRUE" Comment="Массив АПС" />
         <Signal Name="SEN_KTO_IM_CV0201_VIEW" UUID="8F7B4F8046289903EB680B8208AD3E80" Type="E2F512E0418E53D1482E2F9E54A664A9" Usage="" />
+        <Signal Name="CV0201_SET_REM_CTRL_PRU" UUID="9189654443397BBA28C61CA3ED9780CF" Type="BOOL" Usage="" Global="TRUE" Comment="Активация ДУ клапаном CV-0201 c ПРУ" />
+        <Signal Name="A1_8_4_SV_pos_PV" UUID="7008A3E24908C13B523AA989C3DD518A" Type="REAL" Usage="" Global="TRUE" Comment="Текущая позиция клапана CV-0201" />
+        <Signal Name="A1_9_4_SH_pos_PV" UUID="F3475DC04056C7BF4F641D94A3F23EDC" Type="REAL" Usage="" Global="TRUE" Comment="Текущая позиция положения затвора CV-0101" />
     </InterfaceList>
 </SubAppType>
