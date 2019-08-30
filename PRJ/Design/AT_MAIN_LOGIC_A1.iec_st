@@ -1313,7 +1313,41 @@ AI_030(SEN_A1_10_2_HMI,	KTO_AI_DRV.A1_10_2,	cycleTime,		KTO_AI_HMI.A1_10_2_L_hi_
 AI_031(SEN_A1_10_3_HMI,	KTO_AI_DRV.A1_10_3,	cycleTime,		KTO_AI_HMI.A1_10_3_rez);
 AI_032(SEN_A1_10_4_HMI,	KTO_AI_DRV.A1_10_4,	cycleTime,		KTO_AI_HMI.A1_10_4_rez);
 
-]]></ST>
+
+if not IMIT then
+	valAI.A1_3_1_Uop						:=	KTO_AI_HMI.A1_3_1_Uop.PV;
+	valAI.A1_3_2_NC							:=	KTO_AI_HMI.A1_3_2_NC.PV;
+	valAI.A1_3_3_Lzag_CH4					:=	KTO_AI_HMI.A1_3_3_Lzag_CH4.PV;
+	valAI.A1_3_4_rez						:=	KTO_AI_HMI.A1_3_4_rez.PV;
+	valAI.A1_4_1_T_Burn_room				:=	KTO_AI_HMI.A1_4_1_T_Burn_room.PV;
+	valAI.A1_4_2_T_Ign_room					:=	KTO_AI_HMI.A1_4_2_T_Ign_room.PV;
+	valAI.A1_4_3_T_tank_TK0201				:=	KTO_AI_HMI.A1_4_3_T_tank_TK0201.PV;
+	valAI.A1_4_4_T1_dust_col				:=	KTO_AI_HMI.A1_4_4_T1_dust_col.PV;
+	valAI.A1_5_1_T2_dust_col				:=	KTO_AI_HMI.A1_5_1_T2_dust_col.PV;
+	valAI.A1_5_2_T1_block					:=	KTO_AI_HMI.A1_5_2_T1_block.PV;
+	valAI.A1_5_3_P_prim_Burn_room			:=	KTO_AI_HMI.A1_5_3_P_prim_Burn_room.PV;
+	valAI.A1_5_4_dP1_filt_V0208A			:=	KTO_AI_HMI.A1_5_4_dP1_filt_V0208A.PV;
+	valAI.A1_6_1_dP1_filt_V0208A			:=	KTO_AI_HMI.A1_6_1_dP1_filt_V0208A.PV;
+	valAI.A1_6_2_Pgaz1_burner_G1			:=	KTO_AI_HMI.A1_6_2_Pgaz1_burner_G1.PV;
+	valAI.A1_6_3_Pgaz1_burner_G2			:=	KTO_AI_HMI.A1_6_3_Pgaz1_burner_G2.PV;
+	valAI.A1_6_4_P2_pump_P0201A				:=	KTO_AI_HMI.A1_6_4_P2_pump_P0201A.PV;
+	valAI.A1_7_1_P2_pump_P0201B				:=	KTO_AI_HMI.A1_7_1_P2_pump_P0201B.PV;
+	valAI.A1_7_2_P2_regul_C0201				:=	KTO_AI_HMI.A1_7_2_P2_regul_C0201.PV;
+	valAI.A1_7_3_Sen_flame_dtc_GU_main_BR	:=	KTO_AI_HMI.A1_7_3_Sen_flame_dtc_GU_main_BR.PV;
+	valAI.A1_7_4_Sen_flame_dtc_GU_secon_BR	:=	KTO_AI_HMI.A1_7_4_Sen_flame_dtc_GU_secon_BR.PV;
+	valAI.A1_8_1_GRPSH_dP1_F1				:=	KTO_AI_HMI.A1_8_1_GRPSH_dP1_F1.PV;
+	valAI.A1_8_2_GRPSH_Q_GC1_1				:=	KTO_AI_HMI.A1_8_2_GRPSH_Q_GC1_1.PV;
+	valAI.A1_8_3_GRPSH_P_GC1_1				:=	KTO_AI_HMI.A1_8_3_GRPSH_P_GC1_1.PV;
+	valAI.A1_8_4_SV_pos						:=	KTO_AI_HMI.A1_8_4_SV_pos.PV;
+	valAI.A1_9_1_rez						:=	KTO_AI_HMI.A1_9_1_rez.PV;
+	valAI.A1_9_2_rez						:=	KTO_AI_HMI.A1_9_2_rez.PV;
+	valAI.A1_9_3_rez						:=	KTO_AI_HMI.A1_9_3_rez.PV;
+	valAI.A1_9_4_SH_pos						:=	KTO_AI_HMI.A1_9_4_SH_pos.PV;
+	valAI.A1_10_1_L_hi_LT1					:=	KTO_AI_HMI.A1_10_1_L_hi_LT1.PV;
+	valAI.A1_10_2_L_hi_LT2					:=	KTO_AI_HMI.A1_10_2_L_hi_LT2.PV;
+	valAI.A1_10_3_rez						:=	KTO_AI_HMI.A1_10_3_rez.PV;
+	valAI.A1_10_4_rez						:=	KTO_AI_HMI.A1_10_4_rez.PV;
+end_if;]]></ST>
         </FunctionBlock>
     </FBLibrary>
 </Program>

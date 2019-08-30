@@ -4,5 +4,6 @@
     <Items>
         <Item Name="KTO_AI_DRV.type" />
         <Item Name="KTO_AI_HMI.type" />
+        <Item Name="Type_KTO_AI_EXCHANGE_PV.type" />
     </Items>
 </Folder>

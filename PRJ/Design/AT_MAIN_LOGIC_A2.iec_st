@@ -13,6 +13,8 @@
         <Variable UUID="FEAE931F421E8B08BD83818DB6A747EB" Name="proc_APS" Type="FB_AE" TypeUUID="2AC87D1E411C792FE83D9E9B74FC1D0A" Usage="internal" />
         <Variable UUID="FAED113247E8E3C866B74CB6CE12470D" Name="proc_VLV" Type="FB_VLV" TypeUUID="6365F2774F4DD22539CE50A3F08609D4" Usage="internal" />
         <Variable UUID="66B53E5242E527321C65738C63147497" Name="rtrig_Deblock" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
+        <Variable UUID="AB22489041D37C572B28178AB1A6332C" Name="proc_PID_calc" Type="FB_PID_CALC" TypeUUID="9492448C4E812292EA6CB5B1185D6694" Usage="internal" />
+        <Variable UUID="2997C56C451A47BF9E2D809DEF4FDB01" Name="proc_ALG" Type="FB_ALG" TypeUUID="F94A478B4EF05FF39C249A8E8B9401F2" Usage="internal" />
     </Variables>
     <ST><![CDATA[//Использование C-библиотеки (время цикла и таймер 1с)
 clock_AI_cur := CLOCK();
@@ -33,9 +35,10 @@ rtrig_Deblock(CLK:= Deblock_PRU or Deblock_HMI, Q => Deblock);
 //proc_AI();
 proc_DI();
 
-//proc_ALG();
+proc_ALG();
 proc_VLV();
 
+proc_PID_calc(cycle := LREAL_TO_REAL(cycleTime));
 proc_DO();
 proc_AO();
 proc_APS();
@@ -152,6 +155,98 @@ cycleTime_AI_sys := clock_AI_cur - clock_AI_prev;]]></ST>
         </Struct>
     </DataTypes>
     <FBLibrary>
+        <Folder Name="Инструменты" Comment="" Data="" UUID="2FECFB9D43D016C4EF601D9FA0C0BF04">
+            <Function UUID="306BC47D4D7CBF0A6CBC8DB34BCB6CA0" Name="MAX_VG" Comment="Выбор максимального из двух REAL" ResultTypeUUID="42E054C8453789BBDD3594B53BDC7DE5">
+                <Variables>
+                    <Variable UUID="318EE2B4466D19541BA42CBF55EE074E" Name="IN1" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="E66F8AA148E6029657733E9AEE4D6D0B" Name="IN2" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                </Variables>
+                <ST><![CDATA[// ===============================================================================
+// функция, возвращающая максимальное из двух значений real на входе
+// ===============================================================================
+MAX_VG := IN1;
+IF IN2 > IN1 THEN MAX_VG := IN2; END_IF;]]></ST>
+            </Function>
+            <Function UUID="6347D59B429F99B5F49133BAFCA594FD" Name="MIN_VG" Comment="Выбор минимального из двух REAL" ResultTypeUUID="42E054C8453789BBDD3594B53BDC7DE5">
+                <Variables>
+                    <Variable UUID="F5AD924D421492278109308890C6FDE6" Name="IN1" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="E893E0CE45BC3FFCDC19C59875FA8B38" Name="IN2" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                </Variables>
+                <ST><![CDATA[// ===============================================================================
+// функция, возвращающая минимальное из двух значений real на входе
+// ===============================================================================
+MIN_VG := IN1;
+IF IN2 < IN1 THEN MIN_VG := IN2; END_IF;]]></ST>
+            </Function>
+            <FunctionBlock UUID="FC714E38406E84024B957D9AFF39A636" Name="SinglePID_Proc">
+                <Variables>
+                    <Variable UUID="A821E1A34809244B03EE6CBE74B3E4C3" Name="init" Comment="Признак инициализации" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="internal" />
+                    <Variable UUID="39698A3F49015EA51A56F6894D3331A9" Name="errTemp" Comment="Ошибка за вычетом мертвой зоны" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                    <Variable UUID="5313E97F485A328663F60A9EF1409269" Name="outTemp" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                    <Variable UUID="EED7A9DC4ABF19AF19B5CFBE8B9E9CB2" Name="dInteg" Comment="Приращение интегратора" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                    <Variable UUID="84C4DDD74CCA1E59B865CE8E10F25A70" Name="integ" Comment="Интегратор" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                    <Variable UUID="CEBEB7D349B328D0FB4E29A5C59E0618" Name="oldErr" Comment="Ошибка регулирования на предыдущем цикле" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                    <Variable UUID="945BAEE341161C95A2BAE290C252A466" Name="tmp" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                    <Variable UUID="017812B04DE5DE29B98E4093D83CD4E2" Name="err" Comment="Ошибка регулирования" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="35D48CBE45DEDF4CA08E36AAE5B6A0B8" Name="hiLimit" Comment="Верхнее ограничение выхода регулятора" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="47E60A394E7D178306FB5F975AB9BB5C" Name="loLimit" Comment="Нижнее ограничение выхода регулятора" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="CB88F1FD41587A06C944F4AC8E358D4F" Name="hiRate" Comment="Ограничение по скорости увеличения выхода регулятора" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="6C4B0800437526861AD6989271A3CE20" Name="loRate" Comment="Ограничение по скорости уменьшения выхода регулятора" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="CB7A074545E7342B1F49BD9DCC7D51EC" Name="cycle" Comment="Время цикла вызова регулятора" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="E2FFC27746F55AE887DE8DAD08D50F3D" Name="setDU" Comment="Выход регулятора при ДУ" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="CA2F4A8F4AFCA8B3E9537EA01341992E" Name="DU" Comment="Признак ДУ" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                    <Variable UUID="9BD7B2B64F5CE2F26652759D388B963C" Name="Work_ON" Comment="Включить регулятор" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                    <Variable UUID="D78D4506404D0EF322D6EA95D3C84485" Name="Kp" Comment="Пропорциональный коэффициент" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="9FEFB7974EA3FF9CDAE9EA9C83789368" Name="Ki" Comment="Интегральный коэффициент" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="60371F03451EB444BC01A3A066F82C0E" Name="Kd" Comment="Дифференциальный коэффициент" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="E4A0DC8C4BA647EF577BD2A9C2DDEC2E" Name="DZ" Comment="Зона нечувствительности" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                    <Variable UUID="8DBB83C243E95D50BCAC14A08A33FE4D" Name="out" Comment="Выход регулятора" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="output" />
+                </Variables>
+                <ST><![CDATA[//Инициализация
+init := Work_ON;
+	IF NOT init THEN
+    	dInteg  := 0.0;
+    	oldErr  := err;
+    	out     := setDU;
+		integ   := setDU;
+   		init    := TRUE;
+	ELSE
+  //Если осуществляется нормальная работа
+	IF NOT DU THEN  
+    //Расчет ошибки, пропущенной через зону нечувствительности
+		IF err > DZ THEN errTemp := err - DZ; ELSIF err < -DZ THEN errTemp := err + DZ; ELSE errTemp := 0.0; END_IF;
+    //Расчет приращения интегратора
+		dInteg := (errTemp + oldErr) / 2.0 * cycle * Ki;
+    //Расчет выхода регулятора
+		outTemp := integ + dInteg + ((errTemp - oldErr)/cycle) * Kd + errTemp * Kp;
+		oldErr := errTemp;
+  //Если осуществляется дистанционное управление
+	ELSE
+    //Приращение интегратора расчитывается как разность задания при ДУ и текущего выхода регулятора
+		dInteg  := setDU - out;
+    //Ошибка регулирования считается равной нулю
+		oldErr  := 0.0;
+    //Выход приравнивается заданию при ДУ
+		outTemp := setDU;
+	END_IF;
+  //Пересчет выхода и приращения интегратора с учетом ограничения скорости изменения выхода
+	IF (outTemp - out) > hiRate * cycle  THEN 
+		out := out + hiRate * cycle;
+		dInteg := MIN_VG(hiRate * cycle, dInteg);
+	ELSIF (outTemp - out) < -loRate * cycle THEN
+		out := out - loRate * cycle;     
+		dInteg := MAX_VG(-loRate * cycle, dInteg);
+	ELSE
+		out := outTemp;
+	END_IF;
+	//Расчет приращения интегратора
+		integ := MIN_VG(MAX_VG(integ + dInteg, loLimit), hiLimit);
+	//Учет ограничения выхода
+		out := MIN_VG(MAX_VG(out,loLimit), hiLimit);
+	END_IF;
+]]></ST>
+            </FunctionBlock>
+        </Folder>
         <FunctionBlock UUID="6A4FEBAC4B635BACDB1140A38C63D50E" Name="AE_Proc">
             <Variables>
                 <Variable UUID="2640D4C347D9AEED753D038568D7636C" Name="IN_bool" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
@@ -1274,6 +1369,33 @@ APS_414(KTO_IM_LG.EH0401.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO
 
 end_if;]]></ST>
         </FunctionBlock>
+        <FunctionBlock UUID="F94A478B4EF05FF39C249A8E8B9401F2" Name="FB_ALG">
+            <Variables />
+            <ST><![CDATA[if (obj.state = 0) then
+
+end_if;
+
+//Подготовительные процедуры перед запуском
+if KTO_DI_HMI.A2_9_3_BT_door_feed_ON.PV then
+
+end_if;
+
+
+case obj.state of
+	0: //Дежурный режим
+
+	1: //Запуск	
+
+	2: //Воспламенение
+
+	3: //Горение
+
+	4: //Сгорание
+
+	5: //Охлаждение
+		
+end_case;]]></ST>
+        </FunctionBlock>
         <FunctionBlock UUID="C051E2DF429786EC5FA4C39A9C27CC61" Name="FB_AO">
             <Variables>
                 <Variable UUID="6F28B0D847E3E903F15235AC8E9C14B8" Name="AO_min" Type="LREAL" TypeUUID="65F1DDD44EDA9C0776BB16BBDFE36B1F" Usage="internal" />
@@ -1282,7 +1404,38 @@ end_if;]]></ST>
             <ST><![CDATA[(*Аналоговые выходы*)
 //Масштабирование AO для выходного модуля
 AO_min := lreal#13100;
-AO_max := lreal#65535;]]></ST>
+AO_max := lreal#65535;
+
+
+//Управление отсечным клапаном (CV-0201)
+KTO_AO_DRV.A3_3_1 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_3_1_CV0201/lreal#100.0);
+
+//Установка частоты ПЧ вентилятора подачи воздуха в основную камеру сгорания (SF-0201)
+KTO_AO_DRV.A3_3_2 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_3_2_SF0201/lreal#100.0);
+
+//Установка частоты ПЧ вентилятора подачи воздуха во вторичную камеру сгорания (SF-0202)
+KTO_AO_DRV.A3_3_3 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_3_3_SF0202/lreal#100.0);
+
+//Установка частоты ПЧ вентилятора подачи дымовых газов в трубу (SF-0301)
+KTO_AO_DRV.A3_3_4 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_3_4_SF0301/lreal#100.0);
+
+//Установка частоты ПЧ вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201)
+if KTO_IM_HMI.AF0201.RA then
+	KTO_AO_HMI.A3_4_1_AF0201 := AO_PRU.A3_4_1_AF0201;
+end_if;
+KTO_AO_DRV.A3_4_1 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_4_1_AF0201/lreal#100.0);
+
+//Установка частоты ПЧ дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)
+if KTO_IM_HMI.SC0203.RA then
+	KTO_AO_HMI.A3_4_2_SC0203 := AO_PRU.A3_4_2_SC0203;
+end_if;
+KTO_AO_DRV.A3_4_2 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_4_2_SC0203/lreal#100.0);
+
+//Управление затвором (CV-0101)
+if KTO_IM_HMI.CV0101.RA then
+	KTO_AO_HMI.A3_5_1_CV0101 := AO_PRU.A3_5_1_CV0101;
+end_if;
+KTO_AO_DRV.A3_5_1 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_5_1_CV0101/lreal#100.0);]]></ST>
         </FunctionBlock>
         <FunctionBlock UUID="9018116F43FC2E443834D486159520D8" Name="FB_DI">
             <Variables>
@@ -1712,6 +1865,161 @@ end_if;]]></ST>
 	DO_080(KTO_DO_HMI.A3_10_16_Sound_emerg,	KTO_DO_DRV.A3_10_16,	'Аварийная звуковая сигнализация');
 end_if;]]></ST>
         </FunctionBlock>
+        <FunctionBlock UUID="9492448C4E812292EA6CB5B1185D6694" Name="FB_PID_CALC">
+            <Variables>
+                <Variable UUID="DF822EB142D775118D27D388AE49F3B1" Name="cycle" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="input" />
+                <Variable UUID="DC10E5204A287EEE5318659F7C135F62" Name="pidCV0201" Type="SinglePID_Proc" TypeUUID="FC714E38406E84024B957D9AFF39A636" Usage="internal" />
+                <Variable UUID="B2EE0A334C4805DF12616F925AA283AC" Name="pidCF0201" Type="SinglePID_Proc" TypeUUID="FC714E38406E84024B957D9AFF39A636" Usage="internal" />
+                <Variable UUID="B5E6B8C14825EE417D30BEBF68AEB57C" Name="pidCF0202" Type="SinglePID_Proc" TypeUUID="FC714E38406E84024B957D9AFF39A636" Usage="internal" />
+                <Variable UUID="72EAC325480BDD15E2509B91798438E5" Name="pidCF0301" Type="SinglePID_Proc" TypeUUID="FC714E38406E84024B957D9AFF39A636" Usage="internal" />
+                <Variable UUID="F6CD7FC74CA936BBD8FDB094ADD6BC5D" Name="pidAF0201" Type="SinglePID_Proc" TypeUUID="FC714E38406E84024B957D9AFF39A636" Usage="internal" />
+                <Variable UUID="6E2C3D0041E27C78DBD4C88D6D2477E4" Name="pidSC0203" Type="SinglePID_Proc" TypeUUID="FC714E38406E84024B957D9AFF39A636" Usage="internal" />
+                <Variable UUID="80F28DDF47E35055E01B54A087E02E13" Name="pidCV0101" Type="SinglePID_Proc" TypeUUID="FC714E38406E84024B957D9AFF39A636" Usage="internal" />
+                <Variable UUID="F1C2651743298B77AC9806A58B7CD67E" Name="CV0201_TMO_out" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                <Variable UUID="A7CF0A6A4AAD9EE6370D608972E22B42" Name="CF0201_TMO_out" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                <Variable UUID="DEF4255D4DE2FBDFC8FBCBB11A71EE9B" Name="CF0202_TMO_out" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                <Variable UUID="B899256B48B6C6E3F16F7E9E5A7FD135" Name="CF0301_TMO_out" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                <Variable UUID="C75E615942331EE14E5B388A19AA972E" Name="AF0201_TMO_out" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                <Variable UUID="D6D0DEE440ADF710AB803FA9B53DE4E2" Name="SC0203_TMO_out" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+                <Variable UUID="0A7594CE45DEED74FB5D8AAA6F282BBC" Name="CV0101_TMO_out" Type="REAL" TypeUUID="42E054C8453789BBDD3594B53BDC7DE5" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[if Firstscan then
+//настройки регулятора отсечного клапана (CV-0201)
+	regCV0201.SP := 5.0;
+	regCV0201.Kp := 1.0;
+	regCV0201.Ki := 0.8;
+	regCV0201.Kd := 0.5;
+	regCV0201.DZ := 0.5;
+	regCV0201.setDU := 0.0;
+
+//настройки регулятора ПЧ вентилятора подачи воздуха в основную камеру сгорания (SF-0201)
+	regCF0201.SP := 5.0;
+	regCF0201.Kp := 1.0;
+	regCF0201.Ki := 0.8;
+	regCF0201.Kd := 0.5;
+	regCF0201.DZ := 0.5;
+	regCF0201.setDU := 0.0;
+
+//настройки регулятора ПЧ вентилятора подачи воздуха во вторичную камеру сгорания (SF-0202)
+	regCF0202.SP := 5.0;
+	regCF0202.Kp := 1.0;
+	regCF0202.Ki := 0.8;
+	regCF0202.Kd := 0.5;
+	regCF0202.DZ := 0.5;
+	regCF0202.setDU := 0.0;
+
+//настройки регулятора ПЧ вентилятора подачи дымовых газов в трубу (SF-0301)
+	regCF0301.SP := 5.0;
+	regCF0301.Kp := 1.0;
+	regCF0301.Ki := 0.8;
+	regCF0301.Kd := 0.5;
+	regCF0301.DZ := 0.5;
+	regCF0301.setDU := 0.0;
+end_if;
+
+
+//Управление отсечным клапаном (CV-0201)
+regCV0201.PV := 0.0;							//Отслеживаемый параметр
+regCV0201.DU := KTO_IM_HMI.CV0201.RA;
+regCV0201.setDU := lreal_to_real(AO_PRU.A3_3_1_CV0201);
+pidCV0201(err	:= regCV0201.SP - regCV0201.PV,	//Ошибка регулирования
+		hiLimit	:= 100.0,						//Верхнее ограничение выхода регулятора
+		loLimit	:= 0.0,							//Нижнее ограничение выхода регулятора
+		hiRate	:= 5.0,							//Ограничение по скорости увеличения выхода регулятора
+		loRate	:= 5.0,							//Ограничение по скорости уменьшения выхода регулятора
+		cycle	:= cycle,						//Время цикла вызова регулятора
+		setDU	:= regCV0201.setDU,				//Выход регулятора при ДУ
+		DU		:= regCV0201.DU,				//Признак ДУ
+		Work_ON	:= not CV0201_SET_REM_CTRL_PRU,	//Включить регулятор
+		Kp		:= regCV0201.Kp,				//Пропорциональный коэффициент
+		Ki		:= regCV0201.Ki,				//Интегральный коэффициент
+		Kd		:= regCV0201.Kd,				//Дифференциальный коэффициент
+		DZ		:= regCV0201.DZ					//Зона нечувствительности
+);
+KTO_AO_HMI.A3_3_1_CV0201 := real_to_lreal(pidCV0201.out);	//Выход регулятора
+if not CV0201_SET_REM_CTRL_PRU and IMIT then
+	valAI.A1_8_4_SV_pos := pidCV0201.out;
+	KTO_IM_HMI.CV0201.state.0 := valAI.A1_8_4_SV_pos < 2.0;
+	KTO_IM_HMI.CV0201.state.1 := valAI.A1_8_4_SV_pos > 98.0;
+	if valAI.A1_8_4_SV_pos > 2.0 and  valAI.A1_8_4_SV_pos < 98.0 then
+		KTO_IM_HMI.CV0201.state := word#0;
+	end_if;
+end_if;
+
+
+//Управление частотой ПЧ вентилятора подачи воздуха в основную камеру сгорания (SF-0201)
+regCF0201.PV := 0.0;							//Отслеживаемый параметр
+regCF0201.DU := KTO_IM_HMI.CF0201.RA;
+regCF0201.setDU := lreal_to_real(AO_PRU.A3_3_2_SF0201);
+pidCF0201(err	:= regCF0201.SP - regCF0201.PV,	//Ошибка регулирования
+		hiLimit	:= 100.0,						//Верхнее ограничение выхода регулятора
+		loLimit	:= 0.0,							//Нижнее ограничение выхода регулятора
+		hiRate	:= 5.0,							//Ограничение по скорости увеличения выхода регулятора
+		loRate	:= 5.0,							//Ограничение по скорости уменьшения выхода регулятора
+		cycle	:= cycle,						//Время цикла вызова регулятора
+		setDU	:= regCF0201.setDU,				//Выход регулятора при ДУ
+		DU		:= regCF0201.DU,				//Признак ДУ
+		Work_ON	:= true,						//Включить регулятор
+		Kp		:= regCF0201.Kp,				//Пропорциональный коэффициент
+		Ki		:= regCF0201.Ki,				//Интегральный коэффициент
+		Kd		:= regCF0201.Kd,				//Дифференциальный коэффициент
+		DZ		:= regCF0201.DZ					//Зона нечувствительности
+);
+KTO_AO_HMI.A3_3_2_SF0201 := real_to_lreal(pidCF0201.out);	//Выход регулятора
+
+
+//Управление частотой ПЧ вентилятора подачи воздуха во вторичную камеру сгорания (SF-0202)
+regCF0202.PV := 0.0;							//Отслеживаемый параметр
+regCF0202.DU := KTO_IM_HMI.CF0202.RA;
+regCF0202.setDU := lreal_to_real(AO_PRU.A3_3_3_SF0202);
+pidCF0202(err	:= regCF0202.SP - regCF0202.PV,	//Ошибка регулирования
+		hiLimit	:= 100.0,						//Верхнее ограничение выхода регулятора
+		loLimit	:= 0.0,							//Нижнее ограничение выхода регулятора
+		hiRate	:= 5.0,							//Ограничение по скорости увеличения выхода регулятора
+		loRate	:= 5.0,							//Ограничение по скорости уменьшения выхода регулятора
+		cycle	:= cycle,						//Время цикла вызова регулятора
+		setDU	:= regCF0202.setDU,				//Выход регулятора при ДУ
+		DU		:= regCF0202.DU,				//Признак ДУ
+		Work_ON	:= true,						//Включить регулятор
+		Kp		:= regCF0202.Kp,				//Пропорциональный коэффициент
+		Ki		:= regCF0202.Ki,				//Интегральный коэффициент
+		Kd		:= regCF0202.Kd,				//Дифференциальный коэффициент
+		DZ		:= regCF0202.DZ					//Зона нечувствительности
+);
+KTO_AO_HMI.A3_3_3_SF0202 := real_to_lreal(pidCF0202.out);	//Выход регулятора
+
+
+//Управление частотой ПЧ вентилятора подачи дымовых газов в трубу (SF-0301)
+regCF0301.PV := 0.0;							//Отслеживаемый параметр
+regCF0301.DU := KTO_IM_HMI.CF0301.RA;
+regCF0301.setDU := lreal_to_real(AO_PRU.A3_3_4_SF0301);
+pidCF0202(err	:= regCF0301.SP - regCF0301.PV,	//Ошибка регулирования
+		hiLimit	:= 100.0,						//Верхнее ограничение выхода регулятора
+		loLimit	:= 0.0,							//Нижнее ограничение выхода регулятора
+		hiRate	:= 5.0,							//Ограничение по скорости увеличения выхода регулятора
+		loRate	:= 5.0,							//Ограничение по скорости уменьшения выхода регулятора
+		cycle	:= cycle,						//Время цикла вызова регулятора
+		setDU	:= regCF0301.setDU,				//Выход регулятора при ДУ
+		DU		:= regCF0301.DU,				//Признак ДУ
+		Work_ON	:= true,						//Включить регулятор
+		Kp		:= regCF0301.Kp,				//Пропорциональный коэффициент
+		Ki		:= regCF0301.Ki,				//Интегральный коэффициент
+		Kd		:= regCF0301.Kd,				//Дифференциальный коэффициент
+		DZ		:= regCF0301.DZ					//Зона нечувствительности
+);
+KTO_AO_HMI.A3_3_4_SF0301 := real_to_lreal(pidCF0301.out);	//Выход регулятора
+
+
+//Управление частотой ПЧ вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201)
+
+
+//Управление частотой ПЧ дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)
+
+
+//Управление затвором (CV-0101)
+
+]]></ST>
+        </FunctionBlock>
         <FunctionBlock UUID="6365F2774F4DD22539CE50A3F08609D4" Name="FB_VLV">
             <Variables>
                 <Variable UUID="73EEFCA54C3141308DF94A8904790ED4" Name="SEN_KTO_IM_CV0201" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
@@ -1744,7 +2052,7 @@ end_if;]]></ST>
                 <Variable UUID="BFC00BDAD1104A77B5A18581B1F98408" Name="SEN_KTO_IM_SC0202" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
                 <Variable UUID="436F349E74464C4AB33C8C5CE3414103" Name="SEN_KTO_IM_P0401" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
                 <Variable UUID="64B8A00D3D534BFBAC46A9594E9F2988" Name="SEN_KTO_IM_EH0401" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="internal" />
-                <Variable UUID="C13B61AA0B044FE1BC00663792503FE9" Name="cfg_KTO_IM_CV0201" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
+                <Variable UUID="C13B61AA0B044FE1BC00663792503FE9" Name="cfg_KTO_IM_CV0201" Type="VLV_cfg_CV0201" TypeUUID="2F0E8E8F40388B0B4BAFBC9CE630F54F" Usage="internal" />
                 <Variable UUID="E8C9D58B6A8040A6A1D32C8E5CA48628" Name="cfg_KTO_IM_EV0103" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
                 <Variable UUID="FC94515DF70F4B119011CD8575B85B87" Name="cfg_KTO_IM_AG1" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
                 <Variable UUID="FE118777BBB44BFAA263107983A6DF1A" Name="cfg_KTO_IM_FP1" Type="VLV_cfg" TypeUUID="03FC474C44065334B97FF8985FD8215B" Usage="internal" />
@@ -1875,7 +2183,7 @@ KTO_DO_HMI.A3_6_10_CV0201_set_discr_ctrl_ON.PV := CV0201_SET_REM_CTRL_PRU;
 
 
 //Формирование входных сигналов и АПС для ИМ
-cfg_KTO_IM_CV0201(SEN_KTO_IM_CV0201,KTO_IM_HMI.CV0201.RA,KTO_IM_HMI.CV0201.rOn,KTO_IM_HMI.CV0201.rOff,KTO_IM_LG.CV0201.rOnOff,KTO_IM_LG.CV0201.aOnOff,KTO_IM_HMI.CV0201.rep,KTO_IM_LG.CV0201.cwOn,KTO_IM_LG.CV0201.cwOff,KTO_DI_HMI.A2_3_7_CV0201_ON.PV,KTO_DI_HMI.A2_3_8_CV0201_OFF.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_IM_LG.CV0201.non,KTO_IM_LG.CV0201.noff,KTO_IM_LG.CV0201.nstart,KTO_IM_LG.CV0201.selfon,KTO_IM_LG.CV0201.selfoff,KTO_IM_LG.CV0201.flt,KTO_IM_LG.CV0201.ncon,KTO_IM_LG.CV0201.ncoff,KTO_IM_HMI.CV0201.flt_all,KTO_IM_HMI.CV0201.state,KTO_IM_LG.CV0201.extern);
+cfg_KTO_IM_CV0201(SEN_KTO_IM_CV0201,KTO_IM_HMI.CV0201.RA,KTO_IM_HMI.CV0201.rOn,KTO_IM_HMI.CV0201.rOff,KTO_IM_LG.CV0201.rOnOff,KTO_IM_LG.CV0201.aOnOff,KTO_IM_HMI.CV0201.rep,KTO_IM_LG.CV0201.cwOn,KTO_IM_LG.CV0201.cwOff,KTO_DI_HMI.A2_3_7_CV0201_ON.PV,KTO_DI_HMI.A2_3_8_CV0201_OFF.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_IM_LG.CV0201.non,KTO_IM_LG.CV0201.noff,KTO_IM_LG.CV0201.nstart,KTO_IM_LG.CV0201.selfon,KTO_IM_LG.CV0201.selfoff,KTO_IM_LG.CV0201.flt,KTO_IM_LG.CV0201.ncon,KTO_IM_LG.CV0201.ncoff,KTO_IM_HMI.CV0201.flt_all,KTO_IM_HMI.CV0201.state,KTO_IM_LG.CV0201.extern,CV0201_SET_REM_CTRL_PRU);
 cfg_KTO_IM_EV0103(SEN_KTO_IM_EV0103,KTO_IM_HMI.EV0103.RA,KTO_IM_HMI.EV0103.rOn,KTO_IM_HMI.EV0103.rOff,KTO_IM_LG.EV0103.rOnOff,KTO_IM_LG.EV0103.aOnOff,KTO_IM_HMI.EV0103.rep,KTO_IM_LG.EV0103.cwOn,KTO_IM_LG.EV0103.cwOff,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_IM_LG.EV0103.non,KTO_IM_LG.EV0103.noff,KTO_IM_LG.EV0103.nstart,KTO_IM_LG.EV0103.selfon,KTO_IM_LG.EV0103.selfoff,KTO_IM_LG.EV0103.flt,KTO_IM_LG.EV0103.ncon,KTO_IM_LG.EV0103.ncoff,KTO_IM_HMI.EV0103.flt_all,KTO_IM_HMI.EV0103.state,KTO_IM_LG.EV0103.extern);
 cfg_KTO_IM_AG1(SEN_KTO_IM_AG1,KTO_IM_HMI.AG1.RA,KTO_IM_HMI.AG1.rOn,KTO_IM_HMI.AG1.rOff,KTO_IM_LG.AG1.rOnOff,KTO_IM_LG.AG1.aOnOff,KTO_IM_HMI.AG1.rep,KTO_IM_LG.AG1.cwOn,KTO_IM_LG.AG1.cwOff,KTO_DI_HMI.A2_4_3_AG1_ON.PV,KTO_DI_HMI.A2_4_2_AG1_OFF.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_IM_LG.AG1.non,KTO_IM_LG.AG1.noff,KTO_IM_LG.AG1.nstart,KTO_IM_LG.AG1.selfon,KTO_IM_LG.AG1.selfoff,KTO_IM_LG.AG1.flt,KTO_IM_LG.AG1.ncon,KTO_IM_LG.AG1.ncoff,KTO_IM_HMI.AG1.flt_all,KTO_IM_HMI.AG1.state,KTO_IM_LG.AG1.extern);
 cfg_KTO_IM_FP1(SEN_KTO_IM_FP1,KTO_IM_HMI.FP1.RA,KTO_IM_HMI.FP1.rOn,KTO_IM_HMI.FP1.rOff,KTO_IM_LG.FP1.rOnOff,KTO_IM_LG.FP1.aOnOff,KTO_IM_HMI.FP1.rep,KTO_IM_LG.FP1.cwOn,KTO_IM_LG.FP1.cwOff,KTO_DI_HMI.A2_4_8_SEN_FP_door_ins_ld_ON.PV,KTO_DI_HMI.A2_4_7_SEN_FP_door_ins_ld_OFF.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_IM_LG.FP1.non,KTO_IM_LG.FP1.noff,KTO_IM_LG.FP1.nstart,KTO_IM_LG.FP1.selfon,KTO_IM_LG.FP1.selfoff,KTO_IM_LG.FP1.flt,KTO_IM_LG.FP1.ncon,KTO_IM_LG.FP1.ncoff,KTO_IM_HMI.FP1.flt_all,KTO_IM_HMI.FP1.state,KTO_IM_LG.FP1.extern);
@@ -1908,7 +2216,7 @@ cfg_KTO_IM_EH0401(SEN_KTO_IM_EH0401,KTO_IM_HMI.EH0401.RA,KTO_IM_HMI.EH0401.rOn,K
 
 
 //ВЫЗОВ С-блоков
-if KTO_DO_HMI.A3_6_10_CV0201_set_discr_ctrl_ON.PV then
+if CV0201_SET_REM_CTRL_PRU then
 	im_KTO_IM_CV0201(SEN_KTO_IM_CV0201, cycleTime);
 end_if;
 im_KTO_IM_EV0103(SEN_KTO_IM_EV0103, cycleTime);
@@ -2013,7 +2321,7 @@ KTO_DO_HMI.A3_10_5_EH0401_oil_feed_DD_OFF.PV := SEN_KTO_IM_EH0401.Outs.outoff.0;
 
  
 if IMIT then
-if KTO_DO_HMI.A3_6_10_CV0201_set_discr_ctrl_ON.PV then
+if CV0201_SET_REM_CTRL_PRU then
 	imit_KTO_IM_CV0201(KTO_DO_HMI.A3_6_8_CV0201_ON.PV, KTO_DO_HMI.A3_6_9_CV0201_OFF.PV, KTO_DI_HMI.A2_3_7_CV0201_ON.PV, KTO_DI_HMI.A2_3_8_CV0201_OFF.PV);
 end_if;
 imit_KTO_IM_EV0103(KTO_DO_HMI.A3_6_12_EV0103_GSDD_ON.PV, not KTO_DO_HMI.A3_6_12_EV0103_GSDD_ON.PV, KTO_DI_HMI.dummy.PV, KTO_DI_HMI.dummy.PV);
@@ -2115,6 +2423,12 @@ KTO_IM_LG.P0401.aOnOff := SEN_KTO_IM_P0401.Control.aOnOff.0;
 KTO_IM_LG.EH0401.aOnOff := SEN_KTO_IM_EH0401.Control.aOnOff.0;
 end_if;]]></ST>
         </FunctionBlock>
+        <FunctionBlock UUID="5F52D1E141A30BA3ADA1838E727128DB" Name="FB_CMD_IM_BLK">
+            <Variables />
+            <ST><![CDATA[//Управление ИМ
+//if then CMD_IM_aOnOff := false; end_if; //закрыть/отключить
+//if then CMD_IM_aOnOff := true; end_if; //открыть/включить]]></ST>
+        </FunctionBlock>
         <FunctionBlock UUID="03FC474C44065334B97FF8985FD8215B" Name="VLV_cfg">
             <Variables>
                 <Variable UUID="CBAFF6624208F30EC24AD490FD070D72" Name="KR" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="inout" />
@@ -2179,6 +2493,85 @@ APS_ncon := KR.Oper.ncon.0;
 APS_ncoff := KR.Oper.ncoff.0;
 KR_state.0 := KR.Ins.off.0;
 KR_state.1 := KR.Ins.on.0;
+
+
+//!!!!!!!!!!!Обобщенный ALARM !!!!!!!!!!!!!!!!!!!
+if IMIT then APS_all := false; 
+else
+	APS_all := APS_non OR APS_noff OR APS_nstart OR APS_selfon OR APS_selfoff OR APS_flt OR APS_ncon OR APS_ncoff OR APS_extern;
+end_if;
+/////////////////////////////////////////////////
+
+
+IF NOT HMI_KR_DA THEN CMD_KR_rOnOff := CMD_KR_aOnOff; ELSE CMD_KR_aOnOff := CMD_KR_rOnOff; END_IF;]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="2F0E8E8F40388B0B4BAFBC9CE630F54F" Name="VLV_cfg_CV0201">
+            <Variables>
+                <Variable UUID="CBAFF6624208F30EC24AD490FD070D72" Name="KR" Type="support_ACT" TypeUUID="E2F512E0418E53D1482E2F9E54A664A9" Usage="inout" />
+                <Variable UUID="62BC56BC489B61070F81028EF67C4EB9" Name="HMI_KR_DA" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="C6DF5B66484FF21E1B6A8C8BE712C2B0" Name="HMI_KR_rOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="2E3A751642784A20028CF7AD5EB880E0" Name="HMI_KR_rOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="212EEA414D8EB7DBBACCDBB3A58D921E" Name="CMD_KR_rOnOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="7A37791248D118EFBE183E9637A76D87" Name="CMD_KR_aOnOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="EAA254DA4BEC8275B1BC2F9495C6F49F" Name="KR_rep" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="9375CF48441E1F5A5FAD2D8A27657BC5" Name="CMD_KR_cwOn" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="6FAC80DE4D32CE6B63737A9BD1CD11C6" Name="CMD_KR_cwOff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="0C5293414FA461711AFE3BA004986812" Name="DI_KR_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="B33AF57945D8C605452506AE7357F679" Name="DI_KR_OFF" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="6E40558B4D637EAD036FD4AB4CEB98BD" Name="DI_KRkcu_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="E54DF3DE4C88ECABEA071986590A83E8" Name="DI_KRkcu_OFF" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="A285B72F40528503C0A6BC9135A7AFC2" Name="APS_non" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="ED6BD4124307FB547F2D04BFB2E9FE99" Name="APS_noff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="7F14C77D4A242C1CC8E46797FB69E94F" Name="APS_nstart" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="6D122D7F4350A9D672209AB46B3F73BD" Name="APS_selfon" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="D1C0203940767BD7FC4A54A10BA41B68" Name="APS_selfoff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="2CB7153642514A009DB0A784E8F88071" Name="APS_flt" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="5BAD2D2345EE67E29348829CA1149661" Name="APS_ncon" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="B2F0B32346920CED44EACCA891A4822F" Name="APS_ncoff" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="2F8C901842268CA512830BA22A0060E5" Name="APS_all" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="F0D106E64BB82DE2CDC7D3AA5A64C7BE" Name="KR_state" Type="WORD" TypeUUID="05CD1AAB4891B30C004C2799CA460884" Usage="inout" />
+                <Variable UUID="3E3D13CA4AD7B407ADF3949EE4374D76" Name="APS_extern" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
+                <Variable UUID="4854C0B2431947626F4EFB9DA042E1DC" Name="state" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="inout" />
+                <Variable UUID="A43987B6454F1D7386F50182C9D07289" Name="cmd_ON" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
+                <Variable UUID="9E81B987458CCD3DEFBB0FAD0696C719" Name="cmd_OFF" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
+                <Variable UUID="57F552494731483CEAC41394B178B526" Name="alg_ON" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="internal" />
+                <Variable UUID="A073A32C4CA560DCBAB5A891FEF7A3F7" Name="alg_OFF" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[KR.Control.RA.0 := HMI_KR_DA;
+IF HMI_KR_rOn AND HMI_KR_DA  THEN alg_ON  := BOOL#1; END_IF; HMI_KR_rOn  := BOOL#0;
+IF HMI_KR_rOff AND HMI_KR_DA THEN alg_OFF := BOOL#1; END_IF; HMI_KR_rOff := BOOL#0;
+IF alg_ON AND CMD_KR_rOnOff OR alg_OFF AND NOT CMD_KR_rOnOff THEN
+	KR_rep := BOOL#1;
+ELSE
+	IF alg_ON THEN CMD_KR_rOnOff := BOOL#1; END_IF;
+	IF alg_OFF THEN CMD_KR_rOnOff := BOOL#0; END_IF;
+END_IF;
+alg_ON := BOOL#0;
+alg_OFF := BOOL#0;
+
+KR.Control.rOnOff.0 := CMD_KR_rOnOff;
+KR.Control.aOnOff.0 := CMD_KR_aOnOff;
+KR.Control.rep.0 := KR_rep; KR_rep := BOOL#0;
+//KR.Control.cwOn.0 := CMD_KR_cwOn;
+//KR.Control.cwOff.0 := CMD_KR_cwOff;
+
+
+KR.Ins.on.0 := DI_KR_ON;
+KR.Ins.off.0 := DI_KR_OFF;
+KR.Ins.con.0 := DI_KRkcu_ON;
+KR.Ins.coff.0 := DI_KRkcu_OFF;
+APS_non := KR.Oper.non.0;
+APS_noff := KR.Oper.noff.0;
+APS_nstart := KR.Oper.nstart.0;
+APS_selfon := KR.Oper.selfon.0;
+APS_selfoff := KR.Oper.selfoff.0;
+APS_flt := KR.Oper.flt.0;
+APS_ncon := KR.Oper.ncon.0;
+APS_ncoff := KR.Oper.ncoff.0;
+if state then
+	KR_state.0 := KR.Ins.off.0;
+	KR_state.1 := KR.Ins.on.0;
+end_if;
 
 
 //!!!!!!!!!!!Обобщенный ALARM !!!!!!!!!!!!!!!!!!!

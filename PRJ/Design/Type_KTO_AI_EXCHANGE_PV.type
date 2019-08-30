@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Type v. 1.0 >
+<Type Name="KTO_AI_EXCHANGE_PV" Kind="Struct" UUID="7D86CA484851FB63F4C408B5FE85C1E9">
+    <Fields>
+        <Field Name="A1_3_1_Uop" Type="REAL" UUID="90FB7C41410B8458ADB4E4978F57CB13" Comment="Напряжение основного питания САУ " />
+        <Field Name="A1_3_2_NC" Type="REAL" UUID="00976B304ABC3B4E122C3E93C1995DB7" Comment="Не подключен" />
+        <Field Name="A1_3_3_Lzag_CH4" Type="REAL" UUID="AD05C3B645228A4BC49F3D9910E41677" Comment="Уровень загазованности по метану (QT1)" />
+        <Field Name="A1_3_4_rez" Type="REAL" UUID="5EAD1A9D428397D9AFCDD18413FA1A57" Comment="Резерв" />
+        <Field Name="A1_4_1_T_Burn_room" Type="REAL" UUID="6FA80BA747CD2A37F6C80B8BD0C28FA5" Comment="Температура в камере сжигания TI0201 (TT1)" />
+        <Field Name="A1_4_2_T_Ign_room" Type="REAL" UUID="FBFE882E42360ED95D2362B8E3FB301D" Comment="Температура в камере поджига TI0202 (TT2)" />
+        <Field Name="A1_4_3_T_tank_TK0201" Type="REAL" UUID="7A6A2C27480A968CE70AA08FB86A76AB" Comment="Температура в емкости TK-0201 (TT3)" />
+        <Field Name="A1_4_4_T1_dust_col" Type="REAL" UUID="1E3EBC63404741F5742B77805152380F" Comment="Температура перед пылеуловителем TI0203 (TT4)" />
+        <Field Name="A1_5_1_T2_dust_col" Type="REAL" UUID="37DE87114FE4A8EB6A330EBF903C2BF8" Comment="Температура после пылеуловителя TI0204 (TT5)" />
+        <Field Name="A1_5_2_T1_block" Type="REAL" UUID="6EE2851F42D60BD680B6AC8954234025" Comment="Температура в блоке (в помещении) (TT6)" />
+        <Field Name="A1_5_3_P_prim_Burn_room" Type="REAL" UUID="BB35BB144E560582B69824B02FD7550B" Comment="Давление в основной камере сжигания PI0201(PT5)" />
+        <Field Name="A1_5_4_dP1_filt_V0208A" Type="REAL" UUID="DC0EE3D24BDE445D8B37FA8607B0050F" Comment="Перепад давления на фильтре V-0208A (PdT1.2)" />
+        <Field Name="A1_6_1_dP1_filt_V0208A" Type="REAL" UUID="86F5641944E31FCE4F6694B06FA83040" Comment="Перепад давления на фильтре V-0208B (PdT1.3)" />
+        <Field Name="A1_6_2_Pgaz1_burner_G1" Type="REAL" UUID="331E37894F98E8998B446E858E503FBB" Comment="Давление газа на горелку Г1 (PT1)" />
+        <Field Name="A1_6_3_Pgaz1_burner_G2" Type="REAL" UUID="4EBAFC5545867990726CE0B0610A5147" Comment="Давление газа на горелку Г2 (PT2)" />
+        <Field Name="A1_6_4_P2_pump_P0201A" Type="REAL" UUID="2620BBBB494F0DE6BE233093C2C235F1" Comment="Давление после насоса P-0201A (PT3)" />
+        <Field Name="A1_7_1_P2_pump_P0201B" Type="REAL" UUID="EFDF28F147334D196F9BBCB730DA4762" Comment="Давление после насоса P-0201B (PT4)" />
+        <Field Name="A1_7_2_P2_regul_C0201" Type="REAL" UUID="607FEA324F94C200BF8214BAF2D50691" Comment="Давление после регулятора C-0201 (PT6)" />
+        <Field Name="A1_7_3_Sen_flame_dtc_GU_main_BR" Type="REAL" UUID="57DC2CC74D1134A884CC3AA2731E0E0E" Comment="Датчик обнаружения пламени ГУ основной камеры сгорания (BI-0101A)" />
+        <Field Name="A1_7_4_Sen_flame_dtc_GU_secon_BR" Type="REAL" UUID="A55259D34F1255B81BA7FA85F4BB5CAE" Comment="Датчик обнаружения пламени ГУ вторичной камеры сгорания (BI-0101B)" />
+        <Field Name="A1_8_1_GRPSH_dP1_F1" Type="REAL" UUID="49EE103B441B535A17E470AEDBDC0FF0" Comment="ГРПШ.Перепад давления на Ф1 (PdT1.1)" />
+        <Field Name="A1_8_2_GRPSH_Q_GC1_1" Type="REAL" UUID="0A3215194D31E59C6B2CC4A6DC912BE3" Comment="ГРПШ.Расход на входе газа ГС1.1 (FE1.1)" />
+        <Field Name="A1_8_3_GRPSH_P_GC1_1" Type="REAL" UUID="EEB99858416B67C8AE70889AE6CEC64D" Comment="ГРПШ.Давление на входе газа ГС1.1 (PT1.1)" />
+        <Field Name="A1_8_4_SV_pos" Type="REAL" UUID="903403AA4EB104B044AA8B98A7FF7E5A" Comment="Положение отсечного клапана (CV-0201)" />
+        <Field Name="A1_9_1_rez" Type="REAL" UUID="A4A5735D49F919774F22DBA0D54FAACF" Comment="Резерв" />
+        <Field Name="A1_9_2_rez" Type="REAL" UUID="4C19207B4CB13453FDD81482D9303059" Comment="Резерв" />
+        <Field Name="A1_9_3_rez" Type="REAL" UUID="07B05C6646F64B500EB14E98D9802947" Comment="Резерв" />
+        <Field Name="A1_9_4_SH_pos" Type="REAL" UUID="EEB1AD23423C47DDE407CCB2619987D7" Comment="Положение затвора (CV-0101)" />
+        <Field Name="A1_10_1_L_hi_LT1" Type="REAL" UUID="A859D9CC469555FFE21A97A7B33393D1" Comment="Верхний уровень в емкости TK-0201 (LT1)" />
+        <Field Name="A1_10_2_L_hi_LT2" Type="REAL" UUID="C17F58A84A15EAF38885949D171BB354" Comment="Верхний уровень в емкости TK-0201 (LT2)" />
+        <Field Name="A1_10_3_rez" Type="REAL" UUID="095F554046031DC827C238889F720A09" Comment="Резерв" />
+        <Field Name="A1_10_4_rez" Type="REAL" UUID="1972513149B658605469448978227630" Comment="Резерв" />
+    </Fields>
+</Type>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Type v. 1.0 >
+<Type Name="TObjectVars" Kind="Struct" UUID="CC17525C48E1B387B931A8AD517EA93F">
+    <Fields>
+        <Field Name="state" Type="INT" UUID="F9D625BE493C12D653D9868E4DD3434E" Comment="Режим работы инсениратора" />
+    </Fields>
+</Type>
