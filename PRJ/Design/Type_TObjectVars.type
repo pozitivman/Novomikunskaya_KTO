@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Type v. 1.0 >
+<Type Name="TObjectVars" Kind="Struct" UUID="CC17525C48E1B387B931A8AD517EA93F">
+    <Fields>
+        <Field Name="state" Type="INT" UUID="F9D625BE493C12D653D9868E4DD3434E" Comment="Режим работы инсениратора" />
+        <Field Name="startCF0301_on" Type="BOOL" UUID="E96CF6624AC8340278165883F0DA4631" Comment="Этап запуска: Включить CF0301" />
+        <Field Name="startAF0201_on" Type="BOOL" UUID="0609325B4AFE23D6FA5E04AA99473D31" Comment="Этап запуска: Включить AF0201" />
+        <Field Name="startB0101_BC_on" Type="BOOL" UUID="7ECCFF7B41BF8F659A0AD893C5D99009" Comment="Этап запуска: Настройка ГУ B0101 в режим Большое горение" />
+    </Fields>
+</Type>

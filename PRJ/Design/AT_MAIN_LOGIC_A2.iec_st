@@ -247,6 +247,32 @@ init := Work_ON;
 ]]></ST>
             </FunctionBlock>
         </Folder>
+        <Folder Name="Режимы работы" Comment="" Data="" UUID="71D5191646434DE8F453C58B8FFCBC54">
+            <FunctionBlock UUID="C6BED3DA40D9B552DA719A96291E91EE" Name="FB_STANDBY">
+                <Variables>
+                    <Variable UUID="B46DF66540BD09E2B78E67B6D878352D" Name="rtrigStartBtn" Type="R_TRIG" TypeUUID="D90E3B974D4D8C72877123B1A897EB52" Usage="internal" />
+                    <Variable UUID="258D2ECA4D68A0BED5EC4DBCC31858E7" Name="srtrigStarMode" Type="SR" TypeUUID="2E4DE4324E1F5E488B22EE9160EBE03C" Usage="internal" />
+                </Variables>
+                <ST><![CDATA[//Подготовительные процедуры перед запуском
+//....
+
+//Ждем нажатия кнопки Пуск и срабатывания концевиков ZSC-0206, ZSC-0207 
+rtrigStartBtn(CLK:= KTO_DI_HMI.A2_9_2_BT_Start.PV);
+if (rtrigStartBtn.Q and KTO_DI_HMI.A2_4_5_SEN_door_serv_ins_OFF.PV and KTO_DI_HMI.A2_4_4_SEN_door_extr_ash_OFF.PV) then
+	KTO_IM_HMI.CF0301.RA := false;
+	KTO_IM_HMI.AF0201.RA := false;
+	obj.startCF0301_on := true;
+	obj.startAF0201_on := true;
+end_if;
+
+//после включения CF0301 и AF0201 настраиваем B-0101 на большое горение  
+if (obj.startCF0301_on and KTO_DI_HMI.A2_5_5_CF0301_ash_gaz_feed_ON.PV) and (obj.startAF0201_on and KTO_DI_HMI.A2_5_7_AF0201_air_feed_CSG_ins_ON.PV) then
+	obj.startCF0301_on := false;
+	obj.startAF0201_on := false;
+	obj.startB0101_BC_on := true;	
+end_if;]]></ST>
+            </FunctionBlock>
+        </Folder>
         <FunctionBlock UUID="6A4FEBAC4B635BACDB1140A38C63D50E" Name="AE_Proc">
             <Variables>
                 <Variable UUID="2640D4C347D9AEED753D038568D7636C" Name="IN_bool" Type="BOOL" TypeUUID="EC797BDD4541F500AD80A78F1F991834" Usage="input" />
@@ -1370,19 +1396,20 @@ APS_414(KTO_IM_LG.EH0401.flt_all, T#100ms, Deblock, Kvitir, DO_sound_PS, APS_KTO
 end_if;]]></ST>
         </FunctionBlock>
         <FunctionBlock UUID="F94A478B4EF05FF39C249A8E8B9401F2" Name="FB_ALG">
-            <Variables />
-            <ST><![CDATA[if (obj.state = 0) then
+            <Variables>
+                <Variable UUID="0E3B56284299DA33AF5F82A13E53152E" Name="standby_proc" Type="FB_STANDBY" TypeUUID="C6BED3DA40D9B552DA719A96291E91EE" Usage="internal" />
+            </Variables>
+            <ST><![CDATA[//Процедуры в дежурном режиме
+if (obj.state = 0) then
 
 end_if;
 
-//Подготовительные процедуры перед запуском
-if KTO_DI_HMI.A2_9_3_BT_door_feed_ON.PV then
-
-end_if;
 
 
+//Циклограмма работы объекта
 case obj.state of
 	0: //Дежурный режим
+		standby_proc();
 
 	1: //Запуск	
 
@@ -1420,22 +1447,27 @@ KTO_AO_DRV.A3_3_3 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_3_3_
 KTO_AO_DRV.A3_3_4 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_3_4_SF0301/lreal#100.0);
 
 //Установка частоты ПЧ вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201)
-if KTO_IM_HMI.AF0201.RA then
-	KTO_AO_HMI.A3_4_1_AF0201 := AO_PRU.A3_4_1_AF0201;
-end_if;
 KTO_AO_DRV.A3_4_1 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_4_1_AF0201/lreal#100.0);
 
 //Установка частоты ПЧ дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)
-if KTO_IM_HMI.SC0203.RA then
-	KTO_AO_HMI.A3_4_2_SC0203 := AO_PRU.A3_4_2_SC0203;
-end_if;
 KTO_AO_DRV.A3_4_2 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_4_2_SC0203/lreal#100.0);
 
 //Управление затвором (CV-0101)
-if KTO_IM_HMI.CV0101.RA then
-	KTO_AO_HMI.A3_5_1_CV0101 := AO_PRU.A3_5_1_CV0101;
-end_if;
 KTO_AO_DRV.A3_5_1 := lreal_to_uint(AO_min + (AO_max - AO_min)*KTO_AO_HMI.A3_5_1_CV0101/lreal#100.0);]]></ST>
+        </FunctionBlock>
+        <FunctionBlock UUID="5F52D1E141A30BA3ADA1838E727128DB" Name="FB_CMD_IM_BLK">
+            <Variables />
+            <ST><![CDATA[//Управление ИМ
+//if then CMD_IM_aOnOff := false; end_if; //закрыть/отключить
+//if then CMD_IM_aOnOff := true; end_if; //открыть/включить
+
+
+//Вентилятор подачи дымовых газов в трубу (SF-0301)
+if obj.startCF0301_on then KTO_IM_LG.CF0301.aOnOff := true; end_if; //открыть/включить
+
+
+//Вентилятор подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201)
+if obj.startAF0201_on then KTO_IM_LG.AF0201.aOnOff := true; end_if; //открыть/включить]]></ST>
         </FunctionBlock>
         <FunctionBlock UUID="9018116F43FC2E443834D486159520D8" Name="FB_DI">
             <Variables>
@@ -1885,7 +1917,7 @@ end_if;]]></ST>
             </Variables>
             <ST><![CDATA[if Firstscan then
 //настройки регулятора отсечного клапана (CV-0201)
-	regCV0201.SP := 5.0;
+	regCV0201.SP := 0.0;
 	regCV0201.Kp := 1.0;
 	regCV0201.Ki := 0.8;
 	regCV0201.Kd := 0.5;
@@ -1893,7 +1925,7 @@ end_if;]]></ST>
 	regCV0201.setDU := 0.0;
 
 //настройки регулятора ПЧ вентилятора подачи воздуха в основную камеру сгорания (SF-0201)
-	regCF0201.SP := 5.0;
+	regCF0201.SP := 0.0;
 	regCF0201.Kp := 1.0;
 	regCF0201.Ki := 0.8;
 	regCF0201.Kd := 0.5;
@@ -1901,7 +1933,7 @@ end_if;]]></ST>
 	regCF0201.setDU := 0.0;
 
 //настройки регулятора ПЧ вентилятора подачи воздуха во вторичную камеру сгорания (SF-0202)
-	regCF0202.SP := 5.0;
+	regCF0202.SP := 0.0;
 	regCF0202.Kp := 1.0;
 	regCF0202.Ki := 0.8;
 	regCF0202.Kd := 0.5;
@@ -1909,12 +1941,36 @@ end_if;]]></ST>
 	regCF0202.setDU := 0.0;
 
 //настройки регулятора ПЧ вентилятора подачи дымовых газов в трубу (SF-0301)
-	regCF0301.SP := 5.0;
+	regCF0301.SP := 0.0;
 	regCF0301.Kp := 1.0;
 	regCF0301.Ki := 0.8;
 	regCF0301.Kd := 0.5;
 	regCF0301.DZ := 0.5;
 	regCF0301.setDU := 0.0;
+
+//настройки регулятора ПЧ вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201)
+	regAF0201.SP := 0.0;
+	regAF0201.Kp := 1.0;
+	regAF0201.Ki := 0.8;
+	regAF0201.Kd := 0.5;
+	regAF0201.DZ := 0.5;
+	regAF0201.setDU := 0.0;
+
+//настройки регулятора ПЧ дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)
+	regSC0203.SP := 0.0;
+	regSC0203.Kp := 1.0;
+	regSC0203.Ki := 0.8;
+	regSC0203.Kd := 0.5;
+	regSC0203.DZ := 0.5;
+	regSC0203.setDU := 0.0;
+
+//настройки регулятора клапана (CV-0101)
+	regCV0101.SP := 0.0;
+	regCV0101.Kp := 1.0;
+	regCV0101.Ki := 0.8;
+	regCV0101.Kd := 0.5;
+	regCV0101.DZ := 0.5;
+	regCV0101.setDU := 0.0;
 end_if;
 
 
@@ -1990,10 +2046,10 @@ KTO_AO_HMI.A3_3_3_SF0202 := real_to_lreal(pidCF0202.out);	//Выход регу�
 
 
 //Управление частотой ПЧ вентилятора подачи дымовых газов в трубу (SF-0301)
-regCF0301.PV := 0.0;							//Отслеживаемый параметр
+regCF0301.PV := valAI.A1_5_3_P_prim_Burn_room;	//Отслеживаемый параметр
 regCF0301.DU := KTO_IM_HMI.CF0301.RA;
 regCF0301.setDU := lreal_to_real(AO_PRU.A3_3_4_SF0301);
-pidCF0202(err	:= regCF0301.SP - regCF0301.PV,	//Ошибка регулирования
+pidCF0301(err	:= regCF0301.SP - regCF0301.PV,	//Ошибка регулирования
 		hiLimit	:= 100.0,						//Верхнее ограничение выхода регулятора
 		loLimit	:= 0.0,							//Нижнее ограничение выхода регулятора
 		hiRate	:= 5.0,							//Ограничение по скорости увеличения выхода регулятора
@@ -2011,12 +2067,74 @@ KTO_AO_HMI.A3_3_4_SF0301 := real_to_lreal(pidCF0301.out);	//Выход регу�
 
 
 //Управление частотой ПЧ вентилятора подачи воздуха для охлаждения дымовых газов инсинератора (AF-0201)
+regAF0201.PV := valAI.A1_4_4_T1_dust_col;		//Отслеживаемый параметр
+regAF0201.DU := KTO_IM_HMI.AF0201.RA;
+regAF0201.setDU := lreal_to_real(AO_PRU.A3_4_1_AF0201);
+pidAF0201(err	:= regAF0201.SP - regAF0201.PV,	//Ошибка регулирования
+		hiLimit	:= 100.0,						//Верхнее ограничение выхода регулятора
+		loLimit	:= 0.0,							//Нижнее ограничение выхода регулятора
+		hiRate	:= 5.0,							//Ограничение по скорости увеличения выхода регулятора
+		loRate	:= 5.0,							//Ограничение по скорости уменьшения выхода регулятора
+		cycle	:= cycle,						//Время цикла вызова регулятора
+		setDU	:= regAF0201.setDU,				//Выход регулятора при ДУ
+		DU		:= regAF0201.DU,				//Признак ДУ
+		Work_ON	:= true,						//Включить регулятор
+		Kp		:= regAF0201.Kp,				//Пропорциональный коэффициент
+		Ki		:= regAF0201.Ki,				//Интегральный коэффициент
+		Kd		:= regAF0201.Kd,				//Дифференциальный коэффициент
+		DZ		:= regAF0201.DZ					//Зона нечувствительности
+);
+KTO_AO_HMI.A3_4_1_AF0201 := real_to_lreal(pidAF0201.out);	//Выход регулятора
 
 
 //Управление частотой ПЧ дозатора реагентов в систему охлаждения дымовых газов инсинератора (SC-0203)
+regSC0203.PV := 0.0;							//Отслеживаемый параметр
+regSC0203.DU := KTO_IM_HMI.SC0203.RA;
+regSC0203.setDU := lreal_to_real(AO_PRU.A3_4_2_SC0203);
+pidSC0203(err	:= regSC0203.SP - regSC0203.PV,	//Ошибка регулирования
+		hiLimit	:= 100.0,						//Верхнее ограничение выхода регулятора
+		loLimit	:= 0.0,							//Нижнее ограничение выхода регулятора
+		hiRate	:= 5.0,							//Ограничение по скорости увеличения выхода регулятора
+		loRate	:= 5.0,							//Ограничение по скорости уменьшения выхода регулятора
+		cycle	:= cycle,						//Время цикла вызова регулятора
+		setDU	:= regSC0203.setDU,				//Выход регулятора при ДУ
+		DU		:= regSC0203.DU,				//Признак ДУ
+		Work_ON	:= true,						//Включить регулятор
+		Kp		:= regSC0203.Kp,				//Пропорциональный коэффициент
+		Ki		:= regSC0203.Ki,				//Интегральный коэффициент
+		Kd		:= regSC0203.Kd,				//Дифференциальный коэффициент
+		DZ		:= regSC0203.DZ					//Зона нечувствительности
+);
+KTO_AO_HMI.A3_4_2_SC0203 := real_to_lreal(pidSC0203.out);	//Выход регулятора
 
 
 //Управление затвором (CV-0101)
+regCV0101.PV := 0.0;							//Отслеживаемый параметр
+regCV0101.DU := KTO_IM_HMI.CV0101.RA;
+regCV0101.setDU := lreal_to_real(AO_PRU.A3_5_1_CV0101);
+pidCV0101(err	:= regCV0101.SP - regCV0101.PV,	//Ошибка регулирования
+		hiLimit	:= 100.0,						//Верхнее ограничение выхода регулятора
+		loLimit	:= 0.0,							//Нижнее ограничение выхода регулятора
+		hiRate	:= 5.0,							//Ограничение по скорости увеличения выхода регулятора
+		loRate	:= 5.0,							//Ограничение по скорости уменьшения выхода регулятора
+		cycle	:= cycle,						//Время цикла вызова регулятора
+		setDU	:= regCV0101.setDU,				//Выход регулятора при ДУ
+		DU		:= regCV0101.DU,				//Признак ДУ
+		Work_ON	:= true,						//Включить регулятор
+		Kp		:= regCV0101.Kp,				//Пропорциональный коэффициент
+		Ki		:= regCV0101.Ki,				//Интегральный коэффициент
+		Kd		:= regCV0101.Kd,				//Дифференциальный коэффициент
+		DZ		:= regCV0101.DZ					//Зона нечувствительности
+);
+KTO_AO_HMI.A3_5_1_CV0101 := real_to_lreal(pidCV0101.out);	//Выход регулятора
+if IMIT then
+	valAI.A1_9_4_SH_pos := pidCV0101.out;
+	KTO_IM_HMI.CV0101.state.0 := valAI.A1_9_4_SH_pos < 2.0;
+	KTO_IM_HMI.CV0101.state.1 := valAI.A1_9_4_SH_pos > 98.0;
+	if valAI.A1_9_4_SH_pos > 2.0 and  valAI.A1_9_4_SH_pos < 98.0 then
+		KTO_IM_HMI.CV0101.state := word#0;
+	end_if;
+end_if;
 
 ]]></ST>
         </FunctionBlock>
@@ -2142,6 +2260,7 @@ KTO_AO_HMI.A3_3_4_SF0301 := real_to_lreal(pidCF0301.out);	//Выход регу�
                 <Variable UUID="0D22588F222F4DF393AF17E6980AB674" Name="imit_KTO_IM_SC0202" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
                 <Variable UUID="ACD1AE8EA48941D699FD515D73192209" Name="imit_KTO_IM_P0401" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
                 <Variable UUID="3254E91915664CBBA4F3BDE638382C0D" Name="imit_KTO_IM_EH0401" Type="VLV_imit" TypeUUID="A09AE2844B73351BF94B378381A47C0F" Usage="internal" />
+                <Variable UUID="17AC769D4B930D2AA298D8A972C561E8" Name="proc_CMD_IM" Type="FB_CMD_IM_BLK" TypeUUID="5F52D1E141A30BA3ADA1838E727128DB" Usage="internal" />
             </Variables>
             <ST><![CDATA[
 if Firstscan then		                               		//таймер команды	//таймер дожима		//цепи "откр"	//цепи "закр"	//Дист/Авто
@@ -2213,6 +2332,10 @@ cfg_KTO_IM_SC0201(SEN_KTO_IM_SC0201,KTO_IM_HMI.SC0201.RA,KTO_IM_HMI.SC0201.rOn,K
 cfg_KTO_IM_SC0202(SEN_KTO_IM_SC0202,KTO_IM_HMI.SC0202.RA,KTO_IM_HMI.SC0202.rOn,KTO_IM_HMI.SC0202.rOff,KTO_IM_LG.SC0202.rOnOff,KTO_IM_LG.SC0202.aOnOff,KTO_IM_HMI.SC0202.rep,KTO_IM_LG.SC0202.cwOn,KTO_IM_LG.SC0202.cwOff,KTO_DI_HMI.A2_7_6_SC0202_disch_ash_MC_ON.PV,not KTO_DI_HMI.A2_7_6_SC0202_disch_ash_MC_ON.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_IM_LG.SC0202.non,KTO_IM_LG.SC0202.noff,KTO_IM_LG.SC0202.nstart,KTO_IM_LG.SC0202.selfon,KTO_IM_LG.SC0202.selfoff,KTO_IM_LG.SC0202.flt,KTO_IM_LG.SC0202.ncon,KTO_IM_LG.SC0202.ncoff,KTO_IM_HMI.SC0202.flt_all,KTO_IM_HMI.SC0202.state,KTO_IM_LG.SC0202.extern);
 cfg_KTO_IM_P0401(SEN_KTO_IM_P0401,KTO_IM_HMI.P0401.RA,KTO_IM_HMI.P0401.rOn,KTO_IM_HMI.P0401.rOff,KTO_IM_LG.P0401.rOnOff,KTO_IM_LG.P0401.aOnOff,KTO_IM_HMI.P0401.rep,KTO_IM_LG.P0401.cwOn,KTO_IM_LG.P0401.cwOff,KTO_DI_HMI.A2_7_7_P0401_oil_feed_DD_ON.PV,not KTO_DI_HMI.A2_7_7_P0401_oil_feed_DD_ON.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_IM_LG.P0401.non,KTO_IM_LG.P0401.noff,KTO_IM_LG.P0401.nstart,KTO_IM_LG.P0401.selfon,KTO_IM_LG.P0401.selfoff,KTO_IM_LG.P0401.flt,KTO_IM_LG.P0401.ncon,KTO_IM_LG.P0401.ncoff,KTO_IM_HMI.P0401.flt_all,KTO_IM_HMI.P0401.state,KTO_IM_LG.P0401.extern);
 cfg_KTO_IM_EH0401(SEN_KTO_IM_EH0401,KTO_IM_HMI.EH0401.RA,KTO_IM_HMI.EH0401.rOn,KTO_IM_HMI.EH0401.rOff,KTO_IM_LG.EH0401.rOnOff,KTO_IM_LG.EH0401.aOnOff,KTO_IM_HMI.EH0401.rep,KTO_IM_LG.EH0401.cwOn,KTO_IM_LG.EH0401.cwOff,KTO_DI_HMI.A2_7_8_EH0401_oil_feed_DD_ON.PV,not KTO_DI_HMI.A2_7_8_EH0401_oil_feed_DD_ON.PV,KTO_DI_HMI.dummy.PV,KTO_DI_HMI.dummy.PV,KTO_IM_LG.EH0401.non,KTO_IM_LG.EH0401.noff,KTO_IM_LG.EH0401.nstart,KTO_IM_LG.EH0401.selfon,KTO_IM_LG.EH0401.selfoff,KTO_IM_LG.EH0401.flt,KTO_IM_LG.EH0401.ncon,KTO_IM_LG.EH0401.ncoff,KTO_IM_HMI.EH0401.flt_all,KTO_IM_HMI.EH0401.state,KTO_IM_LG.EH0401.extern);
+
+
+//Выдача команд управления механизмами из алгоритма управления объектом
+proc_CMD_IM();
 
 
 //ВЫЗОВ С-блоков
@@ -2422,12 +2545,6 @@ KTO_IM_LG.SC0202.aOnOff := SEN_KTO_IM_SC0202.Control.aOnOff.0;
 KTO_IM_LG.P0401.aOnOff := SEN_KTO_IM_P0401.Control.aOnOff.0;
 KTO_IM_LG.EH0401.aOnOff := SEN_KTO_IM_EH0401.Control.aOnOff.0;
 end_if;]]></ST>
-        </FunctionBlock>
-        <FunctionBlock UUID="5F52D1E141A30BA3ADA1838E727128DB" Name="FB_CMD_IM_BLK">
-            <Variables />
-            <ST><![CDATA[//Управление ИМ
-//if then CMD_IM_aOnOff := false; end_if; //закрыть/отключить
-//if then CMD_IM_aOnOff := true; end_if; //открыть/включить]]></ST>
         </FunctionBlock>
         <FunctionBlock UUID="03FC474C44065334B97FF8985FD8215B" Name="VLV_cfg">
             <Variables>

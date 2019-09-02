@@ -10,7 +10,6 @@
         <Item Name="FLDR_DO.folder" />
         <Item Name="FLDR_IM.folder" />
         <Item Name="FLDR_UST.folder" />
-        <Item Name="Type_AVYFTQ4GQ3WETA6YK2KG3MQWPA.type" />
-        <Item Name="Type_KWASNC5XHYZUJDIHZFGQJW4FTY.type" />
+        <Item Name="Type_TObjectVars.type" />
     </Items>
 </Folder>
