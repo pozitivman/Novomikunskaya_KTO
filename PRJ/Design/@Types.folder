@@ -11,5 +11,6 @@
         <Item Name="FLDR_IM.folder" />
         <Item Name="FLDR_UST.folder" />
         <Item Name="Type_TObjectVars.type" />
+        <Item Name="Type_TIBP.type" />
     </Items>
 </Folder>

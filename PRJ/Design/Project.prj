@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE Project v. 1.0 >
-<Project Name="Novomikunskaya_KTO" Comment="" Port="10000" EndPort="30000" UUID="E0FC463249D9F7E2CC1258B2E3D69969" SignProject="FALSE" UsersUpdateMode="REPLACE">
+<Project Name="Novomikunskaya_KTO" Comment="" Port="10000" EndPort="30000" UUID="BAF57EED4C965A676502439F851F447E" SignProject="FALSE" UsersUpdateMode="REPLACE">
     <Globals>
         <Signal Name="Deblock" UUID="6BAECAA040B090C458A0259509A3725D" Type="BOOL" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot;" />
         <Signal Name="Deblock_PRU" UUID="F2F84E504F643C72489365BDED794987" Type="BOOL" Global="TRUE" Comment="Кнопка &quot;Деблокировка&quot; с панели ПРУ" />
@@ -36,6 +36,7 @@
         <Signal Name="regSC0203" UUID="767E8FD045ACFEEE8FFE5A9AA15B6F21" Type="8FEB7CB64160CD86F39E399B10F88ABF" Global="TRUE" Comment="Настройки регулятора SC0203" />
         <Signal Name="regCV0101" UUID="36F11E3F41275DC5457264B804B27524" Type="8FEB7CB64160CD86F39E399B10F88ABF" Global="TRUE" Comment="Настройки регулятора CV0101" />
         <Signal Name="obj" UUID="4263A78741220D64229DA489952645A8" Type="CC17525C48E1B387B931A8AD517EA93F" Global="TRUE" />
+        <Signal Name="ibp" UUID="E1F514ED4794297B691821B2045A48F3" Type="1B440CC446E0089699A5098BA26D5169" Global="TRUE" Comment="Источник бесперебойного питания" />
     </Globals>
     <Connections />
 </Project>

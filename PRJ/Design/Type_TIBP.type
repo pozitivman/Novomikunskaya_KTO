@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Type v. 1.0 >
+<Type Name="TIBP" Kind="Struct" UUID="1B440CC446E0089699A5098BA26D5169">
+    <Fields>
+        <Field Name="V_in" Type="INT" UUID="011BED03499EE02CAD632487B4B41CD8" Comment="Входное напряжение, умноженное на 10, В" />
+        <Field Name="Vin_Real" Type="REAL" UUID="951EA6DF4C0B06DCFA6EB6BF6E79282E" />
+        <Field Name="V_out" Type="INT" UUID="943BE17A41DC7EC7E9B40894D005AE50" Comment="Выходное напряжение, умноженное на 10, В" />
+        <Field Name="V_out_Real" Type="REAL" UUID="4D561C83426D1EBF8C2F61932650BF8B" />
+        <Field Name="I_out" Type="INT" UUID="681B37DD44E4BA4B13C71FA079EF3B64" Comment="Выходной ток, умноженный на 10, А" />
+        <Field Name="I_out_Real" Type="REAL" UUID="CC54C4154B07C0B5192BD590BE2E9E5A" />
+        <Field Name="V_Nom_Battery" Type="INT" UUID="6A5FE06A4FCF130AD09D75A12517049F" Comment="Номинальное значение напряжение батарей, умноженное на 10, В" />
+        <Field Name="V_Nom_Battery_Real" Type="REAL" UUID="1EB78E174DE54391F714708DB0141A61" />
+        <Field Name="V_Battery" Type="INT" UUID="6BB2FEF74F43761C5FFF3BA0DF1AB337" Comment="Значение напряжение батарей, умноженное на 10, В" />
+        <Field Name="V_Battery_Real" Type="REAL" UUID="57E107D941713FEF55A0D789B2C23522" />
+        <Field Name="Time" Type="INT" UUID="C4A146DB4E5C6DAB2E300A96F1531CCE" Comment="Значение прогнозируемого времени работы ИБП  в автономном режиме" />
+        <Field Name="Nagruzka_IBP" Type="INT" UUID="493D9FBB4D687BB34C8A07B86DA652D4" Comment="Уровень нагрузки выхода ИБП, %" />
+        <Field Name="Power_Level" Type="INT" UUID="F468FF904173D7B22016EC8D55E35237" Comment="Уровень заряда батареи, %" />
+    </Fields>
+</Type>

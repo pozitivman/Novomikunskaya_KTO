@@ -1,0 +1,14 @@
+<Configuration>
+    <Nodes>
+        <Node Device="192.168.1.254" Version="0" Auth="0" Community="public" User="user" Password="passw" PassPhrase="" />
+    </Nodes>
+    <Crossconnect>
+        <Connection ItemName="ibp.V_in" Device="192.168.1.254" Channel="1.3.6.1.4.1.22138.1.10.3.1.1.0" UUID="E1F514ED4794297B691821B2045A48F3.011BED03499EE02CAD632487B4B41CD8" />
+        <Connection ItemName="ibp.I_out" Device="192.168.1.254" Channel="1.3.6.1.4.1.22138.1.10.3.3.8.0" UUID="E1F514ED4794297B691821B2045A48F3.681B37DD44E4BA4B13C71FA079EF3B64" />
+        <Connection ItemName="ibp.V_Battery" Device="192.168.1.254" Channel="1.3.6.1.4.1.22138.1.10.3.4.2.0" UUID="E1F514ED4794297B691821B2045A48F3.6BB2FEF74F43761C5FFF3BA0DF1AB337" />
+        <Connection ItemName="ibp.Time" Device="192.168.1.254" Channel="1.3.6.1.4.1.22138.1.10.3.4.3.0" UUID="E1F514ED4794297B691821B2045A48F3.C4A146DB4E5C6DAB2E300A96F1531CCE" />
+        <Connection ItemName="ibp.V_out" Device="192.168.1.254" Channel="1.3.6.1.4.1.22138.1.10.3.3.1.0" UUID="E1F514ED4794297B691821B2045A48F3.943BE17A41DC7EC7E9B40894D005AE50" />
+        <Connection ItemName="ibp.Nagruzka_IBP" Device="192.168.1.254" Channel="1.3.6.1.4.1.22138.1.10.3.3.12.0" UUID="E1F514ED4794297B691821B2045A48F3.493D9FBB4D687BB34C8A07B86DA652D4" />
+        <Connection ItemName="ibp.Power_Level" Device="192.168.1.254" Channel="1.3.6.1.4.1.22138.1.10.3.4.4.0" UUID="E1F514ED4794297B691821B2045A48F3.F468FF904173D7B22016EC8D55E35237" />
+    </Crossconnect>
+</Configuration>
